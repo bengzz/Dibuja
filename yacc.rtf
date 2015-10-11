@@ -1,0 +1,200 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Consolas;}
+{\colortbl;\red255\green255\blue255;\red19\green36\blue126;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\fs24 \cf0 from stack import Stack\
+from avail import avail\
+\
+def p_prog(p):\
+		
+\f1 \cf2 '''prog : PR Vars Funciones princ Bloque '''\
+\
+
+\f0 \cf0 def p_princ(p):\
+
+\f1 \cf2 		'''princ : PRINC'''\
+\
+
+\f0 \cf0 def p_Funciones(p):\
+
+\f1 \cf2 		'''Funciones : funciones | empty'''\
+
+\f0 \cf0 \
+def p_funciones(p):\
+		
+\f1 \cf2 '''funciones : Tipo func Bloque Regresar'''\
+
+\f0 \cf0 \
+def p_func(p):\
+		
+\f1 \cf2 '''func : Tipo fID'''\
+\
+
+\f0 \cf0 def p_fID(p):\
+		
+\f1 \cf2 '''fID : ID'''\
+\
+
+\f0 \cf0 def p_Regresar(p):\
+		
+\f1 \cf2 '''Regresar : Exp'''\
+\
+
+\f0 \cf0 def p_Bloque(p):\
+
+\f1 \cf2 		'''Bloque : Vars Estatuto'''\
+\
+
+\f0 \cf0 def p_Vars(p):\
+
+\f1 \cf2 		'''Vars : Tipo fID VarCte'''\
+\
+
+\f0 \cf0 def p_Estatuto(p):\
+
+\f1 \cf2 		'''Estatuto : Asignacion Condicion Ciclo Llamada Objeto'''\
+\
+
+\f0 \cf0 def p_Tipo(p):\
+
+\f1 \cf2 		'''Tipo : tipo'''\
+\
+
+\f0 \cf0 def p_Expresion(p):\
+
+\f1 \cf2 		'''Expresion : Subexpresion'''\
+
+\f0 \cf0 \
+def p_Subexpresion(p):\
+
+\f1 \cf2 		'''Subexpresion : Exp'''\
+\
+
+\f0 \cf0 def p_Exp(p):\
+
+\f1 \cf2 		'''Exp : Termino'''\
+\
+
+\f0 \cf0 def p_Termino(p):\
+
+\f1 \cf2 		'''Termino : Factor'''\
+\
+
+\f0 \cf0 def p_Condicion(p):\
+
+\f1 \cf2 		'''Condicion : Expresion Estatuto'''\
+\
+
+\f0 \cf0 def p_Asignacion(p):\
+
+\f1 \cf2 		'''Asignacion : Exp Expresion'''\
+\
+
+\f0 \cf0 def p_Llamada(p):\
+
+\f1 \cf2 		'''Llamada : Exp'''\
+\
+
+\f0 \cf0 def p_Ciclo(p):\
+
+\f1 \cf2 		'''Ciclo : Mientras Para'''\
+\
+
+\f0 \cf0 def p_Mientras(p):\
+
+\f1 \cf2 		'''Mientras : Expresion Estatuto'''\
+
+\f0 \cf0 \
+def p_Para(p):\
+
+\f1 \cf2 		'''Para : Exp Expresion Expresion Estatuto'''\
+\
+
+\f0 \cf0 def p_Factor(p):\
+
+\f1 \cf2 		'''Factor : Expresion'''
+\f0 \cf0 \
+
+\f1 \cf2 \
+
+\f0 \cf0 def p_VarCte(p):\
+
+\f1 \cf2 		'''VarCte : Exp'''\
+\
+
+\f0 \cf0 def p_Objeto(p):\
+
+\f1 \cf2 		'''Objeto : Figura|Texto Color Posicion Grosor Rotacion'''\
+
+\f0 \cf0 \
+def p_Color(p):\
+
+\f1 \cf2 		'''Color : Contorno|Relleno'''\
+\
+
+\f0 \cf0 def p_Figura(p):\
+
+\f1 \cf2 		'''Figura : Cuadrado|Circulo|Arco|Triangulo|Poligono|Linea'''\
+\
+
+\f0 \cf0 def p_Cuadrado(p):\
+
+\f1 \cf2 		'''Cuadrado : Exp Exp'''\
+\
+
+\f0 \cf0 def p_Circulo(p):\
+
+\f1 \cf2 		'''Circulo : Exp Exp'''\
+\
+
+\f0 \cf0 def p_Arco(p):\
+
+\f1 \cf2 		'''Arco : Exp Exp'''\
+
+\f0 \cf0 \
+def p_Triangulo(p):\
+
+\f1 \cf2 		'''Triangulo : Exp Exp Exp Exp Exp Exp'''\
+\
+
+\f0 \cf0 def p_Poligono(p):\
+
+\f1 \cf2 		'''Poligono : Exp Exp'''\
+
+\f0 \cf0 \
+def p_Linea(p):\
+
+\f1 \cf2 		'''Linea : Exp Exp'''\
+\
+
+\f0 \cf0 def p_Contorno(p):\
+
+\f1 \cf2 		'''Contorno : Exp Exp Exp'''\
+\
+
+\f0 \cf0 def p_Relleno(p):\
+
+\f1 \cf2 		'''Relleno : Exp Exp Exp'''\
+\
+
+\f0 \cf0 def p_Texto(p):\
+
+\f1 \cf2 		'''Texto : Exp'''\
+\
+
+\f0 \cf0 def p_Grosor(p):\
+
+\f1 \cf2 		'''Grosor : Exp'''\
+\
+
+\f0 \cf0 def p_Posicion(p):\
+
+\f1 \cf2 		'''Posicion : Exp Exp'''\
+\
+
+\f0 \cf0 def p_Rotacion(p):\
+
+\f1 \cf2 		'''Rotacion : Exp'''\
+}

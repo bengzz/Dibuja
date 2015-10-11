@@ -1,0 +1,83 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww11620\viewh10960\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\fs24 \cf0 import ply.lex as lex\
+\
+reserved = \{\
+	\'91prog\'92 : \'91PROG\'92,\
+	\'91funci\'f3n\'92 : \'91FUNCION\'92,\
+	\'91princ\'92 : \'91PRINC\'92,\
+	\'91id\'92 : \'91ID\'92,\
+	\'91regresa\'92 : \'91REGRESA\'92,\
+	\'91entero\'92 : \'91ENT\'92,\
+	\'91booleano\'92 : \'91BOOL\'92,\
+	\'91flotante\'92 : \'91FLOT\'92,\
+	\'91void\'92 : \'91VOID\'92,\
+	\'91si\'92 : \'92SI\'92,\
+	\'91sino\'92 : \'92SINO\'92, \
+	\'91mientras\'92 : \'91MIENTRAS\'92\
+	\'91para\'92 : \'91PARA\'92,\
+	\'91cte\'92 : \'92CTE\'92,\
+	\'91cuadrado\'92 : \'91CUAD\'92,\
+	\'91circulo\'92 : \'91CIRC\'92,\
+	\'91arco\'92 : \'91ARC\'92,\
+	\'91triangulo\'92 : \'91TRIAN\'92,\
+	\'91poligono\'92 : \'91POLI\'92,\
+	\'91linea\'92 : \'91LIN\'92,\
+	\'91contorno\'92 : \'91CONTORNO\'92,\
+	\'91relleno\'92 : \'91RELLENO\'92,\
+	\'91texto\'92 : \'91TEXTO\'92,\
+	\'91grosor\'92 : \'91GROSOR\'92,\
+	\'91xy\'92 : \'91XY\'92,\
+	\'91rotacion\'92 : \'91ROTACION\'92,\
+\}\
+\
+#Lista de nombres de los tokens\
+tokens = [\
+	\'91Y\'92, \'91O\'92, \'91SUM\'92, \'91RES\'92, \'91MUL\'92, \'91DIV\'92, \'91ME\'92, \'91MA\'92, \'91CI\'92, \'91CD\'92, \'91IG\'92, \'91PC\'92, \'91C\'92, \'91AC\'92, \'91CC\'92, \'91AP\'92, \'91CP\'92, VALI, VALF\
+] + list(reserved.values())\
+\
+\
+t_Y		= r\'92&&\'92\
+t_O		= r\'92||'\
+t_SUM	= r\'92\\+\'92\
+t_RES 	= r\'92-\'91\
+t_MUL	= r \'91\\*\'92\
+t_DIV	= r \'91/\'91\
+t_ME		= r \'91<\'91\
+t_MA		= r \'91>\'92\
+t_CI		= r \'91==\'91\
+t_CD		= r \'91!=\'91\
+t_IG		= r \'91=\'91\
+t_PC		= r \'91;\'92\
+t_C		= r \'92\\,\'92\
+t_AC		= r \'91\\ [\'91\
+t_CC		= r \'91\\ ]\'92\
+t_AP		= r \'91\\ (\'91\
+t_CP		= r \'91\\ )\'92\
+t_VALI	= r \'91\\d+\'92\
+t_VALF	= r \'91\\d+\\ .\\d+\'92\
+\
+def t_ID(t):\
+	r\'92[a-zA-Z][a-zA-Z0-9]*\'92\
+	t.type = reserved.get(t.value, \'91ID\'92)\
+	return t\
+\
+def t_error(t):\
+	if(t.value[0] != None):\
+		print \'93Caracter invalido \'93, t.value[0] ,\
+		t.lexer.skip(1)\
+\
+lex.lex()\
+\
+\
+	\
+\
+\
+\
+\
+\
+}
