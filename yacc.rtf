@@ -7,9 +7,25 @@
 \f0\fs24 \cf0 from stack import Stack\
 from avail import avail\
 \
+direc = dict()\
+dirtemp = dict()\
+entero_val = 1000\
+float_val = 2000\
+void_val = 3000\
+\
 def p_prog(p):\
 		
 \f1 \cf2 '''prog : PR Vars Funciones princ Bloque '''\
+		\cf0 mtemp = [(entero_val-1000), (float_val-2000), (void_val-3000)]\
+		direc[\'93princ\'94] = temp\
+		if(\'93Vars\'94 in direc):\
+			mtemp = direc[\'93vars\'94
+\fs26 ]\
+			mtemp.pop(0)\
+			direc
+\fs24 [\'93vars\'94
+\fs26 ] = mtemp
+\fs24 \cf2 \
 \
 
 \f0 \cf0 def p_princ(p):\
@@ -197,4 +213,46 @@ def p_Linea(p):\
 \f0 \cf0 def p_Rotacion(p):\
 
 \f1 \cf2 		'''Rotacion : Exp'''\
-}
+\cf0 \
+def p_vacia(p)\
+		\cf2 \'91\'92vacia : '''\cf0 \
+		global vacia\
+		vacia = True\
+\
+def guarda_var(var)\
+		global tipoVar\
+		if var in dirtemp:\
+			print \'93Variable existe \'93, var\
+			sys.exit(0)\
+		else:\
+			if tipoVar == \'93entero\'94\
+				global entero_val\
+				dirtemp[var] = [tipoVar, \'93var\'94, entero_val]\
+				entero_val += 1\
+			else:\
+				global float_val\
+				dirtemp[var] = [tipoVar, \'93var\'94, float_val]\
+				float_val += 1\
+\
+def vars_declaradas(p):\
+		global tipoVar\
+		if(p != None):\
+			if(p not in dirtemp):\
+				if(\'93Vars\'94 in direc):\
+					if(p not in direc[\'93Vars\'94[0]):\
+						print \'93Variable no declarada \'94, p\
+						sys.exit(0)\
+					else:\
+						tipoVar = direc[\'93Vars\'94][0][p][0]\
+				else:\
+					print \'93Variable no declarada \'94, p\
+					sys.exit(0)\
+			else:\
+				tipoVar = dirtemp[p][0]\
+\
+def dir_var(p)\
+		if p in dirtemp:\
+			return dirtemp[p][2]\
+		else:\
+			if \'93Vars\'94 in direc:\
+				return direc[\'93Vars\'94][0][p][2]}
