@@ -34,3 +34,28 @@ class HashTable():
                         self.numVar +=1
                 
                 self.table[i].set(key,value)
+
+"""Obtener de la tabla............"""
+        def put(self, key):
+
+        """Detectar si el key es un string y que no sea 0"""
+                code = 0
+                if (type(key) is str and len(key) > 0):
+                        code = ord( key[0])
+                i = code % self.size
+                auxi = i
+                w = False
+
+                while self.table[i] != None and self.table[i].key != key and not w:
+                        i = (i + 1) % self.size
+                        if(i == aux):
+                                w = True
+
+                if (self.table[i] != None or w):
+                        rt = self.table[i].value()
+                else:
+                        rt = None
+                return rt
+
+
+
