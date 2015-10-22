@@ -1,3 +1,4 @@
+
 class avail:
         cubo_semantico = None
 
@@ -104,16 +105,6 @@ class avail:
                         }
                 },
                 '+': {
-                        'entero': {
-                                    'entero': 'entero',
-                                    'flotante': 'flotante'
-                        },
-                        'flotante': {
-                                    'entero': 'flotante',
-                                    'flotante': 'flotante'
-                        }
-                },
-                '$': {
                         'entero': {
                                     'entero': 'entero',
                                     'flotante': 'flotante'
