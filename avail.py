@@ -3,6 +3,16 @@ class avail:
         cubo_semantico = None
 
         def _init_(self):
+        		self.temp_entero = 2000
+				self.temp_flotante = 3000
+				self.temp_booleano = 4000
+				self.bloque = 0
+				self.PilaOp = Stack() #Pila de operadores
+				self.POper = Stack() #Pila de operandos
+				self.TPila = Stack() #Pila de tipos
+				self.saltos = Stack() #Pila de saltos
+				self.quads = []
+				self.numQuad = 0
                 self.cubo_semantico = {
                 '=': {
                         'entero': {
@@ -54,7 +64,7 @@ class avail:
                                     'flotante': 'booleano'
                         }
                 },
-                '<>': {
+                '!=': {
                         'entero': {
                                     'entero': 'booleano',
                                     'flotante': 'booleano'
@@ -125,3 +135,158 @@ class avail:
                         }
                 }
         }
+        
+        def get_tipo(self, operador, tipo1, tipo2):
+			#regresa el tipo de la operacion
+			tip = self.cubo_semantico.get(operador)
+			if tip != None:
+				tip = tip.get(tipo1)
+				if tip != None:
+					tip = tip.get(tipo2)
+					return tip
+			print 'error'
+	
+		def get_temporal(self, operador, tipo1, tipo2):
+			#se crea un nuevo valor temporal
+			temp_tipo = self.get_tipo(operador, tipo1, tipo2)
+			if temp_tipo == 'entero':
+				temp = self.temp_entero
+				self.temp_entero += 1
+			elif temp_tipo == 'flotante':
+				temp = self.temp_flotante
+				self.temp_flotante += 1
+			elif temp_tipo == 'booleano':
+				temp = self.temp_booleano
+				self.temp_booleano +=1
+			temp += (self.block * 10000)
+			return [temp, self.get_tipo(operador, tipo1, tipo2)]
+			
+		def setBloque(self, bloque):
+			#resetea la memoria para el siguiente bloque
+			self.bloque = bloque
+			self.temp_entero = 2000
+			self.temp_flotante = 3000
+			self.temp_booleano = 4000
+			
+		def getBloque(self):
+			#regresa el bloque actual
+			return self.bloque
+			
+		def get_temp_dir(self):
+			#regresa la memoria necesaria para las temporales
+			return [(self.temp_entero-2000), (self.temp_flotante-3000), (self.temp_booleano-4000)]
+		
+		def expresion(self):
+			#si hay una expresion para resolver
+			if(self.PilaOp.size() > 0):
+				if(self.PilaOp.peek() == '>' or self.PilaOp.peek() == '<' or self.PilaOp.peek() == '!=' or self.PilaOp.peek() == '==' or self.PilaOp.peek() == '<=' or self.PilaOp.peek() == '>='):
+					self.quad()
+		
+		def add_sub(self):
+			#si hay una operacion se suma o resta
+			if(self.PilaOp.size() > 0):
+				if(self.PilaOp.peek() == '+' or self.PilaOp.peek() == '-'):
+					self.quad()
+					
+		def mult_div(self):
+			#si hay una operacion de multiplicacion o division
+			if(self.PilaOp.size() > 0):
+				if(self.PilaOp.peek() == '*' or self.PilaOp.peek() == '/'):
+					self.quad()
+			
+		def rep_salto(self, dirUno, dirCero):
+			#saca uno de los valores de la temporal 
+			tem = self.POper.pop()
+			spCuad = ['-', tem, dirUno, tem]
+			self.numQuad += 1
+			self.quads.append(spCuad)
+			salto = self.saltos.pop()
+			aux = self.get_temporal('==', self.TPila.pop(), 'entero')
+			spCuad = ['==', tem, dirCero, aux[0]]
+			self.numQuad += 1
+			self.quads.append(spCuad)
+			spCuad.['GOTOF', aux[0], -1, salto]
+			self.numQuad += 1
+			self.quads.append(spCuad)
+			
+		def asign(self, var):
+			#crea una asignacion
+			if(self.POper.size() > 0):
+				self.numQuad += 1
+				spCuad = [101, self.POper.pop(), -1, var]
+				self.quads.append(spCuad)
+		
+		def condicion_inicio(self):
+			#al final de una condicion llena el ultimo goto que fue creado con el cuadruplo actual
+			if(self.saltos.size() > 0)
+				salto = self.saltos.pop() - 1
+				spCuad = self.quads[salto]
+				spCuad[3] = self.numQuad
+				self.quads[salto] = spCuad
+			
+		def condicion(self):
+			#al inicio de una condicion se crea un gotof y se almacena el num de cuadruplo en la pila de saltos
+			condicion = self.POper.pop()
+			tipo_cond = self.TPila.pop()
+			if(tipo_cond = != "booleano"):
+				print "Error, el tipo no coincide"
+				sys.error(0)
+			else:
+				spCuad = ['GOTOF', condicion, -1, -1]
+				self.quads.append(spCuad)
+				self.numQuad += 1
+				self.saltos.push(self.numQuad)
+				
+		def condicion_else(self):
+			#si hay un else, se debe llenar el goto del if y crear un nuevo goto
+			salto = self.saltos.pop() -1
+			spCuad = self.quads[salto]
+			spCuad[3] = self.numQuad +1
+			self.quads[salto] = spCuad
+			spCuad = ['GOTO', -1, -1, -1]
+			self.quads.append(spCuad)
+			self.numQuad += 1
+			self.saltos.push(self.numQuad)
+			
+		def printS(self):
+			#imprime informacion
+			print self.POper.printi()
+
+		def get_temp_point(self):
+		#crea un apuntador de direccion
+			aux = self.get_temporal('$', 'dir', -1)
+			return aux[0]
+		
+		def quad(self):
+			#lo utilizan las expresiones para crear cuadruplos
+			self.numQuad += 1
+			aux = self.get_temporal(self.PilaOp.peek(), self.TPila.pop(), self.TPila.pop())
+			tem = aux[0]
+			dos = self.POper.pop()
+			spCuad = [self.PilaOp.pop(), self.POper.pop(), dos, tem]
+			self.quads.append(spCuad)
+			self.PilaOp.push(tem)
+			self.TPila.push(aux[1])
+
+		def PilaOp_pop(self):
+			self.PilaOp.pop()
+
+		def PilaOp_push(self, op):
+			self.PilaOp.push(op)
+
+		def TPila_push(self, op):
+			self.TPila.push(op)
+
+		def TPila_pop(self, ):
+			self.TPila.pop()
+
+		def POper_push(self, op):
+			self.POper.push(op)
+		
+		def POper_pop(self):
+			return self.POper.pop()
+
+		def POper_peek(self):
+			return self.POper.peek()
+				
+			
