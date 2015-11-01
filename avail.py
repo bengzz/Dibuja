@@ -256,6 +256,79 @@ class avail:
 		#crea un apuntador de direccion
 			aux = self.get_temporal('$', 'dir', -1)
 			return aux[0]
+			
+		def main(self):
+		#crea el goto al main, gurda el numero de cuadruplo en la pila de saltos
+			spCuad = ['GOTO', -1, -1, -1]
+			self.quads.append(spCuad)
+			self.saltos.push(self.numQuad)
+			self.numQuad += 1;
+			
+		def main_goto(self):
+		#hace el goto del main
+			salto = self.saltos.pop()
+			spCuad = self.quads[salto]
+			spCuad[3] = self.numQuad
+			self.quads[salto] = spCuad
+			
+		def funcion_return(self, emty, vDir):
+			#revisa si la funcion regreso, si no crea un cuadruplo en la pila de operadores
+			if(empty):
+				spCuad = ['RETURN', -1, -1, -1]
+				self.numQuad += 1
+				self.quads.append(spCuad)
+				return False
+			else:
+				spCuad = ['RETURN', self.POper.pop(), -1, vDir]
+				self.numQuad += 1
+				self.quads.append(spCuad)
+				return True
+				
+		def funcion_end(self):
+			#final del cuadruplo
+			spCuad = ['ENDPROC', -1, 1]
+			self.numQuad += 1
+			self.quads.append(spCuad)
+			
+		def funcion_param(self, param):
+			#checa los parametros de las funciones de acuerdo al orden
+			cont = len(param)
+			if self.POper.size() < cont:
+				print "Faltan parametros"
+				sys.exit(0)
+			lista = []
+			cont = len(param) -1
+			while cont >= 0:
+				for key in param:
+					if cont == param[key][1]:
+						spCuad = ['PARAMETRO', self.POper.pop(), -1, param[key][2]]
+						print spCuad
+						cont -= 1
+						self.numQuad +=1
+						self.quads.append(spCuad)
+						
+		def llama_funcion(self, var):
+		#cuadruplo que contiene el nombre de la funcion la cual se esta llamando
+			spCuad = ['ERA', -1, -1, var]
+			self.numQuad += 1
+			self.quads.append(spCuad)
+			self.PilaOp.push('[')
+			
+		def llama_funcion_final(self, var, vDir, temp):
+		#se hace un go sub a la funcion de la gual se hizo el go, se hace una asignacion en caso de que se regrese un valor en una temporal
+			spCuad = ['GOSUB', -1, -1, var]
+			self.numQuad += 1
+			self.quads.append(spCuad)
+			spCuad = ['101', vDir, -1, temp]
+			self.POper.push(temp)
+			self.numQuad += 1
+			self.quads.append(spCuad)
+			self.PilaOp.pop()
+			
+		def append_quad(self, quad):
+			#concatena los cuadruplos
+			self.numQuad += 1
+			self.quads.append(quad)
 		
 		def quad(self):
 			#lo utilizan las expresiones para crear cuadruplos
