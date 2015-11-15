@@ -14,9 +14,9 @@ void_val = 3000
 tokens = lex.tokens
 vacia = False
 
-
+#Programa------------------------------------------------------
 def p_prog(p):
-		'''prog : PR Vars Funciones princ Bloque '''
+		'''prog : PR prog1 princ AC Bloque CC'''
 		mtemp = [(entero_val-1000), (float_val-2000), (void_val-3000)]
 		direc["princ"] = temp
 		if("globales" in direc):
@@ -24,33 +24,73 @@ def p_prog(p):
 			mtemp.pop(0)
 			direc["globales"] = mtemp
 
-def p_princ(p):
-		'''princ : PRINC'''
-
-def p_Funciones(p):
-		'''Funciones : funciones 
+def p_prog1(p):
+		'''prog1 : prog2 prog3''' 
+	
+def p_prog2(p):
+		'''prog2 : Vars prog2
+		| vacia'''
+		
+def p_prog3(p):
+		'''prog3 : Funciones prog3
 		| vacia'''
 
+def p_princ(p):
+		'''princ : PRINC'''
+#Programa------------------------------------------------------
+
+#Funciones------------------------------------------------------
+def p_Funciones(p):
+		'''Funciones : funciones'''
+
 def p_funciones(p):
-		'''funciones : Tipo func Bloque Regresar'''
+		'''funciones : Tipo fID AP func CP AC Bloque func4 CC'''
 
 def p_func(p):
-		'''func : Tipo fID'''
+		'''func : func1
+		| vacia'''
+		
+def p_func1(p):
+		'''func1 : func2
+		| func2 func3'''
+
+def p_func2(p):
+		'''func2 : Tipo fID func'''
+		
+def p_func3(p):
+		'''func3 : C Tipo fID func'''
+		
+def p_func4(p):
+		'''func4 : Regresar
+		| vacia'''
+
+def p_Regresar(p):
+		'''Regresar : Exp PC'''
 
 def p_fID(p):
 		'''fID : ID'''
+#Funciones------------------------------------------------------
 
-def p_Regresar(p):
-		'''Regresar : Exp'''
-
+#Bloque------------------------------------------------------
 def p_Bloque(p):
-		'''Bloque : Vars Estatuto'''
+		'''Bloque : b1
+		| b2 '''
+		
+def p_b1(p):
+		'''b1 : Estatuto'''
+		
+def p_b2(p):
+		'''b2 : b3 Estatuto'''
 
-#Variables ------------------------------
+def p_b3(p):
+		'''b3 : Vars b3
+		| vacia'''
+#Bloque------------------------------------------------------
+
+#Variables------------------------------------------------------
 def p_Vars(p):
 		'''Vars : globales 
-		| locales
-		| vacia'''
+		| locales'''
 		
 def p_globales(p):
 	'''globales : glob var'''
@@ -64,9 +104,9 @@ def p_locales(p):
 def p_loc(p):
 		'''loc : LC'''
 
-def var(p):
+def p_var(p):
 		'''var : V Tipo fID VarCte'''
-#Variables ------------------------------
+#Variables------------------------------------------------------
 
 def p_Estatuto(p):
 		'''Estatuto : Asignacion 
@@ -84,16 +124,84 @@ def p_tipo(p):
 		| BOOL  '''
 
 def p_Expresion(p):
-		'''Expresion : Subexpresion'''
+		'''Expresion : Subexpresion Expresion2'''
+
+def p_Expresion2(p):
+		'''Expresion2 : Expresion3
+		| vacia'''
+
+def p_Expresion3(p):
+		'''Expresion3 : Expresion4 Expresion'''
+
+def p_Expresion4(p):
+		'''Expresion4 : Y
+		| O'''
 
 def p_Subexpresion(p):
-		'''Subexpresion : Exp'''
+		'''Subexpresion : Exp Subexpresion2'''
+		
+def p_Subexpresion2(p):
+		'''Subexpresion2 : Subexpresion3
+		| vacia'''
+
+def p_Subexpresion3(p):
+		'''Subexpresion3 : Subexpresion4 Exp'''
+		
+def p_Subexpresion4(p):
+		'''Subexpresion4 : ME
+		| MA
+		| CI
+		| CD'''
+
+#Exp ------------------------------
 
 def p_Exp(p):
-		'''Exp : Termino'''
+		'''Exp : Termino Exp2'''
+
+def p_Exp2(p):
+		'''Exp2 : Exp4 Exp3 Exp
+		| Exp4 vacia'''
+
+def p_Exp3(p):
+		'''Exp3 : SUM
+		| RES'''
+
+def p_Exp4(p):
+		'''Exp4 : vacia'''
 
 def p_Termino(p):
-		'''Termino : Factor'''
+		'''Termino : Factor Termino2'''
+		
+def p_Termino2(p):
+		'''Termino2 : Termino4 Termino3 Termino
+		| Termino4 vacia'''
+
+def p_Termino3(p):
+		'''Termino3 : MUL
+		| DIV'''
+		
+def p_Termino4(p):
+		'''Termino4 : vacia'''
+
+def p_Factor(p):
+		'''Factor : Factor2
+		| Factor3'''
+		
+def p_Factor2(p):
+		'''Factor2 : AP Expresion CP'''
+		
+def p_Factor3(p):
+		'''Factor3 : Factor4 VarCte'''
+		
+def p_Factor4(p):
+		'''Factor4 : SUM
+		| RES'''
+
+#falta terminar varcte------------------------------------------------------
+def p_VarCte(p):
+		'''VarCte : VALI
+		| VALF'''
+#falta terminar varcte------------------------------------------------------
 
 def p_Condicion(p):
 		'''Condicion : Expresion Estatuto'''
@@ -112,12 +220,6 @@ def p_Mientras(p):
 
 def p_Para(p):
 		'''Para : Exp Expresion Expresion Estatuto'''
-
-def p_Factor(p):
-		'''Factor : Expresion'''
-
-def p_VarCte(p):
-		'''VarCte : Exp'''
 
 def p_Objeto(p):
 		'''Objeto : Figura Color Posicion Grosor Rotacion
