@@ -1,0 +1,213 @@
+Created by PLY version 3.8 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    LIN
+    PARA
+    RES
+    SUM
+    CTE
+    AC
+    SINO
+    TRIAN
+    MUL
+    DIV
+    GROSOR
+    POLI
+    SEQ
+    ROTACION
+    TEXTO
+    PC
+    CONTORNO
+    VOID
+    CI
+    CC
+    REGRESA
+    VALF
+    O
+    CD
+    AP
+    VALI
+    XY
+    STR
+    V
+    Y
+    CP
+    IG
+    FUNCION
+    ME
+    MA
+    MIENTRAS
+    C
+    CIRC
+    SI
+    ARC
+    RELLENO
+    CUAD
+
+Grammar
+
+Rule 0     S' -> prog
+Rule 1     prog -> PR Vars Funciones princ Bloque
+Rule 2     princ -> PRINC
+Rule 3     Funciones -> funciones
+Rule 4     Funciones -> vacia
+Rule 5     funciones -> Tipo func Bloque Regresar
+Rule 6     func -> Tipo fID
+Rule 7     fID -> ID
+Rule 8     Regresar -> Exp
+Rule 9     Bloque -> Vars Estatuto
+Rule 10    Vars -> globales
+Rule 11    Vars -> locales
+Rule 12    Vars -> vacia
+Rule 13    globales -> glob var
+Rule 14    glob -> GL
+Rule 15    locales -> loc var
+Rule 16    loc -> LC
+Rule 17    Estatuto -> Asignacion
+Rule 18    Estatuto -> Condicion
+Rule 19    Estatuto -> Ciclo
+Rule 20    Estatuto -> Llamada
+Rule 21    Estatuto -> Objeto
+Rule 22    Tipo -> tipo
+Rule 23    tipo -> ENT
+Rule 24    tipo -> FLOT
+Rule 25    tipo -> BOOL
+Rule 26    Expresion -> Subexpresion
+Rule 27    Subexpresion -> Exp
+Rule 28    Exp -> Termino
+Rule 29    Termino -> Factor
+Rule 30    Condicion -> Expresion Estatuto
+Rule 31    Asignacion -> Exp Expresion
+Rule 32    Llamada -> Exp
+Rule 33    Ciclo -> Mientras Para
+Rule 34    Mientras -> Expresion Estatuto
+Rule 35    Para -> Exp Expresion Expresion Estatuto
+Rule 36    Factor -> Expresion
+Rule 37    VarCte -> Exp
+Rule 38    Objeto -> Figura Color Posicion Grosor Rotacion
+Rule 39    Objeto -> Texto Color Posicion Grosor Rotacion
+Rule 40    Color -> Contorno
+Rule 41    Color -> Relleno
+Rule 42    Figura -> Cuadrado
+Rule 43    Figura -> Circulo
+Rule 44    Figura -> Arco
+Rule 45    Figura -> Triangulo
+Rule 46    Figura -> Poligono
+Rule 47    Figura -> Linea
+Rule 48    Cuadrado -> Exp Exp
+Rule 49    Circulo -> Exp Exp
+Rule 50    Arco -> Exp Exp
+Rule 51    Triangulo -> Exp Exp Exp Exp Exp Exp
+Rule 52    Poligono -> Exp Exp
+Rule 53    Linea -> Exp Exp
+Rule 54    Contorno -> Exp Exp Exp
+Rule 55    Relleno -> Exp Exp Exp
+Rule 56    Texto -> Exp
+Rule 57    Grosor -> Exp
+Rule 58    Posicion -> Exp Exp
+Rule 59    Rotacion -> Exp
+Rule 60    vacia -> <empty>
+
+Terminals, with rules where they appear
+
+AC                   : 
+AP                   : 
+ARC                  : 
+BOOL                 : 25
+C                    : 
+CC                   : 
+CD                   : 
+CI                   : 
+CIRC                 : 
+CONTORNO             : 
+CP                   : 
+CTE                  : 
+CUAD                 : 
+DIV                  : 
+ENT                  : 23
+FLOT                 : 24
+FUNCION              : 
+GL                   : 14
+GROSOR               : 
+ID                   : 7
+IG                   : 
+LC                   : 16
+LIN                  : 
+MA                   : 
+ME                   : 
+MIENTRAS             : 
+MUL                  : 
+O                    : 
+PARA                 : 
+PC                   : 
+POLI                 : 
+PR                   : 1
+PRINC                : 2
+REGRESA              : 
+RELLENO              : 
+RES                  : 
+ROTACION             : 
+SEQ                  : 
+SI                   : 
+SINO                 : 
+STR                  : 
+SUM                  : 
+TEXTO                : 
+TRIAN                : 
+V                    : 
+VALF                 : 
+VALI                 : 
+VOID                 : 
+XY                   : 
+Y                    : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+Arco                 : 44
+Asignacion           : 17
+Bloque               : 1 5
+Ciclo                : 19
+Circulo              : 43
+Color                : 38 39
+Condicion            : 18
+Contorno             : 40
+Cuadrado             : 42
+Estatuto             : 9 30 34 35
+Exp                  : 8 27 31 32 35 37 48 48 49 49 50 50 51 51 51 51 51 51 52 52 53 53 54 54 54 55 55 55 56 57 58 58 59
+Expresion            : 30 31 34 35 35 36
+Factor               : 29
+Figura               : 38
+Funciones            : 1
+Grosor               : 38 39
+Linea                : 47
+Llamada              : 20
+Mientras             : 33
+Objeto               : 21
+Para                 : 33
+Poligono             : 46
+Posicion             : 38 39
+Regresar             : 5
+Relleno              : 41
+Rotacion             : 38 39
+Subexpresion         : 26
+Termino              : 28
+Texto                : 39
+Tipo                 : 5 6
+Triangulo            : 45
+VarCte               : 
+Vars                 : 1 9
+fID                  : 6
+func                 : 5
+funciones            : 3
+glob                 : 13
+globales             : 10
+loc                  : 15
+locales              : 11
+princ                : 1
+prog                 : 0
+tipo                 : 22
+vacia                : 4 12
+var                  : 13 15
+
