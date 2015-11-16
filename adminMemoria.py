@@ -205,3 +205,6 @@ class AdminMemoria:
 		
 	def push_apuntador(self, valor):
 		self.apuntador.push(value)
+		
+	def pop_apuntador(self):
+		return self.apuntador.pop()
