@@ -15,12 +15,10 @@ reserved = {
 	'void' : 'VOID',
 	'global' : 'GL',
 	'local' : 'LC',
-	'var' : 'V',
 	'si' : 'SI',
 	'sino' : 'SINO', 
 	'mientras' : 'MIENTRAS',
 	'para' : 'PARA',
-	'cte' : 'CTE',
 	'cuadrado' : 'CUAD',
 	'circulo' : 'CIRC',
 	'arco' : 'ARC',
@@ -37,7 +35,7 @@ reserved = {
 
 #lista de tokens con sus respectivos nombres
 tokens = [
-	'Y', 'O', 'SUM', 'RES', 'MUL', 'DIV', 'ME', 'MA', 'CI', 'CD', 'IG', 'PC', 'C', 'AC', 'CC', 'AP', 'CP', 'VALI', 'VALF', 'STR', 'SEQ', 'ID'
+	'Y', 'O', 'SUM', 'RES', 'MUL', 'DIV', 'ME', 'MA', 'CI', 'CD', 'IG', 'PC', 'C', 'AC', 'CC', 'AP', 'CP', 'VALI', 'VALF', 'STR', 'ID'
 ] + list(reserved.values())
 
 
@@ -61,7 +59,6 @@ t_CP	= r'\)'
 t_VALI	= r'\d+'
 t_VALF	= r'\d+\.\d+'
 t_STR 	= r'\'.*\''
-t_SEQ	= r'=='
 
 def t_ID(t):
 	r'[a-zA-Z][a-zA-Z0-9]*'

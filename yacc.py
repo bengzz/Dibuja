@@ -41,31 +41,28 @@ def p_princ(p):
 
 #Funciones------------------------------------------------------
 def p_Funciones(p):
-		'''Funciones : funciones'''
+		'''Funciones : FUNCION funciones'''
 
 def p_funciones(p):
-		'''funciones : Tipo fID AP func CP AC Bloque func4 CC'''
+		'''funciones : Tipo fID AP func CP AC Bloque func3 CC'''
 
 def p_func(p):
 		'''func : func1
 		| vacia'''
 		
 def p_func1(p):
-		'''func1 : func2
-		| func2 func3'''
+		'''func1 : Tipo fID func2'''
 
 def p_func2(p):
-		'''func2 : Tipo fID func'''
+		'''func2 : C Tipo fID func2
+		| vacia'''
 		
 def p_func3(p):
-		'''func3 : C Tipo fID func'''
-		
-def p_func4(p):
-		'''func4 : Regresar
+		'''func3 : Regresar
 		| vacia'''
 
 def p_Regresar(p):
-		'''Regresar : Exp PC'''
+		'''Regresar : REGRESA Exp PC'''
 
 def p_fID(p):
 		'''fID : ID'''
@@ -73,18 +70,15 @@ def p_fID(p):
 
 #Bloque------------------------------------------------------
 def p_Bloque(p):
-		'''Bloque : b1
-		| b2 '''
-		
-def p_b1(p):
-		'''b1 : Estatuto'''
+		'''Bloque : b2 Estatuto b3'''
 		
 def p_b2(p):
-		'''b2 : b3 Estatuto'''
-
+		'''b2 : Vars b2
+		| vacia'''	
+			
 def p_b3(p):
-		'''b3 : Vars b3
-		| vacia'''
+		'''b3 : Estatuto b3
+		| vacia'''	
 #Bloque------------------------------------------------------
 
 #Variables------------------------------------------------------
@@ -105,24 +99,41 @@ def p_loc(p):
 		'''loc : LC'''
 
 def p_var(p):
-		'''var : V Tipo fID VarCte'''
+		'''var : Tipo var1 PC'''
+		
+def p_var1(p):
+		'''var1 : fID var2 var3'''
+
+def p_var2(p):
+		'''var2 : AC VarCte CC
+		| vacia'''
+
+def p_var3(p):
+		'''var3 : C var1
+		| vacia'''
 #Variables------------------------------------------------------
 
+#Estatuto------------------------------------------------------
 def p_Estatuto(p):
 		'''Estatuto : Asignacion 
 		| Condicion 
 		| Ciclo 
 		| Llamada 
 		| Objeto'''
+#Estatuto------------------------------------------------------
 
+#Tipo------------------------------------------------------
 def p_Tipo(p):
 		'''Tipo : tipo'''
 		
 def p_tipo(p):
 		'''tipo : ENT 
 		| FLOT
-		| BOOL  '''
+		| BOOL
+		| VOID  '''
+#Tipo------------------------------------------------------
 
+#Expresion, subexpresion------------------------------------------------------
 def p_Expresion(p):
 		'''Expresion : Subexpresion Expresion2'''
 
@@ -152,9 +163,9 @@ def p_Subexpresion4(p):
 		| MA
 		| CI
 		| CD'''
+#Expresion, subexpresion------------------------------------------------------
 
-#Exp ------------------------------
-
+#Exp, termino, factor -------------------------------------------------
 def p_Exp(p):
 		'''Exp : Termino Exp2'''
 
@@ -196,39 +207,89 @@ def p_Factor3(p):
 def p_Factor4(p):
 		'''Factor4 : SUM
 		| RES'''
+#Exp, termino, factor -------------------------------------------------
 
-#falta terminar varcte------------------------------------------------------
+#falta terminar varcte bool---------------------------------------------------------------------------------------------------
 def p_VarCte(p):
-		'''VarCte : VALI
-		| VALF'''
-#falta terminar varcte------------------------------------------------------
+		'''VarCte : VarCte2
+		| VALI
+		| VALF
+		| STR'''
 
+def p_VarCte2(p):
+		''' VarCte2 : fID VarCte3'''
+		
+def p_VarCte3(p):
+		''' VarCte3 : AP Exp VarCte4 CP
+		| AC Exp CC
+		| vacia'''
+		
+def p_VarCte4(p):
+		''' VarCte4 : C Exp VarCte4
+		| vacia'''
+#falta terminar varcte bool---------------------------------------------------------------------------------------------------
+
+#condicion------------------------------------------------------
 def p_Condicion(p):
-		'''Condicion : Expresion Estatuto'''
+		'''Condicion : SI AP Expresion CP Estatuto Condicion2'''
 
+def p_Condicio2(p):
+		'''Condicion2 : SINO Estatuto
+		| vacia'''
+#condicion------------------------------------------------------
+
+#asignacion------------------------------------------------------
 def p_Asignacion(p):
-		'''Asignacion : Exp Expresion'''
+		'''Asignacion : fID Asignacion2 IG Expresion PC'''
+		
+def p_Asignacion2(p):
+		'''Asignacion2 : AC Exp CC
+		| vacia'''
+#asignacion------------------------------------------------------
 
+#llamada------------------------------------------------------
 def p_Llamada(p):
-		'''Llamada : Exp'''
+		'''Llamada : fID AP Llamada2 CP PC'''
 
+def p_Llamada2(p):
+		'''Llamada2 : Llamada3
+		| vacia'''
+				
+def p_Llamada3(p):
+		'''Llamada3 : Exp Llamada4'''
+
+def p_Llamada4(p):
+		'''Llamada4 : C Llamada3
+		| vacia'''
+#llamada------------------------------------------------------
+
+#ciclo------------------------------------------------------
 def p_Ciclo(p):
-		'''Ciclo : Mientras Para'''
+		'''Ciclo : Mientras 
+		| Para'''
 
 def p_Mientras(p):
-		'''Mientras : Expresion Estatuto'''
+		'''Mientras : MIENTRAS AP Expresion CP AC Estatuto aux2 CC'''
+		
+def p_aux2(p):
+		'''aux2 : Estatuto aux2
+		| vacia'''
 
 def p_Para(p):
-		'''Para : Exp Expresion Expresion Estatuto'''
+		'''Para : PARA AP fID IG Exp C Expresion C Expresion CP AC Estatuto aux2 CC'''
+#ciclo------------------------------------------------------
 
+#objeto------------------------------------------------------
 def p_Objeto(p):
-		'''Objeto : Figura Color Posicion Grosor Rotacion
-		| Texto Color Posicion Grosor Rotacion'''
-
-def p_Color(p):
-		'''Color : Contorno
-		| Relleno'''
-
+		'''Objeto : Figura Color Objeto2 Posicion
+		| Texto Color Objeto2 Posicion'''
+		
+def p_Objeto2(p):
+		'''Objeto2 : Grosor Rotacion
+		| Grosor
+		| Rotacion
+		| vacia'''
+		
 def p_Figura(p):
 		'''Figura : Cuadrado
 		| Circulo
@@ -237,41 +298,49 @@ def p_Figura(p):
 		| Poligono
 		| Linea'''
 
+def p_Color(p):
+		'''Color : Contorno Color2
+		| Relleno'''
+
+def p_Color2(p):
+		'''Color2 : Relleno
+		| vacia'''
+				
 def p_Cuadrado(p):
-		'''Cuadrado : Exp Exp'''
+		'''Cuadrado : CUAD AP Exp C Exp CP PC'''
 
 def p_Circulo(p):
-		'''Circulo : Exp Exp'''
+		'''Circulo : CIRC AP Exp C Exp CP PC'''
 
 def p_Arco(p):
-		'''Arco : Exp Exp'''
+		'''Arco : ARC AP Exp C Exp CP PC'''
 
 def p_Triangulo(p):
-		'''Triangulo : Exp Exp Exp Exp Exp Exp'''
+		'''Triangulo : TRIAN AP Exp C Exp C Exp C Exp C Exp C Exp CP PC'''
 
 def p_Poligono(p):
-		'''Poligono : Exp Exp'''
+		'''Poligono : POLI AP Exp C Exp CP PC'''
 
 def p_Linea(p):
-		'''Linea : Exp Exp'''
+		'''Linea : LIN AP Exp C Exp CP PC'''
 
 def p_Contorno(p):
-		'''Contorno : Exp Exp Exp'''
+		'''Contorno : CONTORNO AP Exp C Exp C Exp CP PC'''
 
 def p_Relleno(p):
-		'''Relleno : Exp Exp Exp'''
+		'''Relleno : RELLENO AP Exp C Exp C Exp CP PC'''
 
 def p_Texto(p):
-		'''Texto : Exp'''
+		'''Texto : TEXTO AP Exp CP PC'''
 
 def p_Grosor(p):
-		'''Grosor : Exp'''
+		'''Grosor : GROSOR AP Exp CP PC'''
 
 def p_Posicion(p):
-		'''Posicion : Exp Exp'''
+		'''Posicion : XY AP Exp C Exp CP PC'''
 
 def p_Rotacion(p):
-		'''Rotacion : Exp'''
+		'''Rotacion : ROTACION AP Exp CP PC'''
 
 def p_vacia(p):
 		'''vacia : '''
