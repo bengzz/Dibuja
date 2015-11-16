@@ -1,3 +1,5 @@
+from pila import Pila
+import sys
 
 class avail:
         cubo_semantico = None
@@ -7,10 +9,10 @@ class avail:
 				self.temp_flotante = 3000
 				self.temp_booleano = 4000
 				self.bloque = 0
-				self.PilaOp = Stack() #Pila de operadores
-				self.POper = Stack() #Pila de operandos
-				self.TPila = Stack() #Pila de tipos
-				self.saltos = Stack() #Pila de saltos
+				self.PilaOp = Pila() #Pila de operadores
+				self.POper = Pila() #Pila de operandos
+				self.TPila = Pila() #Pila de tipos
+				self.saltos = Pila() #Pila de saltos
 				self.quads = []
 				self.numQuad = 0
                 self.cubo_semantico = {

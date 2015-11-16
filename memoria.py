@@ -36,7 +36,7 @@ class Memoria:
 		else:
 			self.pointers = [0] * pointerP
 			
-	def imprime(self):
+	def imprimeInfo(self):
 		print "str", self.bloque_str, "entero", self.bloque_entero, "float", self.bloque_float, "Tbooleano", self.temp_bloque_bool, "Tentero", self.temp_bloque_entero, "Tfloat", self.temp_bloque_float
 		
 	def escribeValor(self, dirV, valor):
