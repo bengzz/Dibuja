@@ -3,7 +3,7 @@ import lex
 import sys
 import re
 
-#from stack import Stack
+from pila import Pila
 #from avail import avail
 
 direc = dict()
@@ -341,6 +341,7 @@ def p_Posicion(p):
 
 def p_Rotacion(p):
 		'''Rotacion : ROTACION AP Exp CP PC'''
+#objeto------------------------------------------------------
 
 def p_vacia(p):
 		'''vacia : '''
