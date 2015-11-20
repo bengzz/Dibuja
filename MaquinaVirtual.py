@@ -9,6 +9,8 @@ proc = dict()
 quad = []
 activo = True
 quadActual = 0
+relleno = Falso
+
 
 
 #Función que corre mientras que no se ha terminado el programa
@@ -150,6 +152,12 @@ def rotacion():
 		global quadActual, rotacion
 		rotacion = memoria.getValor(quad[quadActual][1])
 		quadActual += 1
+
+#Función que cambia la posición
+def posicion():
+    global quadActual, posicion
+        posicion = memoria.getValor(quad[quadActual][1])
+            quadActual += 1
 		
 #Función que asigna un valor a las variables
 def asigna():
@@ -157,7 +165,24 @@ def asigna():
 		resultado = memoria.getValor(quad[quadActual][1])
 		memoria.escribeValor(quad[quadActual][3], resultado)
 		quadActual += 1
-		
+
+#Función que crea un rectangulo
+def rectangulo():
+        global quadActual, relleno, colorRelleno
+        x = memoria.getValor('41000')
+        y = memoria.getValor('41001')
+        x2 = x + memoria.getValor(quads[quadActual][1])
+        y2 = y + memoria.getValor(quads[quadActual][2])
+        
+        if(relleno):
+        	w.create_rectangle(x, y, x2, y2, fill=colorRelleno)
+        else:
+        	w.create_rectangle(x, y, x2, y2, fill='')
+        memoria.escribeValor('41000', x2)
+        memoria.escribeValor('41001', y2)
+        quadActual += 1
+        
+
 #Seguir trabajando en los demas detalles.................................187
 #Seguir trabajando en los demas detalles.................................187
 #Seguir trabajando en los demas detalles.................................187
