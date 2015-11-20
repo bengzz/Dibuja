@@ -4,7 +4,7 @@ import sys
 import re
 
 from pila import Pila
-#from avail import avail
+from avail import avail
 
 direc = dict()
 dirtemp = dict()
@@ -18,18 +18,22 @@ vacia = False
 def p_prog(p):
 		'''prog : PR prog1 princ AC Bloque CC'''
 		mtemp = [(entero_val-1000), (float_val-2000), (void_val-3000)]
+		mtemp.extend(avail.get_temp_dir())
 		direc["princ"] = temp
 		if("globales" in direc):
 			mtemp = direc["globales"]
 			mtemp.pop(0)
 			direc["globales"] = mtemp
+		cuads = ['ENDPROG', -1, -1, -1]
+		avail.append_quad(cuads)
 
 def p_prog1(p):
 		'''prog1 : prog2 prog3''' 
-	
+
 def p_prog2(p):
 		'''prog2 : Vars prog2
 		| vacia'''
+		avail.princ()
 		
 def p_prog3(p):
 		'''prog3 : Funciones prog3
@@ -37,6 +41,8 @@ def p_prog3(p):
 
 def p_princ(p):
 		'''princ : PRINC'''
+		avail.princ_goto()
+		avail.setBloque(2)
 #Programa------------------------------------------------------
 
 #Funciones------------------------------------------------------
@@ -66,6 +72,7 @@ def p_Regresar(p):
 
 def p_fID(p):
 		'''fID : ID'''
+		avail.setAlcance(p[1])
 #Funciones------------------------------------------------------
 
 #Bloque------------------------------------------------------
@@ -87,10 +94,21 @@ def p_Vars(p):
 		| locales'''
 		
 def p_globales(p):
-	'''globales : glob var'''
-	
+		'''globales : glob var'''
+		global entero_val, float_val, void_val
+		bloque_dir(dirtemp, 1)
+		dvDict = dict(dirtemp)
+		mtemp = [dvDict, (entero_val-1000), (float_val-2000), (void_val-3000)]
+		mtemp.extend(avail.get_temp_dir())
+		direc["globales"] = mtemp
+		dirtemp.clear()
+		entero_val = 1000
+		float_val = 2000
+		void_val = 3000
+		
 def p_glob(p):
 		'''glob : GL'''
+		avail.setBloque(1)
 		
 def p_locales(p):
 		'''locales : loc var'''

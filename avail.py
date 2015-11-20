@@ -2,10 +2,10 @@ from pila import Pila
 import sys
 
 class avail:
-        cubo_semantico = None
+		cubo_semantico = None
 
-        def _init_(self):
-        		self.temp_entero = 2000
+		def _init_(self):
+				self.temp_entero = 2000
 				self.temp_flotante = 3000
 				self.temp_booleano = 4000
 				self.temp_dir = 5000
@@ -20,7 +20,7 @@ class avail:
 				self.alcanceF = Pila()
 				self.alcance = ''
 				self.RT = ''
-                self.cubo_semantico = {
+				self.cubo_semantico = {
                 '=': {
                         'entero': {
                                     'entero': 'entero',
@@ -110,7 +110,7 @@ class avail:
                                     'entero': 'flotante',
                                     'flotante': 'flotante'
                         }
-                }
+                },
                 '-': {
                         'entero': {
                                     'entero': 'entero',
@@ -141,14 +141,25 @@ class avail:
                                     'flotante': 'flotante'
                         }
                 },
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+				'$': {
+						'dir': {
+									'-1': 'dir'
+						}
+				}
+=======
+>>>>>>> Stashed changes
                 '$': {
                 		'dir': {
                 					'-1': 'dir'
                 		}
                 }
+>>>>>>> origin/master
         }
         
-        def get_tipo(self, operador, tipo1, tipo2):
+		def get_tipo(self, operador, tipo1, tipo2):
 		#regresa el tipo de la operacion
 			tip = self.cubo_semantico.get(operador)
 			if tip != None:
@@ -172,7 +183,15 @@ class avail:
 				self.temp_booleano +=1
 			elif tipo1 == 'dir':
 				temp = self.temp_dir
+<<<<<<< Updated upstream
 				self.temp_dir +=1
+=======
+<<<<<<< HEAD
+				self.temp_dir += 1
+=======
+				self.temp_dir +=1
+>>>>>>> origin/master
+>>>>>>> Stashed changes
 			temp += (self.block * 10000)
 			return [temp, self.get_tipo(operador, tipo1, tipo2)]
 			
@@ -213,54 +232,54 @@ class avail:
 		def rep_salto(self, dirUno, dirCero):
 		#saca uno de los valores de la temporal 
 			tem = self.POper.pop()
-			spCuad = ['-', tem, dirUno, tem]
+			cuads = ['-', tem, dirUno, tem]
 			self.numQuad += 1
-			self.quads.append(spCuad)
+			self.quads.append(cuads)
 			salto = self.saltos.pop()
 			aux = self.get_temporal('==', self.TPila.pop(), 'entero')
-			spCuad = ['==', tem, dirCero, aux[0]]
+			cuads = ['==', tem, dirCero, aux[0]]
 			self.numQuad += 1
-			self.quads.append(spCuad)
-			spCuad.['GOTOF', aux[0], -1, salto]
+			self.quads.append(cuads)
+			cuads = ['GOTOF', aux[0], -1, salto]
 			self.numQuad += 1
-			self.quads.append(spCuad)
+			self.quads.append(cuads)
 			
 		def asign(self, var):
 		#crea una asignacion
 			if(self.POper.size() > 0):
 				self.numQuad += 1
-				spCuad = [101, self.POper.pop(), -1, var]
-				self.quads.append(spCuad)
+				cuads = [101, self.POper.pop(), -1, var]
+				self.quads.append(cuads)
 		
 		def condicion_inicio(self):
 		#al final de una condicion llena el ultimo goto que fue creado con el cuadruplo actual
-			if(self.saltos.size() > 0)
+			if(self.saltos.size() > 0):
 				salto = self.saltos.pop() - 1
-				spCuad = self.quads[salto]
-				spCuad[3] = self.numQuad
-				self.quads[salto] = spCuad
+				cuads = self.quads[salto]
+				cuads[3] = self.numQuad
+				self.quads[salto] = cuads
 			
 		def condicion(self):
 		#al inicio de una condicion se crea un gotof y se almacena el num de cuadruplo en la pila de saltos
 			condicion = self.POper.pop()
 			tipo_cond = self.TPila.pop()
-			if(tipo_cond = != "booleano"):
+			if(tipo_cond != "booleano"):
 				print "Error, el tipo no coincide"
 				sys.error(0)
 			else:
-				spCuad = ['GOTOF', condicion, -1, -1]
-				self.quads.append(spCuad)
+				cuads = ['GOTOF', condicion, -1, -1]
+				self.quads.append(cuads)
 				self.numQuad += 1
 				self.saltos.push(self.numQuad)
 				
 		def condicion_else(self):
 		#si hay un else, se debe llenar el goto del if y crear un nuevo goto
 			salto = self.saltos.pop() -1
-			spCuad = self.quads[salto]
-			spCuad[3] = self.numQuad +1
-			self.quads[salto] = spCuad
-			spCuad = ['GOTO', -1, -1, -1]
-			self.quads.append(spCuad)
+			cuads = self.quads[salto]
+			cuads[3] = self.numQuad +1
+			self.quads[salto] = cuads
+			cuads = ['GOTO', -1, -1, -1]
+			self.quads.append(cuads)
 			self.numQuad += 1
 			self.saltos.push(self.numQuad)
 			
@@ -273,69 +292,69 @@ class avail:
 			aux = self.get_temporal('$', 'dir', -1)
 			return aux[0]
 			
-		def main(self):
+		def princ(self):
 		#crea el goto al main, gurda el numero de cuadruplo en la pila de saltos
-			spCuad = ['GOTO', -1, -1, -1]
-			self.quads.append(spCuad)
+			cuads = ['GOTO', -1, -1, -1]
+			self.quads.append(cuads)
 			self.saltos.push(self.numQuad)
 			self.numQuad += 1;
 			
-		def main_goto(self):
+		def princ_goto(self):
 		#hace el goto del main
 			salto = self.saltos.pop()
-			spCuad = self.quads[salto]
-			spCuad[3] = self.numQuad
-			self.quads[salto] = spCuad
+			cuads = self.quads[salto]
+			cuads[3] = self.numQuad
+			self.quads[salto] = cuads
 			
 		def rep(self):
 		#crea una copia del numero que representa las veces que el bloque fue creado, y almacena el valor en la pila
 			h = self.get_temp('-', self.TPila.peek(), self.TPila.pop())
 			tem = h[0]
-			spCuad = [101, self.POper.pop(), -1, tem]
+			cuads = [101, self.POper.pop(), -1, tem]
 			self.numQuad += 1
-			self.quads.append(spCuad)
+			self.quads.append(cuads)
 			self.saltos.push(self.numQuad)
 			self.POper.push(tem)
 			self.TPila.push(h[1])
 			
 		def dim(self, dim, pointer):
 		#para los arreglos, crea un cuad que checa que el valor ente en el rango
-			spCuad = ['DIM', dim, pointer]
+			cuads = ['DIM', dim, pointer]
 			self.numQuad += 1
-			self.quads.append(spCuad)
+			self.quads.append(cuads)
 			self.numQuad += 1
 			h = self.get_temp('$', 'dir', -1)
 			tem = h[0]
-			spCuad = ['DIR', self.POper.pop(), pointer, tem]
-			self.quads.append(spCuad)
+			cuads = ['DIR', self.POper.pop(), pointer, tem]
+			self.quads.append(cuads)
 			self.POper.push(tem)
 			
 		def dimT(self, dim, pointer):
 		#para las matrices, pointer representa las filas
 			h = self.get_temp('+', 'int', 'int')
 			tem = h[0]
-			spCuad = ['*', pointer, '40002', tem]
-			self.quads.append(spCuad)
+			cuads = ['*', pointer, '40002', tem]
+			self.quads.append(cuads)
 			pointer = tem
 			
-			spCuad = ['DIM', dim, pointer, -1]
-			self.quads.append(spCuad)
+			cuads = ['DIM', dim, pointer, -1]
+			self.quads.append(cuads)
 			
 			h = self.get_temp('$', 'dir', -1)
 			tem = h[0]
 			ren = self.POper.pop()
-			spCuad = ['DIR', ren, pointer, tem]
+			cuads = ['DIR', ren, pointer, tem]
 			one = tem
-			self.quads.append(spCuad)
+			self.quads.append(cuads)
 			h = self.get_temp('+', 'int', 'int')
 			tem = h[0]
-			spCuad = ['+', pointer, '40000', tem]
-			self.quads.append(spCuad)
+			cuads = ['+', pointer, '40000', tem]
+			self.quads.append(cuads)
 			self.POper.push(tem)
 			h = self.get_temp('$', 'dir', -1)
 			tem = h[0]
-			spCuad = ['DIR', ren, self.POper.pop(), tem]
-			self.quads.append(spCuad)
+			cuads = ['DIR', ren, self.POper.pop(), tem]
+			self.quads.append(cuads)
 			help = self.POper.pop()
 			self.POper.push(tem)
 			self.POper.push(help)
@@ -345,32 +364,32 @@ class avail:
 		def dimTP(self, direccion, row, dim):
 		#al inicializar una matriz, revisa la dimension, crea un apuntador para que asigne algo al siguiente valor
 			row *= 2
-			spCuad = ['DIMC', dim, row, -1]
-			self.quads.append(spCuad)
+			cuads = ['DIMC', dim, row, -1]
+			self.quads.append(cuads)
 			
 			h = self.get_temp('$', 'dir', -1)
 			tem = h[0]
-			spCuad = ['DIMC', direccion, (row+1), tem]
-			self.quads.append(spCuad)
+			cuads = ['DIMC', direccion, (row+1), tem]
+			self.quads.append(cuads)
 			self.asign(tem)
 			
 			h = self.get_temp('$', 'dir', -1)
 			tem = h[0]
-			spCuad = ['DIMC', direccion, row, tem]
-			self.quads.append(spCuad)
+			cuads = ['DIMC', direccion, row, tem]
+			self.quads.append(cuads)
 			self.asign(tem)
 			
 			self.numQuad += 3
 			
 		def dimP(self, direccion, row, dim):
 		#checa la dimension, obtiene la direccion del puntero, cuad que genera la direccion actual
-			spCuad = ['DIMC', dim, row, -1]
-			self.quads.append(spCuad)
+			cuads = ['DIMC', dim, row, -1]
+			self.quads.append(cuads)
 			
 			h = self.get_temp('$', 'dir', -1)
 			tem = h[0]
-			spCuad = ['DIMC', direccion, row, tem]
-			self.quads.append(spCuad)
+			cuads = ['DIMC', direccion, row, tem]
+			self.quads.append(cuads)
 			self.asign(tem)
 			
 			self.numQuad += 2
@@ -378,21 +397,21 @@ class avail:
 		def funcion_return(self, emty, vDir):
 		#revisa si la funcion regreso, si no crea un cuadruplo en la pila de operadores
 			if(empty):
-				spCuad = ['RETURN', -1, -1, -1]
+				cuads = ['RETURN', -1, -1, -1]
 				self.numQuad += 1
-				self.quads.append(spCuad)
+				self.quads.append(cuads)
 				return False
 			else:
-				spCuad = ['RETURN', self.POper.pop(), -1, vDir]
+				cuads = ['RETURN', self.POper.pop(), -1, vDir]
 				self.numQuad += 1
-				self.quads.append(spCuad)
+				self.quads.append(cuads)
 				return True
 				
 		def funcion_end(self):
 		#final del cuadruplo
-			spCuad = ['ENDPROC', -1, 1]
+			cuads = ['ENDPROC', -1, 1]
 			self.numQuad += 1
-			self.quads.append(spCuad)
+			self.quads.append(cuads)
 			
 		def funcion_param(self, param):
 		#checa los parametros de las funciones de acuerdo al orden
@@ -405,28 +424,28 @@ class avail:
 			while cont >= 0:
 				for key in param:
 					if cont == param[key][1]:
-						spCuad = ['PARAMETRO', self.POper.pop(), -1, param[key][2]]
-						print spCuad
+						cuads = ['PARAMETRO', self.POper.pop(), -1, param[key][2]]
+						print cuads
 						cont -= 1
 						self.numQuad +=1
-						self.quads.append(spCuad)
+						self.quads.append(cuads)
 						
 		def llama_funcion(self, var):
 		#cuadruplo que contiene el nombre de la funcion la cual se esta llamando
-			spCuad = ['ERA', -1, -1, var]
+			cuads = ['ERA', -1, -1, var]
 			self.numQuad += 1
-			self.quads.append(spCuad)
+			self.quads.append(cuads)
 			self.PilaOp.push('[')
 			
 		def llama_funcion_final(self, var, vDir, temp):
 		#se hace un go sub a la funcion de la gual se hizo el go, se hace una asignacion en caso de que se regrese un valor en una temporal
-			spCuad = ['GOSUB', -1, -1, var]
+			cuads = ['GOSUB', -1, -1, var]
 			self.numQuad += 1
-			self.quads.append(spCuad)
-			spCuad = ['101', vDir, -1, temp]
+			self.quads.append(cuads)
+			cuads = ['101', vDir, -1, temp]
 			self.POper.push(temp)
 			self.numQuad += 1
-			self.quads.append(spCuad)
+			self.quads.append(cuads)
 			self.PilaOp.pop()
 			
 		def append_quad(self, quad):
@@ -457,9 +476,9 @@ class avail:
 			self.TPila.pop()
 			dos = self.POper.pop()
 			self.TPila.pop()
-			spCuad = [fun, self.POper.pop(), dos, uno]
+			cuads = [fun, self.POper.pop(), dos, uno]
 			self.TPila.pop()
-			self.quads.append(spCuad)
+			self.quads.append(cuads)
 			
 		def append_quad_tri(self, fun):
 			self.numQuad += 2
@@ -475,10 +494,10 @@ class avail:
 			self.TPila.pop()
 			x = self.POper.pop()
 			self.TPila.pop()
-			spCuad = [fun, x, y, -1]
-			self.quads.append(spCuad)
-			spCuad = [x2, y2, x3, y3]
-			self.quads.append(spCuad)
+			cuads = [fun, x, y, -1]
+			self.quads.append(cuads)
+			cuads = [x2, y2, x3, y3]
+			self.quads.append(cuads)
 		
 		def quad(self):
 		#lo utilizan las expresiones para crear cuadruplos
@@ -486,8 +505,8 @@ class avail:
 			aux = self.get_temporal(self.PilaOp.peek(), self.TPila.pop(), self.TPila.pop())
 			tem = aux[0]
 			dos = self.POper.pop()
-			spCuad = [self.PilaOp.pop(), self.POper.pop(), dos, tem]
-			self.quads.append(spCuad)
+			cuads = [self.PilaOp.pop(), self.POper.pop(), dos, tem]
+			self.quads.append(cuads)
 			self.PilaOp.push(tem)
 			self.TPila.push(aux[1])
 
@@ -518,20 +537,20 @@ class avail:
 		def get_quads(self):
 			return self.quads
 			
-		def setScope(self, alcance):	
+		def setAlcance(self, alcance):	
 			self.alcance = alcance
 			
-		def getScope(self):
+		def getAlcance(self):
 			return self.alcance
 			
-		def setFuncScope(self, alcance):
+		def setFuncAlcance(self, alcance):
 			self.alcanceF.push(alcance)
 			
-		def delFuncScope(self):
+		def delFuncAlcance(self):
 			self.alcanceF.pop()
 		
-		def getFuncScope(self):
-			return self.scopeF.peek()
+		def getFuncAlcance(self):
+			return self.AlcanceF.peek()
 			
 		def setRT(self, RT):
 			self.RT = RT
