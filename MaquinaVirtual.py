@@ -182,7 +182,7 @@ def goto_falso():
 						quadActual = int(quad[quadActual[3]])
 
 #Creacion de la memoria para la funcion llamada
-def crear():
+def era():
 		global quadActual
 		temporal = int(quad[quadActual][3])
 		memoria.setFunciones(temporal[0], temporal[1], temporal[2], temporal[3], temporal[4], temporal[5], temporal[6])

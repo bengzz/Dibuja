@@ -8,6 +8,7 @@ class avail:
         		self.temp_entero = 2000
 				self.temp_flotante = 3000
 				self.temp_booleano = 4000
+				self.temp_dir = 5000
 				self.bloque = 0
 				self.PilaOp = Pila() #Pila de operadores
 				self.POper = Pila() #Pila de operandos
@@ -139,6 +140,11 @@ class avail:
                                     'entero': 'flotante',
                                     'flotante': 'flotante'
                         }
+                },
+                '$': {
+                		'dir': {
+                					'-1': 'dir'
+                		}
                 }
         }
         
@@ -164,6 +170,9 @@ class avail:
 			elif temp_tipo == 'booleano':
 				temp = self.temp_booleano
 				self.temp_booleano +=1
+			elif tipo1 == 'dir':
+				temp = self.temp_dir
+				self.temp_dir +=1
 			temp += (self.block * 10000)
 			return [temp, self.get_tipo(operador, tipo1, tipo2)]
 			
@@ -173,6 +182,7 @@ class avail:
 			self.temp_entero = 2000
 			self.temp_flotante = 3000
 			self.temp_booleano = 4000
+			self.temp_dir = 5000
 			
 		def getBloque(self):
 		#regresa el bloque actual
@@ -180,7 +190,7 @@ class avail:
 			
 		def get_temp_dir(self):
 		#regresa la memoria necesaria para las temporales
-			return [(self.temp_entero-2000), (self.temp_flotante-3000), (self.temp_booleano-4000)]
+			return [(self.temp_entero-2000), (self.temp_flotante-3000), (self.temp_booleano-4000), (self.temp_dir-5000)]
 		
 		def expresion(self):
 		#si hay una expresion para resolver
