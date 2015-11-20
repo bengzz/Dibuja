@@ -141,22 +141,11 @@ class avail:
                                     'flotante': 'flotante'
                         }
                 },
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-				'$': {
-						'dir': {
-									'-1': 'dir'
-						}
-				}
-=======
->>>>>>> Stashed changes
                 '$': {
                 		'dir': {
                 					'-1': 'dir'
                 		}
                 }
->>>>>>> origin/master
         }
         
 		def get_tipo(self, operador, tipo1, tipo2):
@@ -183,15 +172,7 @@ class avail:
 				self.temp_booleano +=1
 			elif tipo1 == 'dir':
 				temp = self.temp_dir
-<<<<<<< Updated upstream
 				self.temp_dir +=1
-=======
-<<<<<<< HEAD
-				self.temp_dir += 1
-=======
-				self.temp_dir +=1
->>>>>>> origin/master
->>>>>>> Stashed changes
 			temp += (self.block * 10000)
 			return [temp, self.get_tipo(operador, tipo1, tipo2)]
 			
