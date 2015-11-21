@@ -9,16 +9,16 @@ proc = dict()
 quad = []
 activo = True
 quadActual = 0
-relleno = Falso
+relleno = False
 
 
 
-#Función que corre mientras que no se ha terminado el programa
+#Funcion que corre mientras que no se ha terminado el programa
 def vivo():
 		while(activo):
 					opciones[quad[quadActual][0]]()
 			
-#Función que suma 2 numeros del cuadruplo
+#Funcion que suma 2 numeros del cuadruplo
 def suma():
 		global quadActual
 		primero = memoria.getValor(quad[quadActual][1])
@@ -27,7 +27,7 @@ def suma():
 		memoria.escribeValor(quad[quadActual][3], resultado)
 		quadActual += 1
 		
-#Función que resta 2 numeros del cuadruplo
+#Funcion que resta 2 numeros del cuadruplo
 def resta():
 		global quadActual
 		primero = memoria.getValor(quad[quadActual][1])
@@ -36,7 +36,7 @@ def resta():
 		memoria.escribeValor(quad[quadActual][3], resultado)
 		quadActual += 1
 		
-#Función que multiplica 2 numeros del cuadruplo
+#Funcion que multiplica 2 numeros del cuadruplo
 def multiplica():
 		global quadActual
 		primero = memoria.getValor(quad[quadActual][1])
@@ -45,7 +45,7 @@ def multiplica():
 		memoria.escribeValor(quad[quadActual][3], resultado)
 		quadActual += 1
 		
-#Función que divide 2 numeros del cuadruplo
+#Funcion que divide 2 numeros del cuadruplo
 def divide():
 		global quadActual
 		primero = memoria.getValor(quad[quadActual][1])
@@ -54,7 +54,7 @@ def divide():
 		memoria.escribeValor(quad[quadActual][3], resultado)
 		quadActual += 1
 				
-#Función que compara si un numero es menor que el otro del cuadruplo
+#Funcion que compara si un numero es menor que el otro del cuadruplo
 def menorQue():
 		global quadActual
 		primero = memoria.getValor(quad[quadActual][1])
@@ -63,7 +63,7 @@ def menorQue():
 		memoria.escribeValor(quad[quadActual][3], resultado)
 		quadActual += 1
 		
-#Función que compara si un numero es menor o igual que el otro del cuadruplo
+#Funcion que compara si un numero es menor o igual que el otro del cuadruplo
 def menorIgQue():
 		global quadActual
 		primero = memoria.getValor(quad[quadActual][1])
@@ -72,7 +72,7 @@ def menorIgQue():
 		memoria.escribeValor(quad[quadActual][3], resultado)
 		quadActual += 1
 
-#Función que compara si un numero es mayor que el otro del cuadruplo
+#Funcion que compara si un numero es mayor que el otro del cuadruplo
 def mayorQue():
 		global quadActual
 		primero = memoria.getValor(quad[quadActual][1])
@@ -81,7 +81,7 @@ def mayorQue():
 		memoria.escribeValor(quad[quadActual][3], resultado)
 		quadActual += 1
 		
-#Función que compara si un numero es mayor o igual que el otro del cuadruplo
+#Funcion que compara si un numero es mayor o igual que el otro del cuadruplo
 def mayorIgQue():
 		global quadActual
 		primero = memoria.getValor(quad[quadActual][1])
@@ -90,7 +90,7 @@ def mayorIgQue():
 		memoria.escribeValor(quad[quadActual][3], resultado)
 		quadActual += 1
 		
-#Función que compara si un numero es diferente que el otro del cuadruplo
+#Funcion que compara si un numero es diferente que el otro del cuadruplo
 def diferenteQue():
 		global quadActual
 		primero = memoria.getValor(quad[quadActual][1])
@@ -99,7 +99,7 @@ def diferenteQue():
 		memoria.escribeValor(quad[quadActual][3], resultado)
 		quadActual += 1
 		
-#Función que compara si un numero es igual que el otro del cuadruplo
+#Funcion que compara si un numero es igual que el otro del cuadruplo
 def igualQue():
 		global quadActual
 		primero = memoria.getValor(quad[quadActual][1])
@@ -108,7 +108,7 @@ def igualQue():
 		memoria.escribeValor(quad[quadActual][3], resultado)
 		quadActual += 1
 		
-#Función que obtiene el color dado por el programador
+#Funcion que obtiene el color dado por el programador
 def obtenerColor(rojo, verde, azul):
 		rojo = int(rojo)
 		if(rojo > 255):
@@ -123,7 +123,7 @@ def obtenerColor(rojo, verde, azul):
 		color = '#' + str(format(rojo, '02x')) + str(format(verde, '02x')) + str(format(azul, '02x'))
 		return color
 		
-#Función que cambia el color del contorno
+#Funcion que cambia el color del contorno
 def colorContorno():
 		global quadActual, colorCont
 		rojo = memoria.getValor(quad[quadActual][1])
@@ -132,7 +132,7 @@ def colorContorno():
 		colorCont = obtenerColor(red, green, blue)
 		quadActual += 1
 		
-#Función que cambia el color del relleno
+#Funcion que cambia el color del relleno
 def colorRelleno():
 		global quadActual, colorRell
 		rojo = memoria.getValor(quad[quadActual][1])
@@ -141,32 +141,32 @@ def colorRelleno():
 		colorRell = obtenerColor(red, green, blue)
 		quadActual += 1
 		
-#Función que cambia el grosor 
+#Funcion que cambia el grosor 
 def grosor():
 		global quadActual, grosor
 		grosor = memoria.getValor(quad[quadActual][1])
 		quadActual += 1
 		
-#Función que cambia la rotacion 
+#Funcion que cambia la rotacion 
 def rotacion():
 		global quadActual, rotacion
 		rotacion = memoria.getValor(quad[quadActual][1])
 		quadActual += 1
 
-#Función que cambia la posición
+#Funcion que cambia la posicion
 def posicion():
-    global quadActual, posicion
-        posicion = memoria.getValor(quad[quadActual][1])
-            quadActual += 1
+		global quadActual, posicion
+		posicion = memoria.getValor(quad[quadActual][1])
+		quadActual += 1
 		
-#Función que asigna un valor a las variables
+#Funcion que asigna un valor a las variables
 def asigna():
 		global quadActual
 		resultado = memoria.getValor(quad[quadActual][1])
 		memoria.escribeValor(quad[quadActual][3], resultado)
 		quadActual += 1
 
-#Función que crea un rectangulo
+#Funcion que crea un rectangulo
 def rectangulo():
         global quadActual, relleno, colorRelleno
         x = memoria.getValor('41000')
@@ -211,15 +211,15 @@ def era():
 		global quadActual
 		temporal = int(quad[quadActual][3])
 		memoria.setFunciones(temporal[0], temporal[1], temporal[2], temporal[3], temporal[4], temporal[5], temporal[6])
-			quadActual += 1
+		quadActual += 1
 
-#Función que asigna valores que serán mandandos a las funciones
+#Funcion que asigna valores que seran mandandos a las funciones
 def param():
 		global quadActual
-		if	quad[quadActual][3][1]] == '7':
-				memoria.escribeValorApuntado(quad[quadActual][3], quad[quadActual][1], 1)
+		if quad[quadActual][3][1] == '7':
+			memoria.escribeValorApuntado(quad[quadActual][3], quad[quadActual][1], 1)
 		else:
-				memoria.escribeValorS(quad[quadActual][3], quad[quadActual][1])
+			memoria.escribeValor(quad[quadActual][3], quad[quadActual][1])
 		quadActual += 1
 		
 #Guarda el cuadruplo actual, da la posicion a la cual va a regresar y cambia el scope actual y el cuadruplo
