@@ -184,20 +184,20 @@ def cuadrado():
 def triangulo():
 		global quadActual, relleno, colorRelleno, colorContorno, grosor
 		x = memoria.getValor(quad[quadActual][1])
-        y = memoria.getValor(quad[quadActual][2])
-        quadActual += 1
-        x2 = memoria.getValor(quad[quadActual][0])
-        y2 = memoria.getValor(quad[quadActual][1])
-        x3 = memoria.getValor(quad[quadActual][2])
-        y3 = memoria.getValor(quad[quadActual][3])
-        
-        if(relleno):
-        	w.create_polygon(x, y, x2, y2, x3, y3, fill=colorRelleno, outline=colorContorno, width=grosor)
-        else:
-        	w.create_polygon(x, y, x2, y2, x3, y3, fill='', outline=colorContorno, width=grosor)
-        memoria.escribeValor('41000', x3)
-        memoria.escribeValor('41001', y3)
-        quadActual += 1
+		y = memoria.getValor(quad[quadActual][2])
+		quadActual += 1
+		x2 = memoria.getValor(quad[quadActual][0])
+		y2 = memoria.getValor(quad[quadActual][1])
+		x3 = memoria.getValor(quad[quadActual][2])
+		y3 = memoria.getValor(quad[quadActual][3])
+		
+		if(relleno):
+			w.create_polygon(x, y, x2, y2, x3, y3, fill=colorRelleno, outline=colorContorno, width=grosor)
+		else:
+			w.create_polygon(x, y, x2, y2, x3, y3, fill='', outline=colorContorno, width=grosor)
+		memoria.escribeValor('41000', x3)
+		memoria.escribeValor('41001', y3)
+		quadActual += 1
         
 #Funcion para crear un circulo
 def circulo():
@@ -213,8 +213,8 @@ def circulo():
 		else:
 			w.create_oval(x, y, x2, y2, fill='', outline=colorContorno, width=grosor)
 		memoria.escribeValor('41000', x2)
-        memoria.escribeValor('41001', y2)
-        quadActual += 1
+		memoria.escribeValor('41001', y2)
+		quadActual += 1
 
 #Funcion para crear un arco
 def arco():
@@ -231,8 +231,8 @@ def arco():
 			w.create_arc(x, y, x2, y2, fill='', outline=colorContorno, width=grosor)
 		y2 = y2 - tamano
 		memoria.escribeValor('41000', x2)
-        memoria.escribeValor('41001', y2)
-        quadActual += 1
+		memoria.escribeValor('41001', y2)
+		quadActual += 1
         
 #Funcion para crear un poligono
 def poligono():
@@ -243,7 +243,7 @@ def poligono():
 		dmem = (memoria.getValor('41000'), memoria.getValor('41001'))
 		vertices.append(dmem)
 		cont = 0
-		while cont < aux
+		while cont < aux:
 				dmem = (memoria.getValor(str(cont + direccion)), memoria.getValor(str(cont + 1 + direccion)))
 				vertices.append(dmem)
 				cont += 2
