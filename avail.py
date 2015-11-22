@@ -19,7 +19,7 @@ class avail:
 				self.funQuad = 0
 				self.alcanceF = Pila()
 				self.alcance = ''
-				self.RT = ''
+				self.TR = ''
 				self.cubo_semantico = {
                 '=': {
                         'entero': {
@@ -198,7 +198,7 @@ class avail:
 				if(self.PilaOp.peek() == '>' or self.PilaOp.peek() == '<' or self.PilaOp.peek() == '!=' or self.PilaOp.peek() == '==' or self.PilaOp.peek() == '<=' or self.PilaOp.peek() == '>='):
 					self.quad()
 		
-		def add_sub(self):
+		def sum_res(self):
 		#si hay una operacion se suma o resta
 			if(self.PilaOp.size() > 0):
 				if(self.PilaOp.peek() == '+' or self.PilaOp.peek() == '-'):
@@ -268,7 +268,7 @@ class avail:
 		#imprime informacion
 			print self.POper.printi()
 
-		def get_temp_point(self):
+		def get_temp_punto(self):
 		#crea un apuntador de direccion
 			aux = self.get_temporal('$', 'dir', -1)
 			return aux[0]
@@ -298,7 +298,7 @@ class avail:
 			self.POper.push(tem)
 			self.TPila.push(h[1])
 			
-		def dim(self, dim, pointer):
+		def dm(self, dim, pointer):
 		#para los arreglos, crea un cuad que checa que el valor ente en el rango
 			cuads = ['DIM', dim, pointer]
 			self.numQuad += 1
@@ -434,14 +434,14 @@ class avail:
 			self.numQuad += 1
 			self.quads.append(quad)
 			
-		def append_quad_one(self, fun):
+		def append_quad_uno(self, fun):
 		#usado por las funciones que solo tienen un parametro
 			self.numQuad += 1
 			spQuad = [fun, self.POper.pop(), -1, -1]
 			self.TPila.pop()
 			self.quads.append(spQuad)
 			
-		def append_quad_two(self, fun):
+		def append_quad_dos(self, fun):
 		#usado por funciones que tienen dos parametros
 			self.numQuad += 1
 			two = self.POper.pop()
@@ -450,7 +450,7 @@ class avail:
 			self.TPila.pop()
 			self.quads.append(spQuad)
 			
-		def append_quad_three(self, fun):
+		def append_quad_tres(self, fun):
 		#usado por funciones con tres parametros
 			self.numQuad += 1
 			uno = self.POper.pop()
@@ -461,7 +461,7 @@ class avail:
 			self.TPila.pop()
 			self.quads.append(cuads)
 			
-		def append_quad_tri(self, fun):
+		def append_quad_tr(self, fun):
 			self.numQuad += 2
 			y3 = self.POper.pop()
 			self.TPila.pop()
@@ -503,19 +503,31 @@ class avail:
 		def TPila_pop(self):
 			self.TPila.pop()
 
-		def POper_push(self, op):
-			self.POper.push(op)
+		def OPila_push(self, op):
+			self.OPila.push(op)
 		
-		def POper_pop(self):
-			return self.POper.pop()
+		def OPila_pop(self):
+			return self.OPila.pop()
 
-		def POper_peek(self):
-			return self.POper.peek()
+		def OPila_peek(self):
+			return self.OPila.peek()
 			
-		def print_quads(self):
+		def IDPila_push(self, op):
+			self.IDPila.push(op)
+			
+		def IDPila_pop(self):
+			return self.IDPila.pop()
+			
+		def DPila_push(self, op):
+			self.DPila.push(op)
+			
+		def DPila_pop(self):
+			return self.DPila.pop()
+			
+		def print_cuads(self):
 			print self.quads
 		
-		def get_quads(self):
+		def get_cuads(self):
 			return self.quads
 			
 		def setAlcance(self, alcance):	
@@ -533,14 +545,14 @@ class avail:
 		def getFuncAlcance(self):
 			return self.AlcanceF.peek()
 			
-		def setRT(self, RT):
-			self.RT = RT
+		def setTR(self, TR):
+			self.TR = TR
 			
-		def getRT(self):
-			return self.RT
+		def getTR(self):
+			return self.TR
 		
-		def setfuncQuad(self):
+		def setFuncQ(self):
 			self.funQuad = self.numQuad
 			
-		def getfuncQuad(self):
+		def getFuncQ(self):
 			return self.funQuad
