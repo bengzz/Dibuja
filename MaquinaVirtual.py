@@ -11,8 +11,6 @@ activo = True
 quadActual = 0
 relleno = False
 
-
-
 #Funcion que corre mientras que no se ha terminado el programa
 def vivo():
 		while(activo):
@@ -167,28 +165,107 @@ def asigna():
 		quadActual += 1
 
 #Funcion que crea un rectangulo
-def rectangulo():
-        global quadActual, relleno, colorRelleno
+def cuadrado():
+        global quadActual, relleno, colorRelleno, colorContorno, grosor
         x = memoria.getValor('41000')
         y = memoria.getValor('41001')
-        x2 = x + memoria.getValor(quads[quadActual][1])
-        y2 = y + memoria.getValor(quads[quadActual][2])
+        x2 = x + memoria.getValor(quad[quadActual][1])
+        y2 = y + memoria.getValor(quad[quadActual][2])
         
         if(relleno):
-        	w.create_rectangle(x, y, x2, y2, fill=colorRelleno)
+        	w.create_rectangle(x, y, x2, y2, fill=colorRelleno, outline=colorContorno, width=grosor)
         else:
-        	w.create_rectangle(x, y, x2, y2, fill='')
+        	w.create_rectangle(x, y, x2, y2, fill='', outline=colorContorno, width=grosor)
         memoria.escribeValor('41000', x2)
         memoria.escribeValor('41001', y2)
         quadActual += 1
-        
 
+#Funcion que crea un triangulo        
+def triangulo():
+		global quadActual, relleno, colorRelleno, colorContorno, grosor
+		x = memoria.getValor(quad[quadActual][1])
+        y = memoria.getValor(quad[quadActual][2])
+        quadActual += 1
+        x2 = memoria.getValor(quad[quadActual][0])
+        y2 = memoria.getValor(quad[quadActual][1])
+        x3 = memoria.getValor(quad[quadActual][2])
+        y3 = memoria.getValor(quad[quadActual][3])
+        
+        if(relleno):
+        	w.create_polygon(x, y, x2, y2, x3, y3, fill=colorRelleno, outline=colorContorno, width=grosor)
+        else:
+        	w.create_polygon(x, y, x2, y2, x3, y3, fill='', outline=colorContorno, width=grosor)
+        memoria.escribeValor('41000', x3)
+        memoria.escribeValor('41001', y3)
+        quadActual += 1
+        
+#Funcion para crear un circulo
+def circulo():
+		global quadActual, relleno, colorRelleno, colorContorno, grosor
+		tamano = memoria.getValor(quad[quadActual][1])
+		x = memoria.getValor('41000') - tamano
+		y = memoria.getValor('41001') - tamano
+		x2 = x + (tamano * 2)
+		y2 = x + (tamano * 2)
+		
+		if(relleno):
+			w.create_oval(x, y, x2, y2, fill=colorRelleno, outline=colorContorno, width=grosor)
+		else:
+			w.create_oval(x, y, x2, y2, fill='', outline=colorContorno, width=grosor)
+		memoria.escribeValor('41000', x2)
+        memoria.escribeValor('41001', y2)
+        quadActual += 1
+
+#Funcion para crear un arco
+def arco():
+		global quadActual, relleno, colorRelleno, colorContorno, grosor
+		tamano = memoria.getValor(quads[quadActual][1])
+		x = memoria.getValor('41000') - tamano
+		y = memoria.getValor('41001') - tamano
+		x2 = x + (tamano * 2)
+		y2 = x + (tamano * 2)
+		
+		if(relleno):
+			w.create_arc(x, y, x2, y2, fill=colorRelleno, outline=colorContorno, width=grosor)
+		else:
+			w.create_arc(x, y, x2, y2, fill='', outline=colorContorno, width=grosor)
+		y2 = y2 - tamano
+		memoria.escribeValor('41000', x2)
+        memoria.escribeValor('41001', y2)
+        quadActual += 1
+        
+#Funcion para crear un poligono
+def poligono():
+		global quadActual, colorRelleno, colorContorno, grosor
+		direccion = int(quad[quadActual][1])
+		aux = int(quad[quadActual][2])
+		vertices = []
+		dmem = (memoria.getValor('41000'), memoria.getValor('41001'))
+		vertices.append(dmem)
+		cont = 0
+		while cont < aux
+				dmem = (memoria.getValor(str(cont + direccion)), memoria.getValor(str(cont + 1 + direccion)))
+				vertices.append(dmem)
+				cont += 2
+		if(relleno):
+				w.create_polygon(vertices, fill=colorRelleno, outline=colorContorno, width=grosor)
+		else:
+				w.create_polygon(vertices, fill='', outline=colorContorno, width=grosor)
+		quadActual += 1
+
+#Funcion para crear una linea
+
+#define si la figura tendra un color de relleno
+def relleno():
+		global quadActual, relleno
+		if(quad[quadActual][3] == '1'):
+				relleno = True
+		else:
+				relleno = False
+		quadActual += 1
+		
 #Seguir trabajando en los demas detalles.................................187
 #Seguir trabajando en los demas detalles.................................187
-#Seguir trabajando en los demas detalles.................................187
-#Seguir trabajando en los demas detalles.................................187
-#Seguir trabajando en los demas detalles.................................435
-#Seguir trabajando en los demas detalles.................................435
 #Seguir trabajando en los demas detalles.................................435
 #Seguir trabajando en los demas detalles.................................435
 

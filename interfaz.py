@@ -1,8 +1,11 @@
 from Tkinter import *
-#from MaquinaVirtual import *
+from MaquinaVirtual import *
+import turtle
 import os, sys
 import ply.yacc as yacc
-import lex 
+import lex
+import py_compile
+from lex import lex
 
 mensajeError = ""
 mensajeErrorMV = ""
@@ -57,11 +60,21 @@ def ejecutar():
 	global mensajeError
 	print "ejecutando"
 	compilar()
+	turtle.setposition(0, 0)
+	turtle.pendown()
+	turtle.clear()
+	turtle.reset()
+	turtle.color("blue", "white")
 	
 #Boton Borrar
 def borrar():
-	global mensajeError
-	print "borrar"
+	turtle.clear()
+	turtle.penup()
+	turtle.setposition(0, 0)
+	turtle.pendown()
+	turtle.reset()
+	turtle.shape("classic")
+	turtle.color("blue", "white")
 	
 #Se pintan todos los cuadrados y canvas correspondientes a la interfaz grafica
 
