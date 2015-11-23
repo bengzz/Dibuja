@@ -305,13 +305,62 @@ def goSub():
 		memoria.cambiaAlcance()
 		memoria.push_apuntador(quadActual+1)
 		quadActual = int(quad[quadActual][3])
+
+#Para accesar a un valor desde un arreglo, checa que este dentro del rango		
+def dimArreglo():
+		global quadActual
+		valor = memoria.getValor(quad[quadActual][2])
+		dimA = int(quad[quadActual][1])
+		if valor < 0 or valor > dimA:
+				print "Fuera de rango", valor, " ", dimA
+				sys.exit(0)
+		quadActual += 1
+		
+#Para accesar a un valor desde una matriz, checa que este dentro del rango
+def dimMat():
+		global quadActual
+		valor = int(quad[quadActual][2])
+		dimM = int(quad[quadActual][1])
+		if valor < 0 or valor > dimM:
+				print "Fuera de rango", valor, " ", dimM
+				sys.exit(0)
+		quadActual += 1
+		
+#Regresa la direccion del valor al que se quiere accesar
+def apuntadorDir():
+		global quadActual
+		if quad[quadActual][1][1] == '7':
+				dirV = memoria.getValorApuntado(quad[quadActual][1])
+		else:
+				dirV = int(quad[quadActual][1])
+		apuntaV = memoria.getValor(quad[quadActual][2])
+		dirV = dirV + apuntaV
+		memoria.escribeValorApuntado(quad[quadActual][3], str(dirV), 0)
+		quadActual += 1
+
+#Obtiene la direccion para el valor y lo almacena en el apuntador
+def apuntadorDirC():
+		global quadActual
+		dirV = int(quad[quadActual][1])
+		apuntaV = int(quad[quadActual][2])
+		dirV = dirV + apuntaV
+		memoria.escribeValorApuntado(quad[quadActual][3], str(dirV), 0)
+		quadActual += 1
+
+#Termina el procedimiento y borra la memoria que utilizo		
+def endProc():
+		global quadActual
+		quadActual = int(memoria.pop_apuntador())
+		memoria.borrar_funcion()
+		
+#Termina el programa
+def endProg():
+		global activo
+		activo = False
+		
 		
 #Seguir trabajando en los demas detalles.................................479
 #Seguir trabajando en los demas detalles.................................479
-#Seguir trabajando en los demas detalles.................................479
-#Seguir trabajando en los demas detalles.................................479
-#Seguir trabajando en los demas detalles.................................630
-#Seguir trabajando en los demas detalles.................................630
 #Seguir trabajando en los demas detalles.................................630
 #Seguir trabajando en los demas detalles.................................630
 		
