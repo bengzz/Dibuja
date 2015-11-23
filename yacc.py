@@ -18,14 +18,16 @@ vacia = False
 avail = avail()
 idF = None
 TipoV = None
+TipoA = None
 apuntador = False
 apuntadorD = 0
 contadorP = 0
-vDir = 0
+vD = 0
 aArch = ''
 cnst_entero_cnt = 40000
 cnst_float_cnt = 41002
 cnst_void_cnt = 42000
+CHF = [] 
 
 #Programa------------------------------------------------------
 def p_prog(p):
@@ -92,11 +94,42 @@ def p_func(p):
 		| vacia'''
 		
 def p_func1(p):
-		'''func1 : Tipo fID'''
-		guarda_var(p[3])
+		'''func1 : Tipo arreglo fID arrD'''
+		global apuntador, apuntadorD, contadorP
+		if apuntador:
+				pD = avail.get_temp_punto()
+				if p[3] in hashT:
+						print "Variable ya existe, ", p[3]
+						sys.exit(0)
+				else:
+						hashT[[3]] = [TipoA, "punto", (pD - 30000)]
+						if apuntadorD > 0:
+									hashT[p[3]].append(apuntadorD)
+						apuntador = False
+		else:
+				guarda_var(p[3])
 		funT[p[3]] = [TipoV, contadorP, (hashT[p[3]][2]+30000)]
 		contador += 1
 
+def p_arreglo(p):
+		'''arreglo : P
+		| vacia'''
+		global apuntador
+		if p[1] == '&':
+				apuntador = True
+		else:
+				apuntador = False
+
+def p_arrD(p):
+		'''arrD : AC Exp CC
+		| vacia'''
+		if len(p) > 2:
+				global apuntadorD
+				ex = avail.OPila_pop()
+				for v, vD in cnst.iteritems():
+						if ex == vD:
+								apuntadorD = v
+		
 def p_func2(p):
 		'''func2 : C func1 func2
 		| vacia'''
@@ -104,6 +137,9 @@ def p_func2(p):
 def p_func3(p):
 		'''func3 : Regresar
 		| vacia'''
+		global vacia, TipoV
+		avail.funcion_return(vacia, dir_var(avail.getAlcance()))
+		vacia = False
 
 def p_Regresar(p):
 		'''Regresar : REGRESA Exp PC'''
@@ -184,8 +220,8 @@ def p_var3(p):
 def p_varSalvar(p):
 		'''varSalvar : ID'''
 		guarda_var(p[1])
-		global vDir
-		vDir = dir_var(p[1]) + (avail.getBloque() * 10000)
+		global vD
+		vD = dir_var(p[1]) + (avail.getBloque() * 10000)
 		avail.IDPila_push(p[1])
 #Variables------------------------------------------------------
 
@@ -194,7 +230,7 @@ def p_Estatuto(p):
 		'''Estatuto : Asignacion 
 		| Condicion 
 		| Ciclo 
-		| Llamada 
+		| Llamada
 		| Objeto'''
 #Estatuto------------------------------------------------------
 
@@ -214,8 +250,9 @@ def p_tipo(p):
 		'''tipo : ENT 
 		| FLOT
 		| BOOL'''
-		global TipoV
+		global TipoV, TipoA
 		TipoV = p[1]
+		TipoA = p[1]
 #Tipo------------------------------------------------------
 
 #Expresion, subexpresion------------------------------------------------------
@@ -298,7 +335,8 @@ def p_Factor2(p):
 		avail.PilaOp_push(p[1])
 		
 def p_Factor3(p):
-		'''Factor3 : Factor4 VarCte'''
+		'''Factor3 : Factor4 VarCte
+		| faID Factor5'''
 		if(len(p) == 3):
 				ID = avail.IDPila_pop()
 				MD = avail.DPila_pop()
@@ -317,6 +355,34 @@ def p_Factor3(p):
 def p_Factor4(p):
 		'''Factor4 : SUM
 		| RES'''
+		
+def p_faID(p):
+		'''faID : ID'''
+		avail.setFuncAlcance(p[1])
+		avail.IDPila_push(p[1])
+
+def p_Factor5(p):
+		'''Factor5 : AC Exp CC
+		| AP Exp CP
+		| Llamada1
+		| vacia'''
+		global vacia
+		if(len(p) == 4):
+				avail.DPila_push(True)
+				if p[1] == '[':
+						avail.DPila_push(True)
+				else:
+						global D
+						D = True
+						avail.DPila_push(False)
+		elif not vacia:
+				avail.DPila_push(True)
+				avail.DPila_push(False)
+		else:
+				avail.delFuncAlcance()
+				avail.DPila_push(False)
+				avail.DPila_push(False)
+				
 #Exp, termino, factor -------------------------------------------------
 
 #falta terminar varcte bool---------------------------------------------------------------------------------------------------
@@ -325,6 +391,23 @@ def p_VarCte(p):
 		| VALI
 		| VALF
 		| STR'''
+		a = re.compile('\d+\.\d+')
+		
+		if p[1] not in cnst:
+				global cnst_entero_cnt, cnst_float_cnt
+				if(a.match(p[1])):
+					cnst[p[1]] = cnst_float_cnt
+					cnst_float_cnt += 1
+				else:
+					cnst[p[1]] = cnst_entero_cnt
+					cnst_entero_cnt += 1
+		avail.OPila_push(cnst[p[1]])
+		global TipoV
+		if(a.match(p[1])):
+			TipoV = "flotante"
+		else:
+			TipoV = "entero"
+		avail.TPila_push(TipoV)
 
 def p_VarCte2(p):
 		''' VarCte2 : fID VarCte3'''
@@ -341,11 +424,20 @@ def p_VarCte4(p):
 
 #condicion------------------------------------------------------
 def p_Condicion(p):
-		'''Condicion : SI AP Expresion CP Estatuto Condicion2'''
+		'''Condicion : SI AP Expresion CondicionCP Estatuto Condicion2'''
+		avail.condicion_inicio()
 
-def p_Condicio2(p):
-		'''Condicion2 : SINO Estatuto
+def p_CondicionCP(p):
+		'''CondicionCP : CP'''
+		avail.condicion()
+		
+def p_Condicion2(p):
+		'''Condicion2 : Condicion3
 		| vacia'''
+
+def p_Condicion3(p):
+		'''Condicion3 : SINO Estatuto'''
+		avail.condicion_else()
 #condicion------------------------------------------------------
 
 #asignacion------------------------------------------------------
@@ -359,18 +451,39 @@ def p_Asignacion2(p):
 
 #llamada------------------------------------------------------
 def p_Llamada(p):
-		'''Llamada : fID AP Llamada2 CP PC'''
+		'''Llamada : faID Llamada1'''
 
+def p_Llamada1(p):
+		'''Llamada1 : fEra Llamada2 CP PC'''
+		global idF, vacia
+		idF = "func"
+		if avail.getFuncAlcance() not in direc:
+				print "Error, funcion no existe"
+				sys.exit(0)
+		avail.funcion_param(direc[avail.getFuncAlcance()][0])
+		vD = 10000
+		cant = direc["globales"][6]
+		vD += 6000 + cant
+		direc["globales"][6] = cant + 1
+		avail.llama_funcion_final(direc.getFuncAlcance()[1], dir_var(getFuncAlcance()), vD)
+		vacia = False
+
+def p_fEra(p):
+		'''fEra : AP'''
+		avail.llama_funcion(avail.getAlcance())
+		
 def p_Llamada2(p):
-		'''Llamada2 : Llamada3
+		'''Llamada2 : Llamada4 Llamada3
 		| vacia'''
 				
 def p_Llamada3(p):
-		'''Llamada3 : Exp Llamada4'''
+		'''Llamada3 : C Llamada4 Llamada3
+		| vacia'''
 
 def p_Llamada4(p):
-		'''Llamada4 : C Llamada3
-		| vacia'''
+		'''Llamada4 : Exp'''
+		CHF.append(TipoV)
+		
 #llamada------------------------------------------------------
 
 #ciclo------------------------------------------------------

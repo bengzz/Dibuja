@@ -35,12 +35,13 @@ reserved = {
 
 #lista de tokens con sus respectivos nombres
 tokens = [
-	'Y', 'O', 'SUM', 'RES', 'MUL', 'DIV', 'ME', 'MA', 'CI', 'CD', 'IG', 'PC', 'C', 'AC', 'CC', 'AP', 'CP', 'VALI', 'VALF', 'STR', 'ID'
+	'Y', 'O', 'P', 'SUM', 'RES', 'MUL', 'DIV', 'ME', 'MA', 'CI', 'CD', 'IG', 'PC', 'C', 'AC', 'CC', 'AP', 'CP', 'VALI', 'VALF', 'STR', 'ID'
 ] + list(reserved.values())
 
 
 t_Y		= r'y'
 t_O		= r'o'
+t_P     = r'&'
 t_SUM	= r'\+'
 t_RES 	= r'-'
 t_MUL	= r'\*'
