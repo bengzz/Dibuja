@@ -156,6 +156,13 @@ def posicion():
 		global quadActual, posicion
 		posicion = memoria.getValor(quad[quadActual][1])
 		quadActual += 1
+
+#Funcion que cambia la posicion en X y en Y		
+def posicionXY():
+		global quadActual, posX, posY
+		posX = memoria.getValor(quad[quadActual][1])
+		posY = memoria.getValor(quad[quadActual][2])
+		quadActual += 1
 		
 #Funcion que asigna un valor a las variables
 def asigna():
@@ -164,6 +171,39 @@ def asigna():
 		memoria.escribeValor(quad[quadActual][3], resultado)
 		quadActual += 1
 
+#Funcion para el texto
+def texto():
+		global quadActual, colorRelleno, grosor
+		final = int(quad[quadActual][3])
+		inicio = int(quad[quadActual][2])
+		longitud = final - inicio
+		inicio = 0
+		dire = int(quad[quadActual][1])
+		palabra = ''
+		while inicio <= longitud:
+				dirTem = dire + inicio
+				dirTem = str(dirTemp)
+				palabra += memoria.getValor(dirTem)
+				inicio += 1
+		w.create_text(memoria.getValor('41000'), memoria.getValor('41001'), text=palabra, fill=colorRelleno)
+		quadActual += 1
+		
+#Funcion que crea una linea
+def linea():
+		global quadActual, grosor, colorRelleno
+		uno = int(quad[quadActual][1])
+		dos = int(quad[quadActual][2])
+		vertice = []
+		aux = (memoria.getValor('41000'), memoria.getValor('41001'))
+		vertice.append(aux)
+		creaLin = 0
+		while creaLin < dos:
+				aux = (memoria.getValor(str(creaLin + uno)), memoria.getValor(str(creaLin + 1 + uno)))
+				vertice.append(aux)
+				creaLin += 2
+		w.create_line(vertice, fill=colorRelleno)
+		quadActual += 1
+		
 #Funcion que crea un rectangulo
 def cuadrado():
         global quadActual, relleno, colorRelleno, colorContorno, grosor
@@ -357,10 +397,4 @@ def endProc():
 def endProg():
 		global activo
 		activo = False
-		
-		
-#Seguir trabajando en los demas detalles.................................479
-#Seguir trabajando en los demas detalles.................................479
-#Seguir trabajando en los demas detalles.................................630
-#Seguir trabajando en los demas detalles.................................630
 		
