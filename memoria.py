@@ -9,7 +9,7 @@ class Memoria:
 			self.temp_bloque_float = []
 			self.pointers = []
 		
-	def setMem(self, strP, enteroP, floatP, boolP, enteroPT, floatPT, pointerP):
+	def setMemoria(self, strP, enteroP, floatP, boolP, enteroPT, floatPT, pointerP):
 			self.bloque_str = [0] * strP
 			if enteroP > 0:
 				self.bloque_entero = [0] * (enteroP + 1)
@@ -71,7 +71,7 @@ class Memoria:
 			elif (dirV >= 7000 and dirV <= 7999):
 				return self.pointers[(dirV-7000)]
 			
-	def releseMem(self):
+	def dejarMemoria(self):
 			del self.bloque_str
 			del self.bloque_entero
 			del self.bloque_float

@@ -5,16 +5,19 @@ from adminMemoria import AdminMemoria
 from pila import Pila
 
 memoria = AdminMemoria()
-pro = dict()
 quad = []
+pro = dict()
 activo = True
 quadActual = 0
 relleno = False
+colorCont = '#000000000'
+colorRell = '#000000000'
+gros = 1
 
 #Funcion que corre mientras que no se ha terminado el programa
 def vivo():
 		while(activo):
-					opciones[quad[quadActual][0]]()
+			opciones[quad[quadActual][0]]()
 			
 #Funcion que suma 2 numeros del cuadruplo
 def suma():
@@ -44,7 +47,7 @@ def multiplica():
 		quadActual += 1
 		
 #Funcion que divide 2 numeros del cuadruplo
-def divide():
+def dividir():
 		global quadActual
 		primero = memoria.getValor(quad[quadActual][1])
 		segundo = memoria.getValor(quad[quadActual][2])
@@ -127,7 +130,7 @@ def colorContorno():
 		rojo = memoria.getValor(quad[quadActual][1])
 		verde = memoria.getValor(quad[quadActual][2])
 		azul = memoria.getValor(quad[quadActual][3])
-		colorCont = obtenerColor(red, green, blue)
+		colorCont = obtenerColor(rojo, verde, azul)
 		quadActual += 1
 		
 #Funcion que cambia el color del relleno
@@ -136,13 +139,22 @@ def colorRelleno():
 		rojo = memoria.getValor(quad[quadActual][1])
 		verde = memoria.getValor(quad[quadActual][2])
 		azul = memoria.getValor(quad[quadActual][3])
-		colorRell = obtenerColor(red, green, blue)
+		colorRell = obtenerColor(rojo, verde, azul)
 		quadActual += 1
-		
-#Funcion que cambia el grosor 
+
+def backColor():
+		global quadActual
+		rojo = memoria.getValor(quad[quadActual][1])
+		verde = memoria.getValor(quad[quadActual][2])
+		azul = memoria.getValor(quad[quadActual][3])
+		color = obtenerColor(rojo, verde, azul)
+		w.configure(background=color) 
+		quadActual += 1
+			
+#Funcion que cambia el gros 
 def grosor():
-		global quadActual, grosor
-		grosor = memoria.getValor(quad[quadActual][1])
+		global quadActual, gros
+		gros = memoria.getValor(quad[quadActual][1])
 		quadActual += 1
 		
 #Funcion que cambia la rotacion 
@@ -173,7 +185,7 @@ def asigna():
 
 #Funcion para el texto
 def texto():
-		global quadActual, colorRelleno, grosor
+		global quadActual, colorRelleno, gros
 		final = int(quad[quadActual][3])
 		inicio = int(quad[quadActual][2])
 		longitud = final - inicio
@@ -190,7 +202,7 @@ def texto():
 		
 #Funcion que crea una linea
 def linea():
-		global quadActual, grosor, colorRelleno
+		global quadActual, gros, colorRelleno
 		uno = int(quad[quadActual][1])
 		dos = int(quad[quadActual][2])
 		vertice = []
@@ -206,23 +218,23 @@ def linea():
 		
 #Funcion que crea un rectangulo
 def cuadrado():
-        global quadActual, relleno, colorRelleno, colorContorno, grosor
+        global quadActual, relleno, colorRelleno, colorContorno, gros
         x = memoria.getValor('41000')
         y = memoria.getValor('41001')
         x2 = x + memoria.getValor(quad[quadActual][1])
         y2 = y + memoria.getValor(quad[quadActual][2])
         
         if(relleno):
-        	w.create_rectangle(x, y, x2, y2, fill=colorRelleno, outline=colorContorno, width=grosor)
+        	w.create_rectangle(x, y, x2, y2, fill=colorRelleno, outline=colorContorno, width=gros)
         else:
-        	w.create_rectangle(x, y, x2, y2, fill='', outline=colorContorno, width=grosor)
+        	w.create_rectangle(x, y, x2, y2, fill='', outline=colorContorno, width=gros)
         memoria.escribeValor('41000', x2)
         memoria.escribeValor('41001', y2)
         quadActual += 1
 
 #Funcion que crea un triangulo        
 def triangulo():
-		global quadActual, relleno, colorRelleno, colorContorno, grosor
+		global quadActual, relleno, colorRelleno, colorContorno, gros
 		x = memoria.getValor(quad[quadActual][1])
 		y = memoria.getValor(quad[quadActual][2])
 		quadActual += 1
@@ -232,16 +244,16 @@ def triangulo():
 		y3 = memoria.getValor(quad[quadActual][3])
 		
 		if(relleno):
-			w.create_polygon(x, y, x2, y2, x3, y3, fill=colorRelleno, outline=colorContorno, width=grosor)
+			w.create_polygon(x, y, x2, y2, x3, y3, fill=colorRelleno, outline=colorContorno, width=gros)
 		else:
-			w.create_polygon(x, y, x2, y2, x3, y3, fill='', outline=colorContorno, width=grosor)
+			w.create_polygon(x, y, x2, y2, x3, y3, fill='', outline=colorContorno, width=gros)
 		memoria.escribeValor('41000', x3)
 		memoria.escribeValor('41001', y3)
 		quadActual += 1
         
 #Funcion para crear un circulo
 def circulo():
-		global quadActual, relleno, colorRelleno, colorContorno, grosor
+		global quadActual, relleno, colorRelleno, colorContorno, gros
 		tamano = memoria.getValor(quad[quadActual][1])
 		x = memoria.getValor('41000') - tamano
 		y = memoria.getValor('41001') - tamano
@@ -249,26 +261,26 @@ def circulo():
 		y2 = x + (tamano * 2)
 		
 		if(relleno):
-			w.create_oval(x, y, x2, y2, fill=colorRelleno, outline=colorContorno, width=grosor)
+			w.create_oval(x, y, x2, y2, fill=colorRelleno, outline=colorContorno, width=gros)
 		else:
-			w.create_oval(x, y, x2, y2, fill='', outline=colorContorno, width=grosor)
+			w.create_oval(x, y, x2, y2, fill='', outline=colorContorno, width=gros)
 		memoria.escribeValor('41000', x2)
 		memoria.escribeValor('41001', y2)
 		quadActual += 1
 
 #Funcion para crear un arco
 def arco():
-		global quadActual, relleno, colorRelleno, colorContorno, grosor
-		tamano = memoria.getValor(quads[quadActual][1])
+		global quadActual, relleno, colorRelleno, colorContorno, gros
+		tamano = memoria.getValor(quad[quadActual][1])
 		x = memoria.getValor('41000') - tamano
 		y = memoria.getValor('41001') - tamano
 		x2 = x + (tamano * 2)
 		y2 = x + (tamano * 2)
 		
 		if(relleno):
-			w.create_arc(x, y, x2, y2, fill=colorRelleno, outline=colorContorno, width=grosor)
+			w.create_arc(x, y, x2, y2, fill=colorRelleno, outline=colorContorno, width=gros)
 		else:
-			w.create_arc(x, y, x2, y2, fill='', outline=colorContorno, width=grosor)
+			w.create_arc(x, y, x2, y2, fill='', outline=colorContorno, width=gros)
 		y2 = y2 - tamano
 		memoria.escribeValor('41000', x2)
 		memoria.escribeValor('41001', y2)
@@ -276,7 +288,7 @@ def arco():
         
 #Funcion para crear un poligono
 def poligono():
-		global quadActual, colorRelleno, colorContorno, grosor
+		global quadActual, colorRelleno, colorContorno, gros
 		direccion = int(quad[quadActual][1])
 		aux = int(quad[quadActual][2])
 		vertices = []
@@ -288,12 +300,106 @@ def poligono():
 				vertices.append(dmem)
 				cont += 2
 		if(relleno):
-				w.create_polygon(vertices, fill=colorRelleno, outline=colorContorno, width=grosor)
+				w.create_polygon(vertices, fill=colorRelleno, outline=colorContorno, width=gros)
 		else:
-				w.create_polygon(vertices, fill='', outline=colorContorno, width=grosor)
+				w.create_polygon(vertices, fill='', outline=colorContorno, width=gros)
 		quadActual += 1
 
-#Funcion para crear una linea
+#--------------------
+def get_x_and_y(angle, hypotenus):
+#detetrmines the end of the line, basic mathematics
+	if(angle < 45):
+		return [ hypotenus * (math.cos(math.radians(angle))), (-1 * (hypotenus * (math.sin(math.radians(angle)))))]
+	elif(angle < 90):
+		return [ hypotenus * (math.sin(math.radians(angle))), (-1 * (hypotenus * (math.cos(math.radians(angle)))))]
+	elif(angle == 90):
+		return [ 0, (-1*hypotenus)]
+
+	angle -= 90
+	if(angle < 45):
+		return [ (-1 * (hypotenus * (math.sin(math.radians(angle))))), (-1 *  (hypotenus * (math.cos(math.radians(angle)))))]
+	elif(angle < 90):
+		return [ (-1 * (hypotenus * (math.cos(math.radians(angle))))), (-1 *  (hypotenus * (math.sin(math.radians(angle)))))]
+	elif(angle == 90):
+		return [(-1*hypotenus), 0]
+
+	angle -= 90
+	if(angle < 45):
+		return [ (-1 * (hypotenus * (math.cos(math.radians(angle))))), hypotenus * (math.sin(math.radians(angle)))]
+	elif(angle < 90):
+		return [ (-1 * (hypotenus * (math.sin(math.radians(angle))))), hypotenus * (math.cos(math.radians(angle)))]
+	elif(angle == 90):
+		return [0, hypotenus]
+
+	angle -= 90
+	if(angle < 45):
+		return [hypotenus * (math.sin(angle)), hypotenus * (math.cos(angle))]
+	elif(angle < 90):
+		return [hypotenus * (math.cos(angle)), hypotenus * (math.sin(angle))]	
+	elif(angle == 90):
+		return [hypotenus, 0]
+	
+def penpos():
+#changes the pen position
+	global quadActual
+	memoria.escribeValor('41001', memoria.getValor(quad[quadActual][1]))
+	memoria.escribeValor('41000', memoria.getValor(quad[quadActual][2]))
+	quadActual += 1
+
+def penX():
+#changes the x of the pen position
+	global quadActual
+	memoria.escribeValor('41000', memoria.getValor(quad[quadActual][1]))
+	quadActual += 1
+
+def penY():
+#changes the y of the pen position
+	global quadActual
+	memoria.escribeValor('41001', memoria.getValor(quad[quadActual][1]))
+	quadActual += 1
+
+def penUp():
+#moves the y of the pen upwards
+	global quadActual
+	up = memoria.getValor('41001') - memoria.getValor(quad[quadActual][1])
+	memoria.escribeValor('41001', up)
+	quadActual += 1
+
+def penDown():
+#moves the y of the pen downwards
+	global quadActual
+	up = memoria.getValor(quad[quadActual][1]) + memoria.getValor('41001')
+	memoria.escribeValor('41001', up)
+	quadActual += 1
+
+def penLeft():
+#moves the x of the pen to the left
+	global quadActual
+	up = memoria.getValor('41000') - memoria.getValor(quad[quadActual][1])
+	memoria.escribeValor('41000', up)
+	quadActual += 1
+
+def penRight():
+#moves the x of the pen to the right
+	global quadActual
+	up = memoria.getValor(quad[quadActual][1]) + memoria.getValor('41000')
+	memoria.escribeValor('41000', up)
+	quadActual += 1
+
+def move():
+#creates a line, has to calculate the end position of the line.
+	global quadActual, colorCont
+	x = memoria.getValor('41000')
+	y = memoria.getValor('41001')
+	hyp = memoria.getValor(quad[quadActual][1])
+	angle = memoria.getValor(quad[quadActual][2])
+	pos = get_x_and_y(angle, hyp)
+	#print "X Y", pos[0], " ", pos[1]
+	w.create_line(x, y,(x+pos[0]), (y+pos[1]), fill=colorCont)
+	memoria.escribeValor('41000', (x+pos[0]))
+	memoria.escribeValor('41001', (y+pos[1]))
+	quadActual += 1
+#--------------------
 
 #define si la figura tendra un color de relleno
 def relleno():
@@ -304,11 +410,6 @@ def relleno():
 				relleno = False
 		quadActual += 1
 		
-#Seguir trabajando en los demas detalles.................................187
-#Seguir trabajando en los demas detalles.................................187
-#Seguir trabajando en los demas detalles.................................435
-#Seguir trabajando en los demas detalles.................................435
-
 #Cambia el cuadruplo acutal
 def goto():
 		global quadActual
@@ -398,6 +499,51 @@ def endProg():
 		global activo
 		activo = False
 
+opciones = { '+' : suma,
+		'-' : resta,
+		'*' : multiplica,
+		'/' : dividir,
+		'<' : menorQue,
+		'>' : mayorQue,
+		'<=' : menorIgQue,
+		'>=' : mayorIgQue,
+		'<>' : diferenteQue,
+		'==' : igualQue,
+		'GOTO': goto,
+		'GOTOF' : goto_falso,
+		'ENDPROG': endProg,
+		'101': asigna,
+		'201' : cuadrado,
+		'202' : triangulo,
+		'203' : circulo,
+		'204' : cuadrado,
+		'205' : poligono,
+		'206' : linea,
+		'207' : arco,
+		'208' : texto,
+		'209' : relleno,
+		'301' : colorContorno,
+		'302' : colorRelleno,
+		'303' : backColor,
+		'304' : grosor,
+		'307' : penpos,
+		'308' : penX,
+		'309' : penY,
+		'305' : move,
+		'310' : penUp,
+		'311' : penDown,
+		'312' : penLeft,
+		'313' : penRight,
+		'ERA' : era,
+		'PARAMETRO' : param,
+		'GOSUB' : goSub,
+		'RETURN' : param,
+		'DIM' : dimArreglo,
+		'DIMC' : dimMat,
+		'DIR' : apuntadorDir,
+		'DIRC' : apuntadorDirC,
+		'ENDPROC' : endProc}
+				
 #Correr el programa
 if(len(sys.argv) > 1):
 	archivo = open(sys.argv[1], "r")
@@ -417,32 +563,32 @@ if(len(sys.argv) > 1):
 					contador += 0.5
 					i = linea.split(' ')
 					memoria.constTamano(int(i[0]), int(i[1]), int(i[2]))
-				if(contador == 2):
-					i = linea.split(' ')
-					if(i[0] == 'princ'):
-						memoria.setMemoriaPrinc(info[1], info[2], info[3], info[4], info[5], info[6], info[7]) 
-					elif(info[0] == 'globales'):
-						memoria.setMemoriaGlobales(info[1], info[2], info[3], info[4], info[5], info[6], info[7])
-					else:
-						pro[info[0]] = [info[1], info[2], info[3], info[4], info[5], info[6], info[7]]
-				if(contador == 3):
-					i = linea.split(' ')
-					s = [info[0], info[1], info[2], info[3]]
-					quad.append(s)
+			if(contador == 2):
+				i = linea.split(' ')
+				if(i[0] == 'princ'):
+					memoria.setMemoriaPrinc(i[1], i[2], i[3], i[4], i[5], i[6], i[7]) 
+				elif(i[0] == 'globales'):
+					memoria.setMemoriaGlobales(i[1], i[2], i[3], i[4], i[5], i[6], i[7])
+				else:
+					pro[i[0]] = [i[1], i[2], i[3], i[4], i[5], i[6], i[7]]
+			if(contador == 3):
+				i = linea.split(' ')
+				s = [i[0], i[1], i[2], i[3]]
+				quad.append(s)
 		acumulador += linea
 	rt = Tk()
-	print "const int float", len(quads)
-	memoria.imprimeConstantes()
-	w = Canvas(root, width=600, height=480)
+	print "const int float", len(quad)
+	#memoria.imprimeConstantes()
+	w = Canvas(rt, width=600, height=480)
 	w.configure(background='white')
 	w.pack()
 	vivo()
-	print "const int float"
-	memoria.imprimeConstantes()
-	print "main"
-	memoria.imprimePrinc()
-	print "global"
-	memoria.imprimeGlobales()
+	#print "const int float"
+	#memoria.imprimeConstantes()
+	#print "main"
+	#memoria.imprimePrinc()
+	#print "global"
+	#memoria.imprimeGlobales()
 	mainloop()
 		
 else:

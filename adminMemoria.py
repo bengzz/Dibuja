@@ -3,7 +3,7 @@ from pila import Pila
 
 class AdminMemoria:
 
-	def _init_(self):
+	def __init__(self):
 			self.constante_entero = []
 			self.constante_flotante = []
 			self.constante_str = []
@@ -21,16 +21,16 @@ class AdminMemoria:
 		
 	def setMemoriaPrinc(self, strP, enteroP, floatP, boolP, enteroPT, floatPT, pointerP):
 	#modifica la memoria del main
-			self.main.setMem(int(strP), int(enteroP), int(floatP), int(boolP), int(enteroPT), int(floatPT), int(pointerP))
+			self.main.setMemoria(int(strP), int(enteroP), int(floatP), int(boolP), int(enteroPT), int(floatPT), int(pointerP))
 		
 	def setMemoriaGlobales(self, strP, enteroP, floatP, boolP, enteroPT, floatPT, pointerP):
 	#modifica la memoria de las globales
-			self.globales.setMem(int(strP), int(enteroP), int(floatP), int(boolP), int(enteroPT), int(floatPT), int(pointerP))
+			self.globales.setMemoria(int(strP), int(enteroP), int(floatP), int(boolP), int(enteroPT), int(floatPT), int(pointerP))
 		
 	def setFunciones(self, strP, enteroP, floatP, boolP, enteroPT, floatPT, pointerP):
 	#crea memoria para la nueva funcion, modifica la memoria y la agrega al diccionario de funciones
 			funcion = Memoria()
-			funcion.setMem(int(strP), int(enteroP), int(floatP), int(boolP), int(enteroPT), int(floatPT), int(pointerP))
+			funcion.setMemoria(int(strP), int(enteroP), int(floatP), int(boolP), int(enteroPT), int(floatPT), int(pointerP))
 			self.funciones[self.alcanceActual+1] = funcion
 		
 	def cambiaAlcance(self):

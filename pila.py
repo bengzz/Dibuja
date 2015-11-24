@@ -2,9 +2,6 @@ class Pila:
 	def _init_(self):
 		self.items = []
 		
-	def isEmpty(self):
-		return self.items == []
-		
 	def push(self, item):
 		self.items.append(item)
 	
@@ -19,3 +16,6 @@ class Pila:
 		
 	def imprime(self):
 		return self.items
+		
+	def isEmpty(self):
+			return self.items == []
