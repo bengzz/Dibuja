@@ -52,10 +52,10 @@ class AdminMemoria:
 					dirV = self.globales.leerValor(dirV-10000)
 				elif((dirV-20000) < 10000):
 				#valores del main
-					dirV = self.main.leerValores(dirV-20000)
+					dirV = self.main.leerValor(dirV-20000)
 				elif((dirV-30000) < 10000):
 				#valores de funciones
-					dirV = self.funciones[self.alacanceActual].leerValores(dirV-30000)
+					dirV = self.funciones[self.alacanceActual].leerValor(dirV-30000)
 				dirV = str(dirV)
 			dirV = int(dirV)
 		#imprime la direccion, dirV
@@ -94,10 +94,10 @@ class AdminMemoria:
 					dirV = self.globales.leerValor(dirV-10000)
 				elif((dirV-20000) < 10000):
 				#valores del main
-					dirV = self.main.leerValores(dirV-20000)
+					dirV = self.main.leerValor(dirV-20000)
 				elif((dirV-30000) < 10000):
 				#valores de funciones
-					dirV = self.funciones[self.alacanceActual+1].leerValores(dirV-30000)
+					dirV = self.funciones[self.alacanceActual+1].leerValor(dirV-30000)
 				dirV = str(dirV)
 			dirV = int(dirV)
 		#imprime la direccion, dirV
@@ -127,10 +127,10 @@ class AdminMemoria:
 					dirV = self.globales.leerValor(dirV-10000)
 				elif((dirV-20000) < 10000):
 				#valores del main
-					dirV = self.main.leerValores(dirV-20000)
+					dirV = self.main.leerValor(dirV-20000)
 				elif((dirV-30000) < 10000):
 				#valores de funciones
-					dirV = self.funciones[self.alacanceActual].leerValores(dirV-30000)
+					dirV = self.funciones[self.alacanceActual].leerValor(dirV-30000)
 				dirV = str(dirV)
 			dirV = int(dirV)
 		#imprime la direccion, dirV

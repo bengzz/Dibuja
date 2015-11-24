@@ -185,7 +185,7 @@ def asigna():
 
 #Funcion para el texto
 def texto():
-		global quadActual, colorRelleno, gros
+		global quadActual, colorRell, gros
 		final = int(quad[quadActual][3])
 		inicio = int(quad[quadActual][2])
 		longitud = final - inicio
@@ -194,15 +194,15 @@ def texto():
 		palabra = ''
 		while inicio <= longitud:
 				dirTem = dire + inicio
-				dirTem = str(dirTemp)
+				dirTem = str(dirTem)
 				palabra += memoria.getValor(dirTem)
 				inicio += 1
-		w.create_text(memoria.getValor('41000'), memoria.getValor('41001'), text=palabra, fill=colorRelleno)
+		w.create_text(memoria.getValor('41000'), memoria.getValor('41001'), text=palabra, fill=colorRell)
 		quadActual += 1
 		
 #Funcion que crea una linea
 def linea():
-		global quadActual, gros, colorRelleno
+		global quadActual, gros, colorRell
 		uno = int(quad[quadActual][1])
 		dos = int(quad[quadActual][2])
 		vertice = []
@@ -213,28 +213,28 @@ def linea():
 				aux = (memoria.getValor(str(creaLin + uno)), memoria.getValor(str(creaLin + 1 + uno)))
 				vertice.append(aux)
 				creaLin += 2
-		w.create_line(vertice, fill=colorRelleno)
+		w.create_line(vertice, fill=colorRell)
 		quadActual += 1
 		
 #Funcion que crea un rectangulo
 def cuadrado():
-        global quadActual, relleno, colorRelleno, colorContorno, gros
+        global quadActual, relleno, colorRell, colorCont, gros
         x = memoria.getValor('41000')
         y = memoria.getValor('41001')
         x2 = x + memoria.getValor(quad[quadActual][1])
-        y2 = y + memoria.getValor(quad[quadActual][2])
+        y2 = y + memoria.getValor(quad[quadActual][1])
         
         if(relleno):
-        	w.create_rectangle(x, y, x2, y2, fill=colorRelleno, outline=colorContorno, width=gros)
+        	w.create_rectangle(x, y, x2, y2, fill=colorRell, outline=colorCont, width=gros)
         else:
-        	w.create_rectangle(x, y, x2, y2, fill='', outline=colorContorno, width=gros)
+        	w.create_rectangle(x, y, x2, y2, fill='', outline=colorCont, width=gros)
         memoria.escribeValor('41000', x2)
         memoria.escribeValor('41001', y2)
         quadActual += 1
 
 #Funcion que crea un triangulo        
 def triangulo():
-		global quadActual, relleno, colorRelleno, colorContorno, gros
+		global quadActual, relleno, colorRell, colorCont, gros
 		x = memoria.getValor(quad[quadActual][1])
 		y = memoria.getValor(quad[quadActual][2])
 		quadActual += 1
@@ -244,16 +244,16 @@ def triangulo():
 		y3 = memoria.getValor(quad[quadActual][3])
 		
 		if(relleno):
-			w.create_polygon(x, y, x2, y2, x3, y3, fill=colorRelleno, outline=colorContorno, width=gros)
+			w.create_polygon(x, y, x2, y2, x3, y3, fill=colorRell, outline=colorCont, width=gros)
 		else:
-			w.create_polygon(x, y, x2, y2, x3, y3, fill='', outline=colorContorno, width=gros)
+			w.create_polygon(x, y, x2, y2, x3, y3, fill='', outline=colorCont, width=gros)
 		memoria.escribeValor('41000', x3)
 		memoria.escribeValor('41001', y3)
 		quadActual += 1
         
 #Funcion para crear un circulo
 def circulo():
-		global quadActual, relleno, colorRelleno, colorContorno, gros
+		global quadActual, relleno, colorRell, colorCont, gros
 		tamano = memoria.getValor(quad[quadActual][1])
 		x = memoria.getValor('41000') - tamano
 		y = memoria.getValor('41001') - tamano
@@ -261,16 +261,16 @@ def circulo():
 		y2 = x + (tamano * 2)
 		
 		if(relleno):
-			w.create_oval(x, y, x2, y2, fill=colorRelleno, outline=colorContorno, width=gros)
+			w.create_oval(x, y, x2, y2, fill=colorRell, outline=colorCont, width=gros)
 		else:
-			w.create_oval(x, y, x2, y2, fill='', outline=colorContorno, width=gros)
+			w.create_oval(x, y, x2, y2, fill='', outline=colorCont, width=gros)
 		memoria.escribeValor('41000', x2)
 		memoria.escribeValor('41001', y2)
 		quadActual += 1
 
 #Funcion para crear un arco
 def arco():
-		global quadActual, relleno, colorRelleno, colorContorno, gros
+		global quadActual, relleno, colorRell, colorCont, gros
 		tamano = memoria.getValor(quad[quadActual][1])
 		x = memoria.getValor('41000') - tamano
 		y = memoria.getValor('41001') - tamano
@@ -278,9 +278,9 @@ def arco():
 		y2 = x + (tamano * 2)
 		
 		if(relleno):
-			w.create_arc(x, y, x2, y2, fill=colorRelleno, outline=colorContorno, width=gros)
+			w.create_arc(x, y, x2, y2, fill=colorRell, outline=colorCont, width=gros)
 		else:
-			w.create_arc(x, y, x2, y2, fill='', outline=colorContorno, width=gros)
+			w.create_arc(x, y, x2, y2, fill='', outline=colorCont, width=gros)
 		y2 = y2 - tamano
 		memoria.escribeValor('41000', x2)
 		memoria.escribeValor('41001', y2)
@@ -288,7 +288,7 @@ def arco():
         
 #Funcion para crear un poligono
 def poligono():
-		global quadActual, colorRelleno, colorContorno, gros
+		global quadActual, colorRell, colorCont, gros
 		direccion = int(quad[quadActual][1])
 		aux = int(quad[quadActual][2])
 		vertices = []
@@ -300,9 +300,9 @@ def poligono():
 				vertices.append(dmem)
 				cont += 2
 		if(relleno):
-				w.create_polygon(vertices, fill=colorRelleno, outline=colorContorno, width=gros)
+				w.create_polygon(vertices, fill=colorRell, outline=colorCont, width=gros)
 		else:
-				w.create_polygon(vertices, fill='', outline=colorContorno, width=gros)
+				w.create_polygon(vertices, fill='', outline=colorCont, width=gros)
 		quadActual += 1
 
 #--------------------

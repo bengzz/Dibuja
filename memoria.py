@@ -1,6 +1,6 @@
 class Memoria:
 	
-	def _init_(self):
+	def __init__(self):
 			self.bloque_str = []
 			self.bloque_entero = []
 			self.bloque_float = []
