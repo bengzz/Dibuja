@@ -5,7 +5,7 @@ from adminMemoria import AdminMemoria
 from pila import Pila
 
 memoria = AdminMemoria()
-proc = dict()
+pro = dict()
 quad = []
 activo = True
 quadActual = 0
@@ -326,7 +326,7 @@ def goto_falso():
 #Creacion de la memoria para la funcion llamada
 def era():
 		global quadActual
-		temporal = int(quad[quadActual][3])
+		temporal = pro(quad[quadActual][3])
 		memoria.setFunciones(temporal[0], temporal[1], temporal[2], temporal[3], temporal[4], temporal[5], temporal[6])
 		quadActual += 1
 
@@ -397,4 +397,53 @@ def endProc():
 def endProg():
 		global activo
 		activo = False
+
+#Correr el programa
+if(len(sys.argv) > 1):
+	archivo = open(sys.argv[1], "r")
+	contador = 0.5
+	l = archivo.readlines()
+	acumulador = ""
+	for linea in l:
+		linea = linea.strip()
+		if(linea == '%%'):
+			contador += 1
+		else:
+			if(contador <= 1):
+				if(contador == 1):
+					i = linea.split(' ')
+					memoria.escribeValor(i[1], i[0])
+				else:
+					contador += 0.5
+					i = linea.split(' ')
+					memoria.constTamano(int(i[0]), int(i[1]), int(i[2]))
+				if(contador == 2):
+					i = linea.split(' ')
+					if(i[0] == 'princ'):
+						memoria.setMemoriaPrinc(info[1], info[2], info[3], info[4], info[5], info[6], info[7]) 
+					elif(info[0] == 'globales'):
+						memoria.setMemoriaGlobales(info[1], info[2], info[3], info[4], info[5], info[6], info[7])
+					else:
+						pro[info[0]] = [info[1], info[2], info[3], info[4], info[5], info[6], info[7]]
+				if(contador == 3):
+					i = linea.split(' ')
+					s = [info[0], info[1], info[2], info[3]]
+					quad.append(s)
+		acumulador += linea
+	rt = Tk()
+	print "const int float", len(quads)
+	memoria.imprimeConstantes()
+	w = Canvas(root, width=600, height=480)
+	w.configure(background='white')
+	w.pack()
+	vivo()
+	print "const int float"
+	memoria.imprimeConstantes()
+	print "main"
+	memoria.imprimePrinc()
+	print "global"
+	memoria.imprimeGlobales()
+	mainloop()
 		
+else:
+    print "No se compilo correctamente"

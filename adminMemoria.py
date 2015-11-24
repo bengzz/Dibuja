@@ -13,13 +13,13 @@ class AdminMemoria:
 			self.alcanceActual = 0
 			self.funciones = dict()
 		
-	def constSize(self, sizeE, sizeF, sizeS):
+	def constTamano(self, sizeE, sizeF, sizeS):
 	#modifica la memoria necesaria por las constantes
 			self.constante_entero = [0] * sizeE
 			self.constante_flotante = [0.0] * sizeF
 			self.constante_str = [0] * sizeS
 		
-	def setMemoriaMain(self, strP, enteroP, floatP, boolP, enteroPT, floatPT, pointerP):
+	def setMemoriaPrinc(self, strP, enteroP, floatP, boolP, enteroPT, floatPT, pointerP):
 	#modifica la memoria del main
 			self.main.setMem(int(strP), int(enteroP), int(floatP), int(boolP), int(enteroPT), int(floatPT), int(pointerP))
 		
@@ -194,7 +194,7 @@ class AdminMemoria:
 	def imprimeFunciones(self):
 			print self.alcanceActual
 		
-	def imprimeMain(self):
+	def imprimePrinc(self):
 			self.main.imprimeInfo()
 		
 	def imprimeGlobales(self):
