@@ -9,30 +9,35 @@ from avail import avail
 tokens = lex.tokens
 hashT = dict()
 funT = dict()
-direc = dict()
-cnst = dict()
-entero_val = 1000
-float_val = 2000
-void_val = 3000
-vacia = False
-avail = avail()
-idF = None
 TipoV = None
 TipoA = None
-apuntador = False
-apuntadorD = 0
-contadorP = 0
-vD = 0
+direc = dict()
+cnst = dict()
+idF = None
+avail = avail()
+CHF = [] 
 aArch = ''
+entero_val = 2000
+float_val = 3000
+void_val = 1000
 cnst_entero_cnt = 40000
 cnst_float_cnt = 41002
 cnst_void_cnt = 42000
-CHF = [] 
+vacia = False
+vD = 0
+#offset
+#ID
+DimM = False
+DirT = False
+DirQty = False
+apuntador = False
+apuntadorD = 0
+contadorP = 0
 
 #Programa------------------------------------------------------
 def p_prog(p):
 		'''prog : PR prog1 princ AC Bloque CC'''
-		mtemp = [(void_val-3000), (entero_val-1000), (float_val-2000)]
+		mtemp = [(void_val-1000), (entero_val-2000), (float_val-3000)]
 		mtemp.extend(avail.get_temp_dir())
 		direc["princ"] = temp
 		if("globales" in direc):
@@ -81,7 +86,7 @@ def p_funcIn(p):
 		DictV = dict(funT)
 		global entero_val, float_val, void_val, contadorP, idF
 		idF = avail.getAlcance()
-		mtemp = [DictV, avail.getFuncQ(), (void_val-3000), (entero_val-1000), (float_val-2000), 0, 0, 0, 0]
+		mtemp = [DictV, avail.getFuncQ(), (void_val-1000), (entero_val-2000), (float_val-3000), 0, 0, 0, 0]
 		direc[avail.getAlcance()] = mtemp
 		cant = direc["globales"][3]+1
 		direc["globales"][0][avail.getAlcance()] = ["flotante", 'func', 13000 + cant]
@@ -173,13 +178,13 @@ def p_globales(p):
 		global entero_val, float_val, void_val
 		bloque_dir(hashT, 1)
 		dvDict = dict(hashT)
-		mtemp = [dvDict, (void_val-3000), (entero_val-1000), (float_val-2000)]
+		mtemp = [dvDict, (void_val-1000), (entero_val-2000), (float_val-3000)]
 		mtemp.extend(avail.get_temp_dir())
 		direc["globales"] = mtemp
 		hashT.clear()
-		entero_val = 1000
-		float_val = 2000
-		void_val = 3000
+		entero_val = 2000
+		float_val = 3000
+		void_val = 1000
 		
 def p_glob(p):
 		'''glob : GL'''
@@ -189,12 +194,12 @@ def p_varFunciones(p):
 		'''varFunciones : loc var'''
 		bloque_dir(hashT, 3)
 		global entero_val, float_val, void_val, idF
-		direc[idF][2] = (void_val-3000)
-		direc[idF][3] = (entero_val-1000)
-		direc[idF][4] = (float_val-2000)
-		void_val = 3000
-		entero_val = 1000
-		float_val = 2000
+		direc[idF][2] = (void_val-1000)
+		direc[idF][3] = (entero_val-2000)
+		direc[idF][4] = (float_val-3000)
+		void_val = 1000
+		entero_val = 2000
+		float_val = 3000
 		
 def p_locales(p):
 		'''locales : var'''
