@@ -5,10 +5,10 @@ class avail:
 		cubo_semantico = None
 
 		def _init_(self):
-				self.temp_entero = 2000
-				self.temp_flotante = 3000
 				self.temp_booleano = 4000
-				self.temp_dir = 5000
+				self.temp_entero = 5000
+				self.temp_flotante = 6000
+				self.temp_dir = 7000
 				self.bloque = 0
 				self.PilaOp = Pila() #Pila de operadores
 				self.POper = Pila() #Pila de operandos
@@ -179,10 +179,10 @@ class avail:
 		def setBloque(self, bloque):
 		#resetea la memoria para el siguiente bloque
 			self.bloque = bloque
-			self.temp_entero = 2000
-			self.temp_flotante = 3000
 			self.temp_booleano = 4000
-			self.temp_dir = 5000
+			self.temp_entero = 5000
+			self.temp_flotante = 6000
+			self.temp_dir = 7000
 			
 		def getBloque(self):
 		#regresa el bloque actual
@@ -190,7 +190,7 @@ class avail:
 			
 		def get_temp_dir(self):
 		#regresa la memoria necesaria para las temporales
-			return [(self.temp_entero-2000), (self.temp_flotante-3000), (self.temp_booleano-4000), (self.temp_dir-5000)]
+			return [(self.temp_booleano-4000), (self.temp_entero-5000), (self.temp_flotante-6000), (self.temp_dir-7000)]
 		
 		def expresion(self):
 		#si hay una expresion para resolver
