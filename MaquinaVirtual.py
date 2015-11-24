@@ -141,15 +141,6 @@ def colorRelleno():
 		azul = memoria.getValor(quad[quadActual][3])
 		colorRell = obtenerColor(rojo, verde, azul)
 		quadActual += 1
-
-def backColor():
-		global quadActual
-		rojo = memoria.getValor(quad[quadActual][1])
-		verde = memoria.getValor(quad[quadActual][2])
-		azul = memoria.getValor(quad[quadActual][3])
-		color = obtenerColor(rojo, verde, azul)
-		w.configure(background=color) 
-		quadActual += 1
 			
 #Funcion que cambia el gros 
 def grosor():
@@ -305,7 +296,7 @@ def poligono():
 				w.create_polygon(vertices, fill='', outline=colorCont, width=gros)
 		quadActual += 1
 
-#--------------------
+#--------------------		
 def get_x_and_y(angle, hypotenus):
 #detetrmines the end of the line, basic mathematics
 	if(angle < 45):
@@ -427,7 +418,7 @@ def goto_falso():
 #Creacion de la memoria para la funcion llamada
 def era():
 		global quadActual
-		temporal = pro(quad[quadActual][3])
+		temporal = pro[quad[quadActual][3]]
 		memoria.setFunciones(temporal[0], temporal[1], temporal[2], temporal[3], temporal[4], temporal[5], temporal[6])
 		quadActual += 1
 
@@ -437,7 +428,7 @@ def param():
 		if quad[quadActual][3][1] == '7':
 			memoria.escribeValorApuntado(quad[quadActual][3], quad[quadActual][1], 1)
 		else:
-			memoria.escribeValor(quad[quadActual][3], quad[quadActual][1])
+			memoria.escribeValorS(quad[quadActual][3], memoria.getValor(quad[quadActual][1]))
 		quadActual += 1
 		
 #Guarda el cuadruplo actual, da la posicion a la cual va a regresar y cambia el scope actual y el cuadruplo
@@ -524,8 +515,8 @@ opciones = { '+' : suma,
 		'209' : relleno,
 		'301' : colorContorno,
 		'302' : colorRelleno,
-		'303' : backColor,
 		'304' : grosor,
+#-----------------------------
 		'307' : penpos,
 		'308' : penX,
 		'309' : penY,
@@ -534,6 +525,7 @@ opciones = { '+' : suma,
 		'311' : penDown,
 		'312' : penLeft,
 		'313' : penRight,
+#-----------------------------
 		'ERA' : era,
 		'PARAMETRO' : param,
 		'GOSUB' : goSub,

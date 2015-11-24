@@ -1,5 +1,5 @@
 class Pila:
-	def _init_(self):
+	def __init__(self):
 		self.items = []
 		
 	def push(self, item):

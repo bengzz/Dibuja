@@ -78,6 +78,6 @@ class Memoria:
 			del self.temp_bloque_bool
 			del self.temp_bloque_entero
 			del self.temp_bloque_float
-			del self.temp.pointers
+			del self.pointers
 		
 			

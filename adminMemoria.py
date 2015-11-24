@@ -39,7 +39,7 @@ class AdminMemoria:
 		
 	def borrar_funcion(self):
 	#destruye la memoria asignada para la funcion y regresa al alcance anterior
-			self.funciones[self.alcanceActual].releseMem()
+			self.funciones[self.alcanceActual].dejarMemoria()
 			del self.funciones[self.alcanceActual]
 			self.alcanceActual -= 1
 		
@@ -55,7 +55,7 @@ class AdminMemoria:
 					dirV = self.main.leerValor(dirV-20000)
 				elif((dirV-30000) < 10000):
 				#valores de funciones
-					dirV = self.funciones[self.alacanceActual].leerValor(dirV-30000)
+					dirV = self.funciones[self.alcanceActual].leerValor(dirV-30000)
 				dirV = str(dirV)
 			dirV = int(dirV)
 		#imprime la direccion, dirV
@@ -97,7 +97,7 @@ class AdminMemoria:
 					dirV = self.main.leerValor(dirV-20000)
 				elif((dirV-30000) < 10000):
 				#valores de funciones
-					dirV = self.funciones[self.alacanceActual+1].leerValor(dirV-30000)
+					dirV = self.funciones[self.alcanceActual+1].leerValor(dirV-30000)
 				dirV = str(dirV)
 			dirV = int(dirV)
 		#imprime la direccion, dirV
@@ -130,7 +130,7 @@ class AdminMemoria:
 					dirV = self.main.leerValor(dirV-20000)
 				elif((dirV-30000) < 10000):
 				#valores de funciones
-					dirV = self.funciones[self.alacanceActual].leerValor(dirV-30000)
+					dirV = self.funciones[self.alcanceActual].leerValor(dirV-30000)
 				dirV = str(dirV)
 			dirV = int(dirV)
 		#imprime la direccion, dirV
@@ -204,7 +204,7 @@ class AdminMemoria:
 			print self.constante_entero, " ", self.constante_flotante
 		
 	def push_apuntador(self, valor):
-			self.apuntador.push(value)
+			self.apuntador.push(valor)
 		
 	def pop_apuntador(self):
 			return self.apuntador.pop()
