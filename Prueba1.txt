@@ -1,16 +1,20 @@
 programa
-princ
-[ 
-var
-entero x[6] = [3.4,33, 99,21, 31, 4];
-flotante h=9;
+global var 
+entero j;
+funcion entero hoho(entero h){
+rectangulo(h+10,9,fondo);
+si(h < 0){
+ regresar 9;
+} sino {
+ hoho(h-1);
+}
+}
+princ 
+[
 {
-rectangulo(90,100);
-repetir 8 {
- h = h+2;
- relleno(h, 123, 223);
- posicion(10*h,250);
- cuadrado(h, fondo);
-} 
+	relleno(255, 45, 78);
+	grosor(3);
+	contorno(35, 45, 178);
+	hoho(8);	
 }
 ]

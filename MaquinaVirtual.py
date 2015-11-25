@@ -212,9 +212,9 @@ def rectangulo():
 			w.create_rectangle(x, y, x2, y2, fill=colorRell, outline=colorCont, width=gros)	
 		else:
 			w.create_rectangle(x, y, x2, y2, fill='', outline=colorCont, width=gros )
-			memoria.escribeValor('41000', x2)
-			memoria.escribeValor('41001', y2)
-			quadActual += 1
+		memoria.escribeValor('41000', x2)
+		memoria.escribeValor('41001', y2)
+		quadActual += 1
 			
 #Funcion que crea un rectangulo
 def cuadrado():
@@ -225,9 +225,9 @@ def cuadrado():
         y2 = y + memoria.getValor(quad[quadActual][1])
         
         if(relleno):
-        	w.create_rectangle(x, y, x2, y2, fill=colorRell, outline=colorCont, width=gros)
+        		w.create_rectangle(x, y, x2, y2, fill=colorRell, outline=colorCont, width=gros)
         else:
-        	w.create_rectangle(x, y, x2, y2, fill='', outline=colorCont, width=gros)
+        		w.create_rectangle(x, y, x2, y2, fill='', outline=colorCont, width=gros)
         memoria.escribeValor('41000', x2)
         memoria.escribeValor('41001', y2)
         quadActual += 1
