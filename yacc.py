@@ -153,7 +153,10 @@ def p_arrD(p):
 		for value, vDir in cnst.iteritems():
 			if exp == vDir :
 				apuntadorD = value
-				
+	
+#Funciones------------------------------------------------------------
+
+#Regresar------------------------------------------------------------
 def p_Regresar(p):	
 	'''Regresar : RT Regresar2 PC'''
 	if(avail.getalcance() == 'princ'):
@@ -166,7 +169,16 @@ def p_Regresar2(p):
 	global vacia, TipoV
 	avail.funcion_return(vacia, dir_var(avail.getalcance()))
 	vacia = False
-#Funciones------------------------------------------------------------
+#Regresar------------------------------------------------------------
+
+#Bloque------------------------------------------------------------
+def p_Bloque(p):
+	'''Bloque : LB Bloque3 RB'''
+
+def p_Bloque3(p):
+	'''Bloque3 : Estatuto Bloque3
+| vacia '''
+#Bloque------------------------------------------------------------
 
 #Variables------------------------------------------------------------
 def p_globales(p):
@@ -314,6 +326,15 @@ def p_var22(p):
 				
 #Variables------------------------------------------------------------
 
+#Estatuto------------------------------------------------------------
+def p_Estatuto(p):
+	'''Estatuto : Objeto 
+	| Condicion 
+	| Asignacion
+	| Ciclo
+	| Regresar'''
+#Estatuto------------------------------------------------------------
+
 #Tipo----------------------------------------------------------------
 
 def p_tipo(p):
@@ -324,106 +345,6 @@ def p_tipo(p):
 	TipoA = p[1]
 
 #Tipo----------------------------------------------------------------
-
-#Objeto----------------------------------------------------------------
-def p_position(p):
-	'''position : XY AP exp C exp CP PC'''
-	avail.append_quad_dos(307)
-
-def p_colors(p):
-	'''colors : CONTORNO AP exp C exp C exp CP PC 
-| RELLENO AP exp C exp C exp CP PC'''
-	if(p[1] == 'penColor'):
-		fun = 301
-	elif(p[1] == 'setColor'):
-		fun = 302
-	else:
-		fun = 303
-	avail.append_quad_three(fun)
-
-
-def p_p_Width(p):
-	'''p_Width : GROSOR AP exp CP PC '''
-#penWidth quad.
-	avail.append_quad_uno(304)
-
-def p_penwrite(p):
-	'''penwrite : PX AP exp CP PC 
-| PY AP exp CP PC'''
-#pen x, y, up, down, left, righashT quad.
-	if(p[1] == 'px'):
-		sC = 308
-	elif p[1] == 'py':
-		sC = 309
-	avail.append_quad_uno(sC)
-
-def p_Cuadrado(p):
-	'''Cuadrado : REC AP exp C exp p_fill CP PC'''
-	avail.append_quad_dos(201)
-
-def p_p_fill(p):
-	'''p_fill : C Fondo 
-| vacia'''
-	if(len(p) == 3):
-		sC = [209, -1, -1, 1]
-	else:
-		sC = [209, -1, -1, -1]
-	avail.append_quad(sC)
-
-def p_Triangulo(p):
-	'''Triangulo : TRI AP AC exp C exp CC C AC exp C exp CC C AC exp C exp CC p_fill CP PC'''
-	avail.append_quad_tri(202)
-
-def p_uno_par(p):
-	'''uno_par : CIR AP exp p_fill CP PC
-| SQ AP exp p_fill CP PC'''
-	if(p[1] == 'circle'):
-		sC = 203
-	else:
-		sC = 204
-	avail.append_quad_uno(sC)
-
-def p_Poligono(p):
-	'''Poligono : POL AP idList p_fill CP PC'''
-	avail.append_quad_dos(205)
-
-def p_Linea(p):
-	'''Linea : LS AP idList CP PC'''
-	avail.append_quad_dos(206)
-
-def p_idList(p):
-	'''idList : ID'''
-	variables_declaradas(p[1])
-	dimention = dim(p[1])
-	if dim(p[1]) == -1:
-		print "dimension error"
-		sys.error(0)
-	avail.OPila_push(dir_var(p[1]))
-	avail.OPila_push(dimention)
-
-def p_Arco(p):
-	'''Arco : ARC AP exp p_fill CP PC'''
-	avail.append_quad_uno(207)
-
-def p_Texto(p):
-	'''Texto : LA AP STR CP PC'''
-	global void_val, cnst_void_val
-	sub = 1
-	start = void_val - 1000
-	strDir = void_val + (avail.getBloque() * 10000)
-	word = p[3]
-	while sub < len(word)-1:
-		if word[sub] not in cnst:
-			cnst[word[sub]] = cnst_void_val
-			cnst_void_val += 1
-		sC = ['101',  cnst[word[sub]], -1, (void_val + (avail.getBloque() * 10000))]
-		void_val += 1
-		avail.append_quad(sC)
-		sub += 1
-	finish = void_val - 1000	-1
-	sC = ['208',  strDir , start, finish]
-	avail.append_quad(sC)
-#Objeto----------------------------------------------------------------
 
 #Expresion----------------------------------------------------------------
 def p_expresion(p):
@@ -442,6 +363,9 @@ def p_ex3(p):
 | LTH
 | MTH'''
 	avail.OpPila_push(p[1])
+#Expresion----------------------------------------------------------------
+
+#exp----------------------------------------------------------------
 
 def p_exp(p):
 	'''exp : Termino exprog2'''
@@ -460,7 +384,7 @@ def p_exprog3(p):
 	'''exprog3 : SUM 
 | RES'''
 	avail.OpPila_push(p[1])
-#Expresion----------------------------------------------------------------
+#exp----------------------------------------------------------------
 
 #Termino----------------------------------------------------------------
 def p_Termino(p):
@@ -562,21 +486,38 @@ def p_varCte(p):
 
 #varCte----------------------------------------------------------------
 
-#Ciclo----------------------------------------------------------------
+#Condicion------------------------------------------------------------
+def p_Condicion(p):
+	'''Condicion : SI AP expresion condicion2 Bloque condicion3'''
+	avail.condicion_inicio()
 
-def p_Ciclo(p):
-	'''Ciclo : RE Cicloprog3 Bloque'''
-	avail.rep_salto(cnst['1'], cnst['0'])
+def p_condicion2(p):
+	'''condicion2 : CP'''
+	avail.condicion()
+				
 
-def p_Cicloprog3(p):
-	'''Cicloprog3 : varCte
-| ID'''
-	if p[1] != None:
-		variables_declaradas(p[1])
-		avail.TPila_push(tipo_variable(p[1], "var"))
-		avail.OPila_push(dir_var(p[1]))
-	avail.rep()
-	
+def p_condicion3(p):
+	'''condicion3 : vacia  
+| con3 Bloque'''
+
+def p_con3(p):
+	'''con3 : SINO '''
+	avail.condition_else()
+#Condicion------------------------------------------------------------
+
+#Asignacion------------------------------------------------------------
+def p_Asignacion2(p):
+	'''Asignacion2 : Asigna
+| PC'''
+
+def p_Asigna(p):
+	'''Asigna : IG AsignaT'''
+	global idF
+	idF = "asig"
+
+def p_AsignaT(p):
+	'''AsignaT : exp PC
+| lAsigna '''
 
 def p_Asignacion(p):
 	'''Asignacion : faID Factor5 Asignacion2'''
@@ -625,21 +566,6 @@ def p_Asignacion(p):
 						sys.error(0)
 					cont += 1 
 	CHF[:] = []
-#Ciclo----------------------------------------------------------------
-
-#Asignacion------------------------------------------------------------
-def p_Asignacion2(p):
-	'''Asignacion2 : Asigna
-| PC'''
-
-def p_Asigna(p):
-	'''Asigna : IG AsignaT'''
-	global idF
-	idF = "asig"
-
-def p_AsignaT(p):
-	'''AsignaT : exp PC
-| lAsigna '''
 #Asignacion------------------------------------------------------------
 
 #Llamada------------------------------------------------------------
@@ -684,33 +610,23 @@ def p_lAsigna(p):
 		DT = False
 #Llamada------------------------------------------------------------
 
-#Condicion------------------------------------------------------------
-def p_Condicion(p):
-	'''Condicion : SI AP expresion condicion2 Bloque condicion3'''
-	avail.condicion_inicio()
+#Ciclo----------------------------------------------------------------
 
-def p_condicion2(p):
-	'''condicion2 : CP'''
-	avail.condicion()
-				
+def p_Ciclo(p):
+	'''Ciclo : RE Cicloprog3 Bloque'''
+	avail.rep_salto(cnst['1'], cnst['0'])
 
-def p_condicion3(p):
-	'''condicion3 : vacia  
-| con3 Bloque'''
+def p_Cicloprog3(p):
+	'''Cicloprog3 : varCte
+| ID'''
+	if p[1] != None:
+		variables_declaradas(p[1])
+		avail.TPila_push(tipo_variable(p[1], "var"))
+		avail.OPila_push(dir_var(p[1]))
+	avail.rep()
+#Ciclo----------------------------------------------------------------
 
-def p_con3(p):
-	'''con3 : SINO '''
-	avail.condition_else()
-#Condicion------------------------------------------------------------
-
-#Bloque y Estatuto------------------------------------------------------------
-def p_Bloque(p):
-	'''Bloque : LB Bloque3 RB'''
-
-def p_Bloque3(p):
-	'''Bloque3 : Estatuto Bloque3
-| vacia '''
-
+#Objeto----------------------------------------------------------------
 def p_Objeto(p):
 	'''Objeto : Cuadrado
 	| Triangulo
@@ -719,15 +635,104 @@ def p_Objeto(p):
 	| uno_par
 	| Arco
 	| Texto'''
+	
+def p_position(p):
+	'''position : XY AP exp C exp CP PC'''
+	avail.append_quad_dos(307)
 
-def p_Estatuto(p):
-	'''Estatuto : Objeto 
-	| Condicion 
-	| Asignacion
-	| Ciclo
-	| Regresar'''
-#Bloque y Estatuto------------------------------------------------------------
+def p_colors(p):
+	'''colors : CONTORNO AP exp C exp C exp CP PC 
+| RELLENO AP exp C exp C exp CP PC'''
+	if(p[1] == 'penColor'):
+		fun = 301
+	elif(p[1] == 'setColor'):
+		fun = 302
+	else:
+		fun = 303
+	avail.append_quad_three(fun)
 
+
+def p_p_Width(p):
+	'''p_Width : GROSOR AP exp CP PC '''
+	avail.append_quad_uno(304)
+
+def p_penwrite(p):
+	'''penwrite : PX AP exp CP PC 
+| PY AP exp CP PC'''
+	if(p[1] == 'px'):
+		sC = 308
+	elif p[1] == 'py':
+		sC = 309
+	avail.append_quad_uno(sC)
+
+def p_Cuadrado(p):
+	'''Cuadrado : REC AP exp C exp p_fill CP PC'''
+	avail.append_quad_dos(201)
+
+def p_p_fill(p):
+	'''p_fill : C Fondo 
+| vacia'''
+	if(len(p) == 3):
+		sC = [209, -1, -1, 1]
+	else:
+		sC = [209, -1, -1, -1]
+	avail.append_quad(sC)
+
+def p_Triangulo(p):
+	'''Triangulo : TRI AP AC exp C exp CC C AC exp C exp CC C AC exp C exp CC p_fill CP PC'''
+	avail.append_quad_tri(202)
+
+def p_uno_par(p):
+	'''uno_par : CIR AP exp p_fill CP PC
+| SQ AP exp p_fill CP PC'''
+	if(p[1] == 'circle'):
+		sC = 203
+	else:
+		sC = 204
+	avail.append_quad_uno(sC)
+
+def p_Poligono(p):
+	'''Poligono : POL AP idList p_fill CP PC'''
+	avail.append_quad_dos(205)
+
+def p_Linea(p):
+	'''Linea : LS AP idList CP PC'''
+	avail.append_quad_dos(206)
+
+def p_idList(p):
+	'''idList : ID'''
+	variables_declaradas(p[1])
+	dimention = dim(p[1])
+	if dim(p[1]) == -1:
+		print "dimension error"
+		sys.error(0)
+	avail.OPila_push(dir_var(p[1]))
+	avail.OPila_push(dimention)
+
+def p_Arco(p):
+	'''Arco : ARC AP exp p_fill CP PC'''
+	avail.append_quad_uno(207)
+
+def p_Texto(p):
+	'''Texto : LA AP STR CP PC'''
+	global void_val, cnst_void_val
+	sub = 1
+	start = void_val - 1000
+	strDir = void_val + (avail.getBloque() * 10000)
+	word = p[3]
+	while sub < len(word)-1:
+		if word[sub] not in cnst:
+			cnst[word[sub]] = cnst_void_val
+			cnst_void_val += 1
+		sC = ['101',  cnst[word[sub]], -1, (void_val + (avail.getBloque() * 10000))]
+		void_val += 1
+		avail.append_quad(sC)
+		sub += 1
+	finish = void_val - 1000	-1
+	sC = ['208',  strDir , start, finish]
+	avail.append_quad(sC)
+#Objeto----------------------------------------------------------------
+	
 def p_pen(p):
 	'''pen : colors 
 | p_Width  
