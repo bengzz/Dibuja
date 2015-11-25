@@ -1,0 +1,54 @@
+programa
+funcion entero sort(entero c, entero &l[6])
+var entero i, p, min, ci, j;
+{
+	si(l[6] == 6){
+	cuadrado(3);
+	}
+	l[1] = 100;
+	i = 0;
+	repetir c {
+	min = l[i];
+	p = i;
+	j = i + 1;
+	ci = c - j;
+	
+	si(ci >0){
+		repetir ci{
+			si(l[j] < min){
+				min = l[j];
+				p = j;
+			}
+		j = j+1;
+	}
+
+	l[p] = l[i];
+	l[i] = min;
+	i = i + 1;
+}
+}
+regresar;
+}
+princ
+[ 
+var 
+entero j=9 , n=4 ,p=5, k[6] = [20,10,2,50,31];
+entero  cuenta;
+{
+	relleno(255, 50, 61);
+	grosor(3);
+	contorno(30, 255, 190);
+rectangulo(k[6], k[0]);
+cuenta = 0;
+repetir 8{
+cuadrado(k[cuenta]);
+cuenta = cuenta + 1;
+}
+sort(6, k);
+cuenta = 0;
+repetir 8{
+cuadrado(k[cuenta], fondo);
+cuenta = cuenta + 1;
+}
+}
+]

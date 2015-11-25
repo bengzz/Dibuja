@@ -1,0 +1,15 @@
+programa
+global var entero F = 8;
+princ 
+[
+{
+repetir 8{
+posicion(20*F,250);
+relleno(255, 255, 78);
+grosor(4);
+contorno(35, 45, 178);
+rectangulo(F+10,9,fondo);
+F = F - 1;
+}
+}
+]

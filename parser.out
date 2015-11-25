@@ -1,9 +1,5 @@
 Created by PLY version 3.8 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    A
-
 Grammar
 
 Rule 0     S' -> prog
@@ -25,7 +21,7 @@ Rule 15    func -> vacia
 Rule 16    fun2 -> C fun1 fun2
 Rule 17    fun2 -> vacia
 Rule 18    fun1 -> tipo arreglo ID arrD
-Rule 19    arreglo -> P
+Rule 19    arreglo -> APN
 Rule 20    arreglo -> vacia
 Rule 21    arrD -> AC exp CC
 Rule 22    arrD -> vacia
@@ -153,9 +149,9 @@ Rule 143   vacia -> <empty>
 
 Terminals, with rules where they appear
 
-A                    : 
 AC                   : 1 21 43 48 89 135 135 135
 AP                   : 9 47 49 85 95 107 128 129 130 131 132 135 136 137 138 139 141 142
+APN                  : 19
 ARC                  : 141
 C                    : 16 38 47 49 49 51 110 113 128 129 129 130 130 132 133 135 135 135 135 135
 CC                   : 1 21 48 53 89 135 135 135
@@ -181,7 +177,6 @@ MA                   : 66
 ME                   : 65
 MTH                  : 70
 MUL                  : 81
-P                    : 19
 PC                   : 23 35 101 103 113 128 129 130 131 132 135 136 137 138 139 141 142
 POL                  : 138
 PRINC                : 2
@@ -597,7 +592,7 @@ state 29
     (61) tipo -> FLOT .
 
     ID              reduce using rule 61 (tipo -> FLOT .)
-    P               reduce using rule 61 (tipo -> FLOT .)
+    APN             reduce using rule 61 (tipo -> FLOT .)
 
 
 state 30
@@ -605,7 +600,7 @@ state 30
     (60) tipo -> ENT .
 
     ID              reduce using rule 60 (tipo -> ENT .)
-    P               reduce using rule 60 (tipo -> ENT .)
+    APN             reduce using rule 60 (tipo -> ENT .)
 
 
 state 31
@@ -1471,14 +1466,14 @@ state 80
 state 81
 
     (18) fun1 -> tipo . arreglo ID arrD
-    (19) arreglo -> . P
+    (19) arreglo -> . APN
     (20) arreglo -> . vacia
     (143) vacia -> .
 
-    P               shift and go to state 130
+    APN             shift and go to state 131
     ID              reduce using rule 143 (vacia -> .)
 
-    arreglo                        shift and go to state 131
+    arreglo                        shift and go to state 130
     vacia                          shift and go to state 129
 
 state 82
@@ -2355,16 +2350,16 @@ state 129
 
 state 130
 
-    (19) arreglo -> P .
+    (18) fun1 -> tipo arreglo . ID arrD
 
-    ID              reduce using rule 19 (arreglo -> P .)
+    ID              shift and go to state 177
 
 
 state 131
 
-    (18) fun1 -> tipo arreglo . ID arrD
+    (19) arreglo -> APN .
 
-    ID              shift and go to state 177
+    ID              reduce using rule 19 (arreglo -> APN .)
 
 
 state 132

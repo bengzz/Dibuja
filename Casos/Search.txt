@@ -1,0 +1,24 @@
+programa
+funcion entero search(entero &d[6], entero number, entero c)
+var entero pos, cont = 0;
+{
+	c = c + 1;
+	repetir c{
+		si(d[cont] == number){
+			pos = cont;
+		}
+		cuadrado(d[cont], fondo);
+		cont = cont + 1;
+	}
+	regresar pos;
+}
+princ
+[ 
+var entero x[10] = [3.4,33, 19,21, 21, 4, 5, 7.2, 51,6];
+flotante h=9;
+{
+contorno(255,230,51);
+relleno(200,120,40);
+h = search(x, 4, 6);
+}
+]

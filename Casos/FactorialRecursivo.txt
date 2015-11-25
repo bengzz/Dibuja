@@ -1,0 +1,19 @@
+programa
+funcion entero Factorial(entero F){
+rectangulo(F+10,9,fondo);
+si(F < 0){
+ regresar 9;
+} sino {
+ Factorial(F-1);
+}
+}
+princ 
+[
+{
+	posicion(250,250);
+	relleno(255, 255, 78);
+	grosor(4);
+	contorno(35, 45, 178);
+	Factorial(8);	
+}
+]

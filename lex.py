@@ -17,7 +17,6 @@ reserved = {
    'circulo' : 'CIR',
    'cuadrado' : 'SQ',
    'poligono' : 'POL',
-   'angulo' : 'A',
    'arco' : 'ARC',
    'linea' : 'LS',
    'repetir' : 'RE',
@@ -30,11 +29,11 @@ reserved = {
 }
 
 tokens = [
-	'LB', 'RB', 'C', 'AP', 'CP', 'IG', 'VALI', 'VALF', 'CI', 'CD', 'MA', 'ME', 'SUM', 'RES', 'MUL', 'DIV', 'STR', 'PC', 'ID', 'AC', 'CC', 'MTH', 'LTH', 'P'
+	'LB', 'RB', 'C', 'AP', 'CP', 'IG', 'VALI', 'VALF', 'CI', 'CD', 'MA', 'ME', 'SUM', 'RES', 'MUL', 'DIV', 'STR', 'PC', 'ID', 'AC', 'CC', 'MTH', 'LTH', 'APN'
 	] + list(reserved.values())
 
 t_ignore 	= ' \t\n\r'
-t_P     		= r'&'
+t_APN    	= r'&'
 t_IG     	= r'='
 t_MA      	= r'>'
 t_ME      	= r'<'

@@ -136,7 +136,7 @@ def p_fun1(p):
 	contadoCP += 1
 
 def p_arr(p):
-	'''arreglo : P
+	'''arreglo : APN
 | vacia '''
 	global apuntador
 	if p[1] == '&':
