@@ -35,20 +35,20 @@ reserved = {
 
 #List of token name.
 tokens = [
-	'LB', 'RB', 'C', 'AP', 'CP', 'IG', 'VALI', 'VALF', 'SEQ', 'D', 'MT', 'LT', 'ADD', 'SUB', 'M', 'DIV', 'STR', 'PC', 'ID', 'AC', 'CC', 'MET', 'LET', 'P'
+	'LB', 'RB', 'C', 'AP', 'CP', 'IG', 'VALI', 'VALF', 'CI', 'CD', 'MA', 'ME', 'SUM', 'RES', 'MUL', 'DIV', 'STR', 'PC', 'ID', 'AC', 'CC', 'MTH', 'LTH', 'P'
 	] + list(reserved.values())
 
 t_ignore 	= ' \t\n\r'
 t_P     	= r'&'
 t_IG     	= r'='
-t_MT      	= r'>'
-t_LT      	= r'<'
-t_LET      	= r'<='
-t_MET      	= r'>='
-t_D             = r'<>'
-t_ADD     	= r'\+'
-t_SUB    	= r'-'
-t_M     	= r'\*'
+t_MA      	= r'>'
+t_ME      	= r'<'
+t_LTH      	= r'<='
+t_MTH      	= r'>='
+t_CD             = r'!='
+t_SUM     	= r'\+'
+t_RES    	= r'-'
+t_MUL     	= r'\*'
 t_DIV  		= r'/'
 t_PC    	= r';'
 t_C     	= r'\,'
@@ -61,7 +61,7 @@ t_CC      = r'\]'
 t_VALI  	= r'\d+'
 t_VALF  	= r'\d+\.\d+'
 t_STR		= r'\'.*\''
-t_SEQ		= r'=='
+t_CI		= r'=='
 
 def t_ID(t):
     r'[a-zA-Z][a-zA-Z0-9]*'

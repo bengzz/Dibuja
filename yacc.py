@@ -435,12 +435,12 @@ def p_ex2(p):
 	avail.expresion()
 
 def p_ex3(p):
-	'''ex3 : LT 
-| MT 
-| D 
-| SEQ
-| LET
-| MET'''
+	'''ex3 : ME 
+| MA 
+| CD 
+| CI
+| LTH
+| MTH'''
 	avail.OpPila_push(p[1])
 
 def p_exp(p):
@@ -457,8 +457,8 @@ def p_exp4(p):
 	avail.sum_res()
 
 def p_exprog3(p):
-	'''exprog3 : ADD 
-| SUB'''
+	'''exprog3 : SUM 
+| RES'''
 	avail.OpPila_push(p[1])
 #Expresion----------------------------------------------------------------
 
@@ -475,7 +475,7 @@ def p_Termino4(p):
 	avail.mult_div()	
 
 def p_Termino3(p):
-	'''Termino3 : M 
+	'''Termino3 : MUL 
 | DIV'''
 	avail.OpPila_push(p[1])
 #Termino----------------------------------------------------------------

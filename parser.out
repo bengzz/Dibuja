@@ -80,23 +80,23 @@ Rule 70    Texto -> LA AP STR CP PC
 Rule 71    expresion -> exp ex2
 Rule 72    ex2 -> ex3 exp
 Rule 73    ex2 -> vacia
-Rule 74    ex3 -> LT
-Rule 75    ex3 -> MT
-Rule 76    ex3 -> D
-Rule 77    ex3 -> SEQ
-Rule 78    ex3 -> LET
-Rule 79    ex3 -> MET
+Rule 74    ex3 -> ME
+Rule 75    ex3 -> MA
+Rule 76    ex3 -> CD
+Rule 77    ex3 -> CI
+Rule 78    ex3 -> LTH
+Rule 79    ex3 -> MTH
 Rule 80    exp -> Termino exprog2
 Rule 81    exprog2 -> exp4 exprog3 exp
 Rule 82    exprog2 -> exp4 vacia
 Rule 83    exp4 -> vacia
-Rule 84    exprog3 -> ADD
-Rule 85    exprog3 -> SUB
+Rule 84    exprog3 -> SUM
+Rule 85    exprog3 -> RES
 Rule 86    Termino -> Factor Termino2
 Rule 87    Termino2 -> Termino4 Termino3 Termino
 Rule 88    Termino2 -> Termino4 vacia
 Rule 89    Termino4 -> vacia
-Rule 90    Termino3 -> M
+Rule 90    Termino3 -> MUL
 Rule 91    Termino3 -> DIV
 Rule 92    Factor -> Factor2 exp CP
 Rule 93    Factor -> Factor4
@@ -157,15 +157,15 @@ Terminals, with rules where they appear
 
 A                    : 
 AC                   : 1 21 40 45 63 63 63 98
-ADD                  : 84
 AP                   : 9 44 46 54 55 56 57 58 59 60 63 64 65 66 67 69 70 94 114 121
 ARC                  : 69
 C                    : 16 35 44 46 46 48 54 55 55 56 56 60 61 63 63 63 63 63 117 120
 CC                   : 1 21 45 50 63 63 63 98
+CD                   : 76
+CI                   : 77
 CIR                  : 64
 CONTORNO             : 55
 CP                   : 9 44 46 54 55 56 57 58 59 60 63 64 65 66 67 69 70 92 113 122
-D                    : 76
 DIV                  : 91
 ENT                  : 52
 FLOT                 : 53
@@ -177,12 +177,12 @@ ID                   : 10 18 37 68 97 106
 IG                   : 38 110
 LA                   : 70
 LB                   : 41 44 99 120 126
-LET                  : 78
 LS                   : 67
-LT                   : 74
-M                    : 90
-MET                  : 79
-MT                   : 75
+LTH                  : 78
+MA                   : 75
+ME                   : 74
+MTH                  : 79
+MUL                  : 90
 P                    : 19
 PC                   : 23 32 54 55 56 57 58 59 60 63 64 65 66 67 69 70 109 111 120
 POL                  : 66
@@ -194,13 +194,13 @@ RB                   : 44 51 99 120 126
 RE                   : 104
 REC                  : 60
 RELLENO              : 56
+RES                  : 85
 RT                   : 23
-SEQ                  : 77
 SI                   : 121
 SINO                 : 125
 SQ                   : 65
 STR                  : 70
-SUB                  : 85
+SUM                  : 84
 TRI                  : 63
 V                    : 30
 VALF                 : 103
@@ -1112,21 +1112,21 @@ state 61
     AC              reduce using rule 97 (faID -> ID .)
     LB              reduce using rule 97 (faID -> ID .)
     AP              reduce using rule 97 (faID -> ID .)
-    M               reduce using rule 97 (faID -> ID .)
+    MUL             reduce using rule 97 (faID -> ID .)
     DIV             reduce using rule 97 (faID -> ID .)
-    ADD             reduce using rule 97 (faID -> ID .)
-    SUB             reduce using rule 97 (faID -> ID .)
+    SUM             reduce using rule 97 (faID -> ID .)
+    RES             reduce using rule 97 (faID -> ID .)
     RB              reduce using rule 97 (faID -> ID .)
     CP              reduce using rule 97 (faID -> ID .)
+    C               reduce using rule 97 (faID -> ID .)
     PC              reduce using rule 97 (faID -> ID .)
     CC              reduce using rule 97 (faID -> ID .)
-    C               reduce using rule 97 (faID -> ID .)
-    LT              reduce using rule 97 (faID -> ID .)
-    MT              reduce using rule 97 (faID -> ID .)
-    D               reduce using rule 97 (faID -> ID .)
-    SEQ             reduce using rule 97 (faID -> ID .)
-    LET             reduce using rule 97 (faID -> ID .)
-    MET             reduce using rule 97 (faID -> ID .)
+    ME              reduce using rule 97 (faID -> ID .)
+    MA              reduce using rule 97 (faID -> ID .)
+    CD              reduce using rule 97 (faID -> ID .)
+    CI              reduce using rule 97 (faID -> ID .)
+    LTH             reduce using rule 97 (faID -> ID .)
+    MTH             reduce using rule 97 (faID -> ID .)
     IG              reduce using rule 97 (faID -> ID .)
 
 
@@ -1487,20 +1487,20 @@ state 86
 
     PC              reduce using rule 101 (Factor5 -> vacia .)
     IG              reduce using rule 101 (Factor5 -> vacia .)
-    M               reduce using rule 101 (Factor5 -> vacia .)
+    MUL             reduce using rule 101 (Factor5 -> vacia .)
     DIV             reduce using rule 101 (Factor5 -> vacia .)
-    ADD             reduce using rule 101 (Factor5 -> vacia .)
-    SUB             reduce using rule 101 (Factor5 -> vacia .)
+    SUM             reduce using rule 101 (Factor5 -> vacia .)
+    RES             reduce using rule 101 (Factor5 -> vacia .)
     CC              reduce using rule 101 (Factor5 -> vacia .)
     RB              reduce using rule 101 (Factor5 -> vacia .)
     C               reduce using rule 101 (Factor5 -> vacia .)
     CP              reduce using rule 101 (Factor5 -> vacia .)
-    LT              reduce using rule 101 (Factor5 -> vacia .)
-    MT              reduce using rule 101 (Factor5 -> vacia .)
-    D               reduce using rule 101 (Factor5 -> vacia .)
-    SEQ             reduce using rule 101 (Factor5 -> vacia .)
-    LET             reduce using rule 101 (Factor5 -> vacia .)
-    MET             reduce using rule 101 (Factor5 -> vacia .)
+    ME              reduce using rule 101 (Factor5 -> vacia .)
+    MA              reduce using rule 101 (Factor5 -> vacia .)
+    CD              reduce using rule 101 (Factor5 -> vacia .)
+    CI              reduce using rule 101 (Factor5 -> vacia .)
+    LTH             reduce using rule 101 (Factor5 -> vacia .)
+    MTH             reduce using rule 101 (Factor5 -> vacia .)
 
 
 state 87
@@ -1544,20 +1544,20 @@ state 88
 
     PC              reduce using rule 100 (Factor5 -> Llamada .)
     IG              reduce using rule 100 (Factor5 -> Llamada .)
-    M               reduce using rule 100 (Factor5 -> Llamada .)
+    MUL             reduce using rule 100 (Factor5 -> Llamada .)
     DIV             reduce using rule 100 (Factor5 -> Llamada .)
-    ADD             reduce using rule 100 (Factor5 -> Llamada .)
-    SUB             reduce using rule 100 (Factor5 -> Llamada .)
+    SUM             reduce using rule 100 (Factor5 -> Llamada .)
+    RES             reduce using rule 100 (Factor5 -> Llamada .)
     CC              reduce using rule 100 (Factor5 -> Llamada .)
     RB              reduce using rule 100 (Factor5 -> Llamada .)
     C               reduce using rule 100 (Factor5 -> Llamada .)
     CP              reduce using rule 100 (Factor5 -> Llamada .)
-    LT              reduce using rule 100 (Factor5 -> Llamada .)
-    MT              reduce using rule 100 (Factor5 -> Llamada .)
-    D               reduce using rule 100 (Factor5 -> Llamada .)
-    SEQ             reduce using rule 100 (Factor5 -> Llamada .)
-    LET             reduce using rule 100 (Factor5 -> Llamada .)
-    MET             reduce using rule 100 (Factor5 -> Llamada .)
+    ME              reduce using rule 100 (Factor5 -> Llamada .)
+    MA              reduce using rule 100 (Factor5 -> Llamada .)
+    CD              reduce using rule 100 (Factor5 -> Llamada .)
+    CI              reduce using rule 100 (Factor5 -> Llamada .)
+    LTH             reduce using rule 100 (Factor5 -> Llamada .)
+    MTH             reduce using rule 100 (Factor5 -> Llamada .)
 
 
 state 89
@@ -1636,22 +1636,22 @@ state 93
 
     (102) varCte -> VALI .
 
-    M               reduce using rule 102 (varCte -> VALI .)
+    MUL             reduce using rule 102 (varCte -> VALI .)
     DIV             reduce using rule 102 (varCte -> VALI .)
-    ADD             reduce using rule 102 (varCte -> VALI .)
-    SUB             reduce using rule 102 (varCte -> VALI .)
+    SUM             reduce using rule 102 (varCte -> VALI .)
+    RES             reduce using rule 102 (varCte -> VALI .)
+    PC              reduce using rule 102 (varCte -> VALI .)
+    CC              reduce using rule 102 (varCte -> VALI .)
+    RB              reduce using rule 102 (varCte -> VALI .)
     C               reduce using rule 102 (varCte -> VALI .)
     CP              reduce using rule 102 (varCte -> VALI .)
-    PC              reduce using rule 102 (varCte -> VALI .)
-    RB              reduce using rule 102 (varCte -> VALI .)
+    ME              reduce using rule 102 (varCte -> VALI .)
+    MA              reduce using rule 102 (varCte -> VALI .)
+    CD              reduce using rule 102 (varCte -> VALI .)
+    CI              reduce using rule 102 (varCte -> VALI .)
+    LTH             reduce using rule 102 (varCte -> VALI .)
+    MTH             reduce using rule 102 (varCte -> VALI .)
     LB              reduce using rule 102 (varCte -> VALI .)
-    LT              reduce using rule 102 (varCte -> VALI .)
-    MT              reduce using rule 102 (varCte -> VALI .)
-    D               reduce using rule 102 (varCte -> VALI .)
-    SEQ             reduce using rule 102 (varCte -> VALI .)
-    LET             reduce using rule 102 (varCte -> VALI .)
-    MET             reduce using rule 102 (varCte -> VALI .)
-    CC              reduce using rule 102 (varCte -> VALI .)
 
 
 state 94
@@ -1665,21 +1665,21 @@ state 95
 
     (95) Factor4 -> varCte .
 
-    M               reduce using rule 95 (Factor4 -> varCte .)
+    MUL             reduce using rule 95 (Factor4 -> varCte .)
     DIV             reduce using rule 95 (Factor4 -> varCte .)
-    ADD             reduce using rule 95 (Factor4 -> varCte .)
-    SUB             reduce using rule 95 (Factor4 -> varCte .)
+    SUM             reduce using rule 95 (Factor4 -> varCte .)
+    RES             reduce using rule 95 (Factor4 -> varCte .)
     C               reduce using rule 95 (Factor4 -> varCte .)
     CP              reduce using rule 95 (Factor4 -> varCte .)
-    PC              reduce using rule 95 (Factor4 -> varCte .)
     CC              reduce using rule 95 (Factor4 -> varCte .)
+    PC              reduce using rule 95 (Factor4 -> varCte .)
     RB              reduce using rule 95 (Factor4 -> varCte .)
-    LT              reduce using rule 95 (Factor4 -> varCte .)
-    MT              reduce using rule 95 (Factor4 -> varCte .)
-    D               reduce using rule 95 (Factor4 -> varCte .)
-    SEQ             reduce using rule 95 (Factor4 -> varCte .)
-    LET             reduce using rule 95 (Factor4 -> varCte .)
-    MET             reduce using rule 95 (Factor4 -> varCte .)
+    ME              reduce using rule 95 (Factor4 -> varCte .)
+    MA              reduce using rule 95 (Factor4 -> varCte .)
+    CD              reduce using rule 95 (Factor4 -> varCte .)
+    CI              reduce using rule 95 (Factor4 -> varCte .)
+    LTH             reduce using rule 95 (Factor4 -> varCte .)
+    MTH             reduce using rule 95 (Factor4 -> varCte .)
 
 
 state 96
@@ -1723,22 +1723,22 @@ state 98
 
     (103) varCte -> VALF .
 
-    M               reduce using rule 103 (varCte -> VALF .)
+    MUL             reduce using rule 103 (varCte -> VALF .)
     DIV             reduce using rule 103 (varCte -> VALF .)
-    ADD             reduce using rule 103 (varCte -> VALF .)
-    SUB             reduce using rule 103 (varCte -> VALF .)
+    SUM             reduce using rule 103 (varCte -> VALF .)
+    RES             reduce using rule 103 (varCte -> VALF .)
+    PC              reduce using rule 103 (varCte -> VALF .)
+    CC              reduce using rule 103 (varCte -> VALF .)
+    RB              reduce using rule 103 (varCte -> VALF .)
     C               reduce using rule 103 (varCte -> VALF .)
     CP              reduce using rule 103 (varCte -> VALF .)
-    PC              reduce using rule 103 (varCte -> VALF .)
-    RB              reduce using rule 103 (varCte -> VALF .)
+    ME              reduce using rule 103 (varCte -> VALF .)
+    MA              reduce using rule 103 (varCte -> VALF .)
+    CD              reduce using rule 103 (varCte -> VALF .)
+    CI              reduce using rule 103 (varCte -> VALF .)
+    LTH             reduce using rule 103 (varCte -> VALF .)
+    MTH             reduce using rule 103 (varCte -> VALF .)
     LB              reduce using rule 103 (varCte -> VALF .)
-    LT              reduce using rule 103 (varCte -> VALF .)
-    MT              reduce using rule 103 (varCte -> VALF .)
-    D               reduce using rule 103 (varCte -> VALF .)
-    SEQ             reduce using rule 103 (varCte -> VALF .)
-    LET             reduce using rule 103 (varCte -> VALF .)
-    MET             reduce using rule 103 (varCte -> VALF .)
-    CC              reduce using rule 103 (varCte -> VALF .)
 
 
 state 99
@@ -1754,21 +1754,21 @@ state 99
 
     AC              shift and go to state 84
     LB              shift and go to state 85
-    M               reduce using rule 145 (vacia -> .)
+    MUL             reduce using rule 145 (vacia -> .)
     DIV             reduce using rule 145 (vacia -> .)
-    ADD             reduce using rule 145 (vacia -> .)
-    SUB             reduce using rule 145 (vacia -> .)
+    SUM             reduce using rule 145 (vacia -> .)
+    RES             reduce using rule 145 (vacia -> .)
     PC              reduce using rule 145 (vacia -> .)
     CC              reduce using rule 145 (vacia -> .)
     RB              reduce using rule 145 (vacia -> .)
     C               reduce using rule 145 (vacia -> .)
     CP              reduce using rule 145 (vacia -> .)
-    LT              reduce using rule 145 (vacia -> .)
-    MT              reduce using rule 145 (vacia -> .)
-    D               reduce using rule 145 (vacia -> .)
-    SEQ             reduce using rule 145 (vacia -> .)
-    LET             reduce using rule 145 (vacia -> .)
-    MET             reduce using rule 145 (vacia -> .)
+    ME              reduce using rule 145 (vacia -> .)
+    MA              reduce using rule 145 (vacia -> .)
+    CD              reduce using rule 145 (vacia -> .)
+    CI              reduce using rule 145 (vacia -> .)
+    LTH             reduce using rule 145 (vacia -> .)
+    MTH             reduce using rule 145 (vacia -> .)
     AP              shift and go to state 89
 
     Factor5                        shift and go to state 144
@@ -1780,21 +1780,21 @@ state 100
 
     (93) Factor -> Factor4 .
 
-    M               reduce using rule 93 (Factor -> Factor4 .)
+    MUL             reduce using rule 93 (Factor -> Factor4 .)
     DIV             reduce using rule 93 (Factor -> Factor4 .)
-    ADD             reduce using rule 93 (Factor -> Factor4 .)
-    SUB             reduce using rule 93 (Factor -> Factor4 .)
+    SUM             reduce using rule 93 (Factor -> Factor4 .)
+    RES             reduce using rule 93 (Factor -> Factor4 .)
     C               reduce using rule 93 (Factor -> Factor4 .)
     CC              reduce using rule 93 (Factor -> Factor4 .)
     CP              reduce using rule 93 (Factor -> Factor4 .)
     PC              reduce using rule 93 (Factor -> Factor4 .)
     RB              reduce using rule 93 (Factor -> Factor4 .)
-    LT              reduce using rule 93 (Factor -> Factor4 .)
-    MT              reduce using rule 93 (Factor -> Factor4 .)
-    D               reduce using rule 93 (Factor -> Factor4 .)
-    SEQ             reduce using rule 93 (Factor -> Factor4 .)
-    LET             reduce using rule 93 (Factor -> Factor4 .)
-    MET             reduce using rule 93 (Factor -> Factor4 .)
+    ME              reduce using rule 93 (Factor -> Factor4 .)
+    MA              reduce using rule 93 (Factor -> Factor4 .)
+    CD              reduce using rule 93 (Factor -> Factor4 .)
+    CI              reduce using rule 93 (Factor -> Factor4 .)
+    LTH             reduce using rule 93 (Factor -> Factor4 .)
+    MTH             reduce using rule 93 (Factor -> Factor4 .)
 
 
 state 101
@@ -1805,19 +1805,19 @@ state 101
     (83) exp4 -> . vacia
     (145) vacia -> .
 
-    ADD             reduce using rule 145 (vacia -> .)
-    SUB             reduce using rule 145 (vacia -> .)
+    SUM             reduce using rule 145 (vacia -> .)
+    RES             reduce using rule 145 (vacia -> .)
     PC              reduce using rule 145 (vacia -> .)
     CC              reduce using rule 145 (vacia -> .)
     RB              reduce using rule 145 (vacia -> .)
     C               reduce using rule 145 (vacia -> .)
     CP              reduce using rule 145 (vacia -> .)
-    LT              reduce using rule 145 (vacia -> .)
-    MT              reduce using rule 145 (vacia -> .)
-    D               reduce using rule 145 (vacia -> .)
-    SEQ             reduce using rule 145 (vacia -> .)
-    LET             reduce using rule 145 (vacia -> .)
-    MET             reduce using rule 145 (vacia -> .)
+    ME              reduce using rule 145 (vacia -> .)
+    MA              reduce using rule 145 (vacia -> .)
+    CD              reduce using rule 145 (vacia -> .)
+    CI              reduce using rule 145 (vacia -> .)
+    LTH             reduce using rule 145 (vacia -> .)
+    MTH             reduce using rule 145 (vacia -> .)
 
     vacia                          shift and go to state 145
     exprog2                        shift and go to state 146
@@ -1838,21 +1838,21 @@ state 103
     (89) Termino4 -> . vacia
     (145) vacia -> .
 
-    M               reduce using rule 145 (vacia -> .)
+    MUL             reduce using rule 145 (vacia -> .)
     DIV             reduce using rule 145 (vacia -> .)
-    ADD             reduce using rule 145 (vacia -> .)
-    SUB             reduce using rule 145 (vacia -> .)
+    SUM             reduce using rule 145 (vacia -> .)
+    RES             reduce using rule 145 (vacia -> .)
     PC              reduce using rule 145 (vacia -> .)
     CC              reduce using rule 145 (vacia -> .)
     RB              reduce using rule 145 (vacia -> .)
     C               reduce using rule 145 (vacia -> .)
     CP              reduce using rule 145 (vacia -> .)
-    LT              reduce using rule 145 (vacia -> .)
-    MT              reduce using rule 145 (vacia -> .)
-    D               reduce using rule 145 (vacia -> .)
-    SEQ             reduce using rule 145 (vacia -> .)
-    LET             reduce using rule 145 (vacia -> .)
-    MET             reduce using rule 145 (vacia -> .)
+    ME              reduce using rule 145 (vacia -> .)
+    MA              reduce using rule 145 (vacia -> .)
+    CD              reduce using rule 145 (vacia -> .)
+    CI              reduce using rule 145 (vacia -> .)
+    LTH             reduce using rule 145 (vacia -> .)
+    MTH             reduce using rule 145 (vacia -> .)
 
     vacia                          shift and go to state 148
     Termino4                       shift and go to state 149
@@ -2379,40 +2379,40 @@ state 144
 
     (96) Factor4 -> faID Factor5 .
 
-    M               reduce using rule 96 (Factor4 -> faID Factor5 .)
+    MUL             reduce using rule 96 (Factor4 -> faID Factor5 .)
     DIV             reduce using rule 96 (Factor4 -> faID Factor5 .)
-    ADD             reduce using rule 96 (Factor4 -> faID Factor5 .)
-    SUB             reduce using rule 96 (Factor4 -> faID Factor5 .)
+    SUM             reduce using rule 96 (Factor4 -> faID Factor5 .)
+    RES             reduce using rule 96 (Factor4 -> faID Factor5 .)
     C               reduce using rule 96 (Factor4 -> faID Factor5 .)
     CP              reduce using rule 96 (Factor4 -> faID Factor5 .)
-    PC              reduce using rule 96 (Factor4 -> faID Factor5 .)
     CC              reduce using rule 96 (Factor4 -> faID Factor5 .)
+    PC              reduce using rule 96 (Factor4 -> faID Factor5 .)
     RB              reduce using rule 96 (Factor4 -> faID Factor5 .)
-    LT              reduce using rule 96 (Factor4 -> faID Factor5 .)
-    MT              reduce using rule 96 (Factor4 -> faID Factor5 .)
-    D               reduce using rule 96 (Factor4 -> faID Factor5 .)
-    SEQ             reduce using rule 96 (Factor4 -> faID Factor5 .)
-    LET             reduce using rule 96 (Factor4 -> faID Factor5 .)
-    MET             reduce using rule 96 (Factor4 -> faID Factor5 .)
+    ME              reduce using rule 96 (Factor4 -> faID Factor5 .)
+    MA              reduce using rule 96 (Factor4 -> faID Factor5 .)
+    CD              reduce using rule 96 (Factor4 -> faID Factor5 .)
+    CI              reduce using rule 96 (Factor4 -> faID Factor5 .)
+    LTH             reduce using rule 96 (Factor4 -> faID Factor5 .)
+    MTH             reduce using rule 96 (Factor4 -> faID Factor5 .)
 
 
 state 145
 
     (83) exp4 -> vacia .
 
-    ADD             reduce using rule 83 (exp4 -> vacia .)
-    SUB             reduce using rule 83 (exp4 -> vacia .)
+    SUM             reduce using rule 83 (exp4 -> vacia .)
+    RES             reduce using rule 83 (exp4 -> vacia .)
     PC              reduce using rule 83 (exp4 -> vacia .)
     CC              reduce using rule 83 (exp4 -> vacia .)
     RB              reduce using rule 83 (exp4 -> vacia .)
     C               reduce using rule 83 (exp4 -> vacia .)
     CP              reduce using rule 83 (exp4 -> vacia .)
-    LT              reduce using rule 83 (exp4 -> vacia .)
-    MT              reduce using rule 83 (exp4 -> vacia .)
-    D               reduce using rule 83 (exp4 -> vacia .)
-    SEQ             reduce using rule 83 (exp4 -> vacia .)
-    LET             reduce using rule 83 (exp4 -> vacia .)
-    MET             reduce using rule 83 (exp4 -> vacia .)
+    ME              reduce using rule 83 (exp4 -> vacia .)
+    MA              reduce using rule 83 (exp4 -> vacia .)
+    CD              reduce using rule 83 (exp4 -> vacia .)
+    CI              reduce using rule 83 (exp4 -> vacia .)
+    LTH             reduce using rule 83 (exp4 -> vacia .)
+    MTH             reduce using rule 83 (exp4 -> vacia .)
 
 
 state 146
@@ -2424,104 +2424,104 @@ state 146
     RB              reduce using rule 80 (exp -> Termino exprog2 .)
     CC              reduce using rule 80 (exp -> Termino exprog2 .)
     CP              reduce using rule 80 (exp -> Termino exprog2 .)
-    LT              reduce using rule 80 (exp -> Termino exprog2 .)
-    MT              reduce using rule 80 (exp -> Termino exprog2 .)
-    D               reduce using rule 80 (exp -> Termino exprog2 .)
-    SEQ             reduce using rule 80 (exp -> Termino exprog2 .)
-    LET             reduce using rule 80 (exp -> Termino exprog2 .)
-    MET             reduce using rule 80 (exp -> Termino exprog2 .)
+    ME              reduce using rule 80 (exp -> Termino exprog2 .)
+    MA              reduce using rule 80 (exp -> Termino exprog2 .)
+    CD              reduce using rule 80 (exp -> Termino exprog2 .)
+    CI              reduce using rule 80 (exp -> Termino exprog2 .)
+    LTH             reduce using rule 80 (exp -> Termino exprog2 .)
+    MTH             reduce using rule 80 (exp -> Termino exprog2 .)
 
 
 state 147
 
     (81) exprog2 -> exp4 . exprog3 exp
     (82) exprog2 -> exp4 . vacia
-    (84) exprog3 -> . ADD
-    (85) exprog3 -> . SUB
+    (84) exprog3 -> . SUM
+    (85) exprog3 -> . RES
     (145) vacia -> .
 
-    ADD             shift and go to state 190
-    SUB             shift and go to state 188
+    SUM             shift and go to state 189
+    RES             shift and go to state 190
     PC              reduce using rule 145 (vacia -> .)
     CC              reduce using rule 145 (vacia -> .)
     RB              reduce using rule 145 (vacia -> .)
     C               reduce using rule 145 (vacia -> .)
     CP              reduce using rule 145 (vacia -> .)
-    LT              reduce using rule 145 (vacia -> .)
-    MT              reduce using rule 145 (vacia -> .)
-    D               reduce using rule 145 (vacia -> .)
-    SEQ             reduce using rule 145 (vacia -> .)
-    LET             reduce using rule 145 (vacia -> .)
-    MET             reduce using rule 145 (vacia -> .)
+    ME              reduce using rule 145 (vacia -> .)
+    MA              reduce using rule 145 (vacia -> .)
+    CD              reduce using rule 145 (vacia -> .)
+    CI              reduce using rule 145 (vacia -> .)
+    LTH             reduce using rule 145 (vacia -> .)
+    MTH             reduce using rule 145 (vacia -> .)
 
-    exprog3                        shift and go to state 189
+    exprog3                        shift and go to state 188
     vacia                          shift and go to state 187
 
 state 148
 
     (89) Termino4 -> vacia .
 
-    M               reduce using rule 89 (Termino4 -> vacia .)
+    MUL             reduce using rule 89 (Termino4 -> vacia .)
     DIV             reduce using rule 89 (Termino4 -> vacia .)
-    ADD             reduce using rule 89 (Termino4 -> vacia .)
-    SUB             reduce using rule 89 (Termino4 -> vacia .)
+    SUM             reduce using rule 89 (Termino4 -> vacia .)
+    RES             reduce using rule 89 (Termino4 -> vacia .)
     PC              reduce using rule 89 (Termino4 -> vacia .)
     CC              reduce using rule 89 (Termino4 -> vacia .)
     RB              reduce using rule 89 (Termino4 -> vacia .)
     C               reduce using rule 89 (Termino4 -> vacia .)
     CP              reduce using rule 89 (Termino4 -> vacia .)
-    LT              reduce using rule 89 (Termino4 -> vacia .)
-    MT              reduce using rule 89 (Termino4 -> vacia .)
-    D               reduce using rule 89 (Termino4 -> vacia .)
-    SEQ             reduce using rule 89 (Termino4 -> vacia .)
-    LET             reduce using rule 89 (Termino4 -> vacia .)
-    MET             reduce using rule 89 (Termino4 -> vacia .)
+    ME              reduce using rule 89 (Termino4 -> vacia .)
+    MA              reduce using rule 89 (Termino4 -> vacia .)
+    CD              reduce using rule 89 (Termino4 -> vacia .)
+    CI              reduce using rule 89 (Termino4 -> vacia .)
+    LTH             reduce using rule 89 (Termino4 -> vacia .)
+    MTH             reduce using rule 89 (Termino4 -> vacia .)
 
 
 state 149
 
     (87) Termino2 -> Termino4 . Termino3 Termino
     (88) Termino2 -> Termino4 . vacia
-    (90) Termino3 -> . M
+    (90) Termino3 -> . MUL
     (91) Termino3 -> . DIV
     (145) vacia -> .
 
-    M               shift and go to state 192
+    MUL             shift and go to state 193
     DIV             shift and go to state 194
-    ADD             reduce using rule 145 (vacia -> .)
-    SUB             reduce using rule 145 (vacia -> .)
+    SUM             reduce using rule 145 (vacia -> .)
+    RES             reduce using rule 145 (vacia -> .)
     PC              reduce using rule 145 (vacia -> .)
     CC              reduce using rule 145 (vacia -> .)
     RB              reduce using rule 145 (vacia -> .)
     C               reduce using rule 145 (vacia -> .)
     CP              reduce using rule 145 (vacia -> .)
-    LT              reduce using rule 145 (vacia -> .)
-    MT              reduce using rule 145 (vacia -> .)
-    D               reduce using rule 145 (vacia -> .)
-    SEQ             reduce using rule 145 (vacia -> .)
-    LET             reduce using rule 145 (vacia -> .)
-    MET             reduce using rule 145 (vacia -> .)
+    ME              reduce using rule 145 (vacia -> .)
+    MA              reduce using rule 145 (vacia -> .)
+    CD              reduce using rule 145 (vacia -> .)
+    CI              reduce using rule 145 (vacia -> .)
+    LTH             reduce using rule 145 (vacia -> .)
+    MTH             reduce using rule 145 (vacia -> .)
 
     vacia                          shift and go to state 191
-    Termino3                       shift and go to state 193
+    Termino3                       shift and go to state 192
 
 state 150
 
     (86) Termino -> Factor Termino2 .
 
-    ADD             reduce using rule 86 (Termino -> Factor Termino2 .)
-    SUB             reduce using rule 86 (Termino -> Factor Termino2 .)
+    SUM             reduce using rule 86 (Termino -> Factor Termino2 .)
+    RES             reduce using rule 86 (Termino -> Factor Termino2 .)
     C               reduce using rule 86 (Termino -> Factor Termino2 .)
-    CP              reduce using rule 86 (Termino -> Factor Termino2 .)
+    PC              reduce using rule 86 (Termino -> Factor Termino2 .)
     CC              reduce using rule 86 (Termino -> Factor Termino2 .)
     RB              reduce using rule 86 (Termino -> Factor Termino2 .)
-    LT              reduce using rule 86 (Termino -> Factor Termino2 .)
-    MT              reduce using rule 86 (Termino -> Factor Termino2 .)
-    D               reduce using rule 86 (Termino -> Factor Termino2 .)
-    SEQ             reduce using rule 86 (Termino -> Factor Termino2 .)
-    LET             reduce using rule 86 (Termino -> Factor Termino2 .)
-    MET             reduce using rule 86 (Termino -> Factor Termino2 .)
-    PC              reduce using rule 86 (Termino -> Factor Termino2 .)
+    CP              reduce using rule 86 (Termino -> Factor Termino2 .)
+    ME              reduce using rule 86 (Termino -> Factor Termino2 .)
+    MA              reduce using rule 86 (Termino -> Factor Termino2 .)
+    CD              reduce using rule 86 (Termino -> Factor Termino2 .)
+    CI              reduce using rule 86 (Termino -> Factor Termino2 .)
+    LTH             reduce using rule 86 (Termino -> Factor Termino2 .)
+    MTH             reduce using rule 86 (Termino -> Factor Termino2 .)
 
 
 state 151
@@ -2618,23 +2618,23 @@ state 159
     (71) expresion -> exp . ex2
     (72) ex2 -> . ex3 exp
     (73) ex2 -> . vacia
-    (74) ex3 -> . LT
-    (75) ex3 -> . MT
-    (76) ex3 -> . D
-    (77) ex3 -> . SEQ
-    (78) ex3 -> . LET
-    (79) ex3 -> . MET
+    (74) ex3 -> . ME
+    (75) ex3 -> . MA
+    (76) ex3 -> . CD
+    (77) ex3 -> . CI
+    (78) ex3 -> . LTH
+    (79) ex3 -> . MTH
     (145) vacia -> .
 
-    LT              shift and go to state 207
-    MT              shift and go to state 206
-    D               shift and go to state 203
-    SEQ             shift and go to state 204
-    LET             shift and go to state 210
-    MET             shift and go to state 205
+    ME              shift and go to state 202
+    MA              shift and go to state 205
+    CD              shift and go to state 206
+    CI              shift and go to state 204
+    LTH             shift and go to state 210
+    MTH             shift and go to state 207
     CP              reduce using rule 145 (vacia -> .)
 
-    vacia                          shift and go to state 202
+    vacia                          shift and go to state 203
     ex2                            shift and go to state 208
     ex3                            shift and go to state 209
 
@@ -2841,20 +2841,20 @@ state 176
 
     PC              reduce using rule 98 (Factor5 -> AC exp CC .)
     IG              reduce using rule 98 (Factor5 -> AC exp CC .)
-    M               reduce using rule 98 (Factor5 -> AC exp CC .)
+    MUL             reduce using rule 98 (Factor5 -> AC exp CC .)
     DIV             reduce using rule 98 (Factor5 -> AC exp CC .)
-    ADD             reduce using rule 98 (Factor5 -> AC exp CC .)
-    SUB             reduce using rule 98 (Factor5 -> AC exp CC .)
+    SUM             reduce using rule 98 (Factor5 -> AC exp CC .)
+    RES             reduce using rule 98 (Factor5 -> AC exp CC .)
     CC              reduce using rule 98 (Factor5 -> AC exp CC .)
     RB              reduce using rule 98 (Factor5 -> AC exp CC .)
     C               reduce using rule 98 (Factor5 -> AC exp CC .)
     CP              reduce using rule 98 (Factor5 -> AC exp CC .)
-    LT              reduce using rule 98 (Factor5 -> AC exp CC .)
-    MT              reduce using rule 98 (Factor5 -> AC exp CC .)
-    D               reduce using rule 98 (Factor5 -> AC exp CC .)
-    SEQ             reduce using rule 98 (Factor5 -> AC exp CC .)
-    LET             reduce using rule 98 (Factor5 -> AC exp CC .)
-    MET             reduce using rule 98 (Factor5 -> AC exp CC .)
+    ME              reduce using rule 98 (Factor5 -> AC exp CC .)
+    MA              reduce using rule 98 (Factor5 -> AC exp CC .)
+    CD              reduce using rule 98 (Factor5 -> AC exp CC .)
+    CI              reduce using rule 98 (Factor5 -> AC exp CC .)
+    LTH             reduce using rule 98 (Factor5 -> AC exp CC .)
+    MTH             reduce using rule 98 (Factor5 -> AC exp CC .)
 
 
 state 177
@@ -2863,41 +2863,41 @@ state 177
 
     PC              reduce using rule 99 (Factor5 -> LB exp RB .)
     IG              reduce using rule 99 (Factor5 -> LB exp RB .)
-    M               reduce using rule 99 (Factor5 -> LB exp RB .)
+    MUL             reduce using rule 99 (Factor5 -> LB exp RB .)
     DIV             reduce using rule 99 (Factor5 -> LB exp RB .)
-    ADD             reduce using rule 99 (Factor5 -> LB exp RB .)
-    SUB             reduce using rule 99 (Factor5 -> LB exp RB .)
+    SUM             reduce using rule 99 (Factor5 -> LB exp RB .)
+    RES             reduce using rule 99 (Factor5 -> LB exp RB .)
     CC              reduce using rule 99 (Factor5 -> LB exp RB .)
     RB              reduce using rule 99 (Factor5 -> LB exp RB .)
     C               reduce using rule 99 (Factor5 -> LB exp RB .)
     CP              reduce using rule 99 (Factor5 -> LB exp RB .)
-    LT              reduce using rule 99 (Factor5 -> LB exp RB .)
-    MT              reduce using rule 99 (Factor5 -> LB exp RB .)
-    D               reduce using rule 99 (Factor5 -> LB exp RB .)
-    SEQ             reduce using rule 99 (Factor5 -> LB exp RB .)
-    LET             reduce using rule 99 (Factor5 -> LB exp RB .)
-    MET             reduce using rule 99 (Factor5 -> LB exp RB .)
+    ME              reduce using rule 99 (Factor5 -> LB exp RB .)
+    MA              reduce using rule 99 (Factor5 -> LB exp RB .)
+    CD              reduce using rule 99 (Factor5 -> LB exp RB .)
+    CI              reduce using rule 99 (Factor5 -> LB exp RB .)
+    LTH             reduce using rule 99 (Factor5 -> LB exp RB .)
+    MTH             reduce using rule 99 (Factor5 -> LB exp RB .)
 
 
 state 178
 
     (113) Llamada -> funEra func2 CP .
 
-    M               reduce using rule 113 (Llamada -> funEra func2 CP .)
+    MUL             reduce using rule 113 (Llamada -> funEra func2 CP .)
     DIV             reduce using rule 113 (Llamada -> funEra func2 CP .)
-    ADD             reduce using rule 113 (Llamada -> funEra func2 CP .)
-    SUB             reduce using rule 113 (Llamada -> funEra func2 CP .)
+    SUM             reduce using rule 113 (Llamada -> funEra func2 CP .)
+    RES             reduce using rule 113 (Llamada -> funEra func2 CP .)
     PC              reduce using rule 113 (Llamada -> funEra func2 CP .)
     CC              reduce using rule 113 (Llamada -> funEra func2 CP .)
     RB              reduce using rule 113 (Llamada -> funEra func2 CP .)
     C               reduce using rule 113 (Llamada -> funEra func2 CP .)
     CP              reduce using rule 113 (Llamada -> funEra func2 CP .)
-    LT              reduce using rule 113 (Llamada -> funEra func2 CP .)
-    MT              reduce using rule 113 (Llamada -> funEra func2 CP .)
-    D               reduce using rule 113 (Llamada -> funEra func2 CP .)
-    SEQ             reduce using rule 113 (Llamada -> funEra func2 CP .)
-    LET             reduce using rule 113 (Llamada -> funEra func2 CP .)
-    MET             reduce using rule 113 (Llamada -> funEra func2 CP .)
+    ME              reduce using rule 113 (Llamada -> funEra func2 CP .)
+    MA              reduce using rule 113 (Llamada -> funEra func2 CP .)
+    CD              reduce using rule 113 (Llamada -> funEra func2 CP .)
+    CI              reduce using rule 113 (Llamada -> funEra func2 CP .)
+    LTH             reduce using rule 113 (Llamada -> funEra func2 CP .)
+    MTH             reduce using rule 113 (Llamada -> funEra func2 CP .)
     IG              reduce using rule 113 (Llamada -> funEra func2 CP .)
 
 
@@ -2996,21 +2996,21 @@ state 186
 
     (92) Factor -> Factor2 exp CP .
 
-    M               reduce using rule 92 (Factor -> Factor2 exp CP .)
+    MUL             reduce using rule 92 (Factor -> Factor2 exp CP .)
     DIV             reduce using rule 92 (Factor -> Factor2 exp CP .)
-    ADD             reduce using rule 92 (Factor -> Factor2 exp CP .)
-    SUB             reduce using rule 92 (Factor -> Factor2 exp CP .)
+    SUM             reduce using rule 92 (Factor -> Factor2 exp CP .)
+    RES             reduce using rule 92 (Factor -> Factor2 exp CP .)
     C               reduce using rule 92 (Factor -> Factor2 exp CP .)
     CC              reduce using rule 92 (Factor -> Factor2 exp CP .)
     CP              reduce using rule 92 (Factor -> Factor2 exp CP .)
     PC              reduce using rule 92 (Factor -> Factor2 exp CP .)
     RB              reduce using rule 92 (Factor -> Factor2 exp CP .)
-    LT              reduce using rule 92 (Factor -> Factor2 exp CP .)
-    MT              reduce using rule 92 (Factor -> Factor2 exp CP .)
-    D               reduce using rule 92 (Factor -> Factor2 exp CP .)
-    SEQ             reduce using rule 92 (Factor -> Factor2 exp CP .)
-    LET             reduce using rule 92 (Factor -> Factor2 exp CP .)
-    MET             reduce using rule 92 (Factor -> Factor2 exp CP .)
+    ME              reduce using rule 92 (Factor -> Factor2 exp CP .)
+    MA              reduce using rule 92 (Factor -> Factor2 exp CP .)
+    CD              reduce using rule 92 (Factor -> Factor2 exp CP .)
+    CI              reduce using rule 92 (Factor -> Factor2 exp CP .)
+    LTH             reduce using rule 92 (Factor -> Factor2 exp CP .)
+    MTH             reduce using rule 92 (Factor -> Factor2 exp CP .)
 
 
 state 187
@@ -3022,25 +3022,15 @@ state 187
     RB              reduce using rule 82 (exprog2 -> exp4 vacia .)
     C               reduce using rule 82 (exprog2 -> exp4 vacia .)
     CP              reduce using rule 82 (exprog2 -> exp4 vacia .)
-    LT              reduce using rule 82 (exprog2 -> exp4 vacia .)
-    MT              reduce using rule 82 (exprog2 -> exp4 vacia .)
-    D               reduce using rule 82 (exprog2 -> exp4 vacia .)
-    SEQ             reduce using rule 82 (exprog2 -> exp4 vacia .)
-    LET             reduce using rule 82 (exprog2 -> exp4 vacia .)
-    MET             reduce using rule 82 (exprog2 -> exp4 vacia .)
+    ME              reduce using rule 82 (exprog2 -> exp4 vacia .)
+    MA              reduce using rule 82 (exprog2 -> exp4 vacia .)
+    CD              reduce using rule 82 (exprog2 -> exp4 vacia .)
+    CI              reduce using rule 82 (exprog2 -> exp4 vacia .)
+    LTH             reduce using rule 82 (exprog2 -> exp4 vacia .)
+    MTH             reduce using rule 82 (exprog2 -> exp4 vacia .)
 
 
 state 188
-
-    (85) exprog3 -> SUB .
-
-    AP              reduce using rule 85 (exprog3 -> SUB .)
-    VALI            reduce using rule 85 (exprog3 -> SUB .)
-    VALF            reduce using rule 85 (exprog3 -> SUB .)
-    ID              reduce using rule 85 (exprog3 -> SUB .)
-
-
-state 189
 
     (81) exprog2 -> exp4 exprog3 . exp
     (80) exp -> . Termino exprog2
@@ -3067,46 +3057,46 @@ state 189
     exp                            shift and go to state 225
     Factor                         shift and go to state 103
 
+state 189
+
+    (84) exprog3 -> SUM .
+
+    AP              reduce using rule 84 (exprog3 -> SUM .)
+    VALI            reduce using rule 84 (exprog3 -> SUM .)
+    VALF            reduce using rule 84 (exprog3 -> SUM .)
+    ID              reduce using rule 84 (exprog3 -> SUM .)
+
+
 state 190
 
-    (84) exprog3 -> ADD .
+    (85) exprog3 -> RES .
 
-    AP              reduce using rule 84 (exprog3 -> ADD .)
-    VALI            reduce using rule 84 (exprog3 -> ADD .)
-    VALF            reduce using rule 84 (exprog3 -> ADD .)
-    ID              reduce using rule 84 (exprog3 -> ADD .)
+    AP              reduce using rule 85 (exprog3 -> RES .)
+    VALI            reduce using rule 85 (exprog3 -> RES .)
+    VALF            reduce using rule 85 (exprog3 -> RES .)
+    ID              reduce using rule 85 (exprog3 -> RES .)
 
 
 state 191
 
     (88) Termino2 -> Termino4 vacia .
 
-    ADD             reduce using rule 88 (Termino2 -> Termino4 vacia .)
-    SUB             reduce using rule 88 (Termino2 -> Termino4 vacia .)
+    SUM             reduce using rule 88 (Termino2 -> Termino4 vacia .)
+    RES             reduce using rule 88 (Termino2 -> Termino4 vacia .)
     PC              reduce using rule 88 (Termino2 -> Termino4 vacia .)
     CC              reduce using rule 88 (Termino2 -> Termino4 vacia .)
     RB              reduce using rule 88 (Termino2 -> Termino4 vacia .)
     C               reduce using rule 88 (Termino2 -> Termino4 vacia .)
     CP              reduce using rule 88 (Termino2 -> Termino4 vacia .)
-    LT              reduce using rule 88 (Termino2 -> Termino4 vacia .)
-    MT              reduce using rule 88 (Termino2 -> Termino4 vacia .)
-    D               reduce using rule 88 (Termino2 -> Termino4 vacia .)
-    SEQ             reduce using rule 88 (Termino2 -> Termino4 vacia .)
-    LET             reduce using rule 88 (Termino2 -> Termino4 vacia .)
-    MET             reduce using rule 88 (Termino2 -> Termino4 vacia .)
+    ME              reduce using rule 88 (Termino2 -> Termino4 vacia .)
+    MA              reduce using rule 88 (Termino2 -> Termino4 vacia .)
+    CD              reduce using rule 88 (Termino2 -> Termino4 vacia .)
+    CI              reduce using rule 88 (Termino2 -> Termino4 vacia .)
+    LTH             reduce using rule 88 (Termino2 -> Termino4 vacia .)
+    MTH             reduce using rule 88 (Termino2 -> Termino4 vacia .)
 
 
 state 192
-
-    (90) Termino3 -> M .
-
-    AP              reduce using rule 90 (Termino3 -> M .)
-    VALI            reduce using rule 90 (Termino3 -> M .)
-    VALF            reduce using rule 90 (Termino3 -> M .)
-    ID              reduce using rule 90 (Termino3 -> M .)
-
-
-state 193
 
     (87) Termino2 -> Termino4 Termino3 . Termino
     (86) Termino -> . Factor Termino2
@@ -3130,6 +3120,16 @@ state 193
     faID                           shift and go to state 99
     Termino                        shift and go to state 226
     Factor                         shift and go to state 103
+
+state 193
+
+    (90) Termino3 -> MUL .
+
+    AP              reduce using rule 90 (Termino3 -> MUL .)
+    VALI            reduce using rule 90 (Termino3 -> MUL .)
+    VALF            reduce using rule 90 (Termino3 -> MUL .)
+    ID              reduce using rule 90 (Termino3 -> MUL .)
+
 
 state 194
 
@@ -3194,59 +3194,59 @@ state 201
 
 state 202
 
+    (74) ex3 -> ME .
+
+    AP              reduce using rule 74 (ex3 -> ME .)
+    VALI            reduce using rule 74 (ex3 -> ME .)
+    VALF            reduce using rule 74 (ex3 -> ME .)
+    ID              reduce using rule 74 (ex3 -> ME .)
+
+
+state 203
+
     (73) ex2 -> vacia .
 
     CP              reduce using rule 73 (ex2 -> vacia .)
 
 
-state 203
-
-    (76) ex3 -> D .
-
-    AP              reduce using rule 76 (ex3 -> D .)
-    VALI            reduce using rule 76 (ex3 -> D .)
-    VALF            reduce using rule 76 (ex3 -> D .)
-    ID              reduce using rule 76 (ex3 -> D .)
-
-
 state 204
 
-    (77) ex3 -> SEQ .
+    (77) ex3 -> CI .
 
-    AP              reduce using rule 77 (ex3 -> SEQ .)
-    VALI            reduce using rule 77 (ex3 -> SEQ .)
-    VALF            reduce using rule 77 (ex3 -> SEQ .)
-    ID              reduce using rule 77 (ex3 -> SEQ .)
+    AP              reduce using rule 77 (ex3 -> CI .)
+    VALI            reduce using rule 77 (ex3 -> CI .)
+    VALF            reduce using rule 77 (ex3 -> CI .)
+    ID              reduce using rule 77 (ex3 -> CI .)
 
 
 state 205
 
-    (79) ex3 -> MET .
+    (75) ex3 -> MA .
 
-    AP              reduce using rule 79 (ex3 -> MET .)
-    VALI            reduce using rule 79 (ex3 -> MET .)
-    VALF            reduce using rule 79 (ex3 -> MET .)
-    ID              reduce using rule 79 (ex3 -> MET .)
+    AP              reduce using rule 75 (ex3 -> MA .)
+    VALI            reduce using rule 75 (ex3 -> MA .)
+    VALF            reduce using rule 75 (ex3 -> MA .)
+    ID              reduce using rule 75 (ex3 -> MA .)
 
 
 state 206
 
-    (75) ex3 -> MT .
+    (76) ex3 -> CD .
 
-    AP              reduce using rule 75 (ex3 -> MT .)
-    VALI            reduce using rule 75 (ex3 -> MT .)
-    VALF            reduce using rule 75 (ex3 -> MT .)
-    ID              reduce using rule 75 (ex3 -> MT .)
+    AP              reduce using rule 76 (ex3 -> CD .)
+    VALI            reduce using rule 76 (ex3 -> CD .)
+    VALF            reduce using rule 76 (ex3 -> CD .)
+    ID              reduce using rule 76 (ex3 -> CD .)
 
 
 state 207
 
-    (74) ex3 -> LT .
+    (79) ex3 -> MTH .
 
-    AP              reduce using rule 74 (ex3 -> LT .)
-    VALI            reduce using rule 74 (ex3 -> LT .)
-    VALF            reduce using rule 74 (ex3 -> LT .)
-    ID              reduce using rule 74 (ex3 -> LT .)
+    AP              reduce using rule 79 (ex3 -> MTH .)
+    VALI            reduce using rule 79 (ex3 -> MTH .)
+    VALF            reduce using rule 79 (ex3 -> MTH .)
+    ID              reduce using rule 79 (ex3 -> MTH .)
 
 
 state 208
@@ -3285,12 +3285,12 @@ state 209
 
 state 210
 
-    (78) ex3 -> LET .
+    (78) ex3 -> LTH .
 
-    AP              reduce using rule 78 (ex3 -> LET .)
-    VALI            reduce using rule 78 (ex3 -> LET .)
-    VALF            reduce using rule 78 (ex3 -> LET .)
-    ID              reduce using rule 78 (ex3 -> LET .)
+    AP              reduce using rule 78 (ex3 -> LTH .)
+    VALI            reduce using rule 78 (ex3 -> LTH .)
+    VALF            reduce using rule 78 (ex3 -> LTH .)
+    ID              reduce using rule 78 (ex3 -> LTH .)
 
 
 state 211
@@ -3502,31 +3502,31 @@ state 225
     RB              reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
     C               reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
     CP              reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
-    LT              reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
-    MT              reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
-    D               reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
-    SEQ             reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
-    LET             reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
-    MET             reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
+    ME              reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
+    MA              reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
+    CD              reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
+    CI              reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
+    LTH             reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
+    MTH             reduce using rule 81 (exprog2 -> exp4 exprog3 exp .)
 
 
 state 226
 
     (87) Termino2 -> Termino4 Termino3 Termino .
 
-    ADD             reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
-    SUB             reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
+    SUM             reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
+    RES             reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
     PC              reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
     CC              reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
     RB              reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
     C               reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
     CP              reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
-    LT              reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
-    MT              reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
-    D               reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
-    SEQ             reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
-    LET             reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
-    MET             reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
+    ME              reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
+    MA              reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
+    CD              reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
+    CI              reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
+    LTH             reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
+    MTH             reduce using rule 87 (Termino2 -> Termino4 Termino3 Termino .)
 
 
 state 227
