@@ -36,7 +36,7 @@ contadorP = 0
 
 #Programa------------------------------------------------------
 def p_prog(p):
-		'''prog : PR prog1 princ AC Bloque CC'''
+		'''prog : PR prog1 princ locales AC Bloque CC'''
 		mtemp = [(void_val-1000), (entero_val-2000), (float_val-3000)]
 		mtemp.extend(avail.get_temp_dir())
 		direc["princ"] = temp
@@ -47,32 +47,48 @@ def p_prog(p):
 		cuads = ['ENDPROG', -1, -1, -1]
 		avail.append_quad(cuads)
 
+def p_princ(p):
+		'''princ : PRINC'''
+		avail.princ_goto()
+		avail.setBloque(2)
+		
+def p_locales(p):
+		'''locales : var'''
+		bloque_dir(hashT, 2)
+				
 def p_prog1(p):
 		'''prog1 : prog2 prog3''' 
 
 def p_prog2(p):
-		'''prog2 : Vars prog2
-		| vacia'''
+		'''prog2 : globales'''
 		avail.princ()
 		
 def p_prog3(p):
 		'''prog3 : Funciones prog3
 		| vacia'''
-
-def p_princ(p):
-		'''princ : PRINC'''
-		avail.princ_goto()
-		avail.setBloque(2)
+		
+def p_globales(p):
+		'''globales : glob var
+		| vacia'''
+		global entero_val, float_val, void_val
+		bloque_dir(hashT, 1)
+		dvDict = dict(hashT)
+		mtemp = [dvDict, (void_val-1000), (entero_val-2000), (float_val-3000)]
+		mtemp.extend(avail.get_temp_dir())
+		direc["globales"] = mtemp
+		hashT.clear()
+		entero_val = 2000
+		float_val = 3000
+		void_val = 1000
+		
+def p_glob(p):
+		'''glob : GL'''
+		avail.setBloque(1)
 #Programa------------------------------------------------------
 
 #Funciones------------------------------------------------------
 def p_Funciones(p):
-		'''Funciones : FUNCION funciones'''
-		avail.setFuncQ()
-		avail.setBloque(3)
-
-def p_funciones(p):
-		'''funciones : funcIn AC Bloque func3 CC'''
+		'''Funciones : Fun1 varFunciones funciones'''
 		mtemp = avail.get_temp_dir()
 		direc[avail.getAlcance()][5] = mtemp[0]
 		direc[avail.getAlcance()][6] = mtemp[1]
@@ -81,8 +97,19 @@ def p_funciones(p):
 		hashT.clear()
 		avail.funcion_end()
 
-def p_funcIn(p):
-		'''funcIn : FTipo fID AP func CP'''
+def p_varFunciones(p):
+		'''varFunciones : var'''
+		bloque_dir(hashT, 3)
+		global entero_val, float_val, void_val, idF
+		direc[idF][2] = (void_val-1000)
+		direc[idF][3] = (entero_val-2000)
+		direc[idF][4] = (float_val-3000)
+		void_val = 1000
+		entero_val = 2000
+		float_val = 3000
+				
+def p_Fun1(p):
+		'''Fun1 : fBloque fID AP func CP'''
 		DictV = dict(funT)
 		global entero_val, float_val, void_val, contadorP, idF
 		idF = avail.getAlcance()
@@ -94,10 +121,31 @@ def p_funcIn(p):
 		funT.clear()
 		contadorP = 0
 		
+def p_fID(p):
+		'''fID : ID'''
+		avail.setAlcance(p[1])
+		
+def p_fBloque(p):
+		'''fBloque : FUNCION FTipo'''
+		avail.setFuncQ()
+		avail.setBloque(3)
+
+def p_FTipo(p):
+		'''FTipo : VOID
+		| Tipo'''
+		global TipoV
+		if(p[1] == 'void'):
+				TipoV = p[1]
+		avail.setTR(TipoV)
+
 def p_func(p):
 		'''func : func1 func2
 		| vacia'''
-		
+				
+def p_func2(p):
+		'''func2 : C func1 func2
+		| vacia'''
+				
 def p_func1(p):
 		'''func1 : Tipo arreglo fID arrD'''
 		global apuntador, apuntadorD, contadorP
@@ -134,80 +182,22 @@ def p_arrD(p):
 				for v, vD in cnst.iteritems():
 						if ex == vD:
 								apuntadorD = v
-		
-def p_func2(p):
-		'''func2 : C func1 func2
-		| vacia'''
-		
+
+def p_funciones(p):
+		'''funciones : AC Bloque func3 CC'''
+										
 def p_func3(p):
-		'''func3 : Regresar
+		'''func3 : REGRESA Regresar PC'''
+
+def p_Regresar(p):
+		'''Regresar : Exp
 		| vacia'''
 		global vacia, TipoV
 		avail.funcion_return(vacia, dir_var(avail.getAlcance()))
 		vacia = False
-
-def p_Regresar(p):
-		'''Regresar : REGRESA Exp PC'''
-
-def p_fID(p):
-		'''fID : ID'''
-		avail.setAlcance(p[1])
 #Funciones------------------------------------------------------
 
-#Bloque------------------------------------------------------
-def p_Bloque(p):
-		'''Bloque : b2 Estatuto b3'''
-		
-def p_b2(p):
-		'''b2 : Vars b2
-		| vacia'''	
-			
-def p_b3(p):
-		'''b3 : Estatuto b3
-		| vacia'''	
-#Bloque------------------------------------------------------
-
 #Variables------------------------------------------------------
-def p_Vars(p):
-		'''Vars : globales 
-		| locales
-		| varFunciones'''
-		
-def p_globales(p):
-		'''globales : glob var'''
-		global entero_val, float_val, void_val
-		bloque_dir(hashT, 1)
-		dvDict = dict(hashT)
-		mtemp = [dvDict, (void_val-1000), (entero_val-2000), (float_val-3000)]
-		mtemp.extend(avail.get_temp_dir())
-		direc["globales"] = mtemp
-		hashT.clear()
-		entero_val = 2000
-		float_val = 3000
-		void_val = 1000
-		
-def p_glob(p):
-		'''glob : GL'''
-		avail.setBloque(1)
-		
-def p_varFunciones(p):
-		'''varFunciones : loc var'''
-		bloque_dir(hashT, 3)
-		global entero_val, float_val, void_val, idF
-		direc[idF][2] = (void_val-1000)
-		direc[idF][3] = (entero_val-2000)
-		direc[idF][4] = (float_val-3000)
-		void_val = 1000
-		entero_val = 2000
-		float_val = 3000
-		
-def p_locales(p):
-		'''locales : var'''
-		bloque_dir(hashT, 2)
-
-def p_loc(p):
-		'''loc : LC'''
-
 def p_var(p):
 		'''var : V var11'''
 		
@@ -296,24 +286,7 @@ def p_var21(p):
 	avail.IDPila_push(ID)
 #Variables------------------------------------------------------
 
-#Estatuto------------------------------------------------------
-def p_Estatuto(p):
-		'''Estatuto : Asignacion 
-		| Condicion 
-		| Ciclo 
-		| Llamada
-		| Objeto'''
-#Estatuto------------------------------------------------------
-
 #Tipo------------------------------------------------------
-def p_FTipo(p):
-		'''FTipo : VOID
-		| Tipo'''
-		global TipoV
-		if(p[1] == 'void'):
-				TipoV = p[1]
-		avail.setTR(TipoV)
-		
 def p_Tipo(p):
 		'''Tipo : tipo'''
 		
@@ -326,41 +299,192 @@ def p_tipo(p):
 		TipoA = p[1]
 #Tipo------------------------------------------------------
 
-#Expresion, subexpresion------------------------------------------------------
+#llamada------------------------------------------------------
+def p_Llamada(p):
+		'''Llamada : faID Llamada1'''
+
+def p_Llamada1(p):
+		'''Llamada1 : fEra Llamada2 CP PC'''
+		global idF, vacia
+		idF = "func"
+		if avail.getFuncAlcance() not in direc:
+				print "Error, funcion no existe"
+				sys.exit(0)
+		avail.funcion_param(direc[avail.getFuncAlcance()][0])
+		vD = 10000
+		cant = direc["globales"][6]
+		vD += 6000 + cant
+		direc["globales"][6] = cant + 1
+		avail.llama_funcion_final(direc.getFuncAlcance()[1], dir_var(getFuncAlcance()), vD)
+		vacia = False
+
+def p_fEra(p):
+		'''fEra : AP'''
+		avail.llama_funcion(avail.getAlcance())
+		
+def p_Llamada2(p):
+		'''Llamada2 : Llamada4 Llamada3
+		| vacia'''
+				
+def p_Llamada3(p):
+		'''Llamada3 : C Llamada4 Llamada3
+		| vacia'''
+
+def p_Llamada4(p):
+		'''Llamada4 : Exp'''
+		CHF.append(TipoV)
+		
+#llamada------------------------------------------------------
+
+#ciclo------------------------------------------------------
+def p_Ciclo(p):
+		'''Ciclo : Mientras 
+		| Para
+		| Ciclo1'''
+
+def p_Mientras(p):
+		'''Mientras : MIENTRAS AP Expresion CP AC Estatuto aux2 CC'''
+		
+def p_aux2(p):
+		'''aux2 : Estatuto aux2
+		| vacia'''
+
+def p_Para(p):
+		'''Para : PARA AP fID IG Exp C Expresion C Expresion CP AC Estatuto aux2 CC'''
+		
+def p_Ciclo1(p):
+		'''Ciclo1 : RE Ciclo2 Bloque'''
+		avail.rep_salto(cnst['1'], cnst['0'])
+		
+def p_Ciclo2(p):
+		'''Ciclo2 : VarCte
+		| ID'''
+		if p[1] != None:
+			vars_declaradas(p[1])
+			avail.TPila_push(tipo_variable(p[1], "var"))
+			avail.OPila_push(dir_var(p[1]))
+		avail.rep()
+			
+#ciclo------------------------------------------------------
+
+#objeto------------------------------------------------------
+def p_Objeto(p):
+		'''Objeto : Figura Color Objeto2 Posicion
+		| Texto Color Objeto2 Posicion'''
+		
+def p_Objeto2(p):
+		'''Objeto2 : Grosor Rotacion
+		| Grosor
+		| Rotacion
+		| vacia'''
+		
+def p_Figura(p):
+		'''Figura : Cuadrado
+		| Circulo
+		| Arco
+		| Triangulo
+		| Poligono
+		| Linea'''
+
+def p_Color(p):
+		'''Color : Contorno Color2
+		| Relleno'''
+
+def p_Color2(p):
+		'''Color2 : Relleno
+		| vacia'''
+				
+def p_Cuadrado(p):
+		'''Cuadrado : CUAD AP Exp C Exp CP PC'''
+		avail.append_quad_dos(201)
+
+def p_Circulo(p):
+		'''Circulo : CIRC AP Exp C Exp CP PC'''
+		avail.append_quad_uno(203)
+
+def p_Arco(p):
+		'''Arco : ARC AP Exp C Exp CP PC'''
+		avail.append_quad_uno(207)
+
+def p_Triangulo(p):
+		'''Triangulo : TRIAN AP Exp C Exp C Exp C Exp C Exp C Exp CP PC'''
+		avail.append_quad_tres(202)
+
+def p_Poligono(p):
+		'''Poligono : POLI AP Exp C Exp CP PC'''
+		avail.append_quad_dos(205)
+
+def p_Linea(p):
+		'''Linea : LIN AP idL CP PC'''
+		avail.append_quad_dos(206)
+
+def p_Contorno(p):
+		'''Contorno : CONTORNO AP Exp C Exp C Exp CP PC'''
+		avail.append_quad_tres(301)
+
+def p_Relleno(p):
+		'''Relleno : RELLENO AP Exp C Exp C Exp CP PC'''
+		spC = [209, -1, -1, 1]
+		avail.append_quad(spC)
+		avail.append_quad_tres(302)
+
+def p_Texto(p):
+		'''Texto : TEXTO AP STR CP PC'''
+		global void_val, cnst_void_cnt
+		su = 1
+		inicio = void_val -1000
+		sDir = void_val + (avail.getBloque() * 10000)
+		w = p[3]
+		while su < len(w)-1:
+			if w[su] not in cnst:
+				cnst[w[s]] = cnst_void_cnt
+				cnst_void_cnt += 1
+			spC = ['101',  cnst[w[su]], -1, (void_val + (avail.getBloque() * 10000))]
+			void_val += 1
+			avail.append_quad(spC)
+			su += 1
+		final = void_val - 1000	-1
+		spC = ['208',  sDir , inicio, final]
+		avail.append_quad(spC)
+
+def p_Grosor(p):
+		'''Grosor : GROSOR AP Exp CP PC'''
+		avail.append_quad_uno(304)
+
+def p_Posicion(p):
+		'''Posicion : XY AP Exp C Exp CP PC'''
+		avail.append_quad_dos(307)
+
+def p_Rotacion(p):
+		'''Rotacion : ROTACION AP Exp CP PC'''
+		
+def p_idL(p):
+		'''idL : ID'''
+		vars_declaradas(p[1])
+		dm = dm(p[1])
+		if dm(p[1]) == -1:
+			print "dimension error"
+			sys.error(0)
+		avail.OPila_push(var_dir(p[1]))
+		avail.OPila_push(dm)
+#objeto------------------------------------------------------
+
+#Expresion------------------------------------------------------
 def p_Expresion(p):
-		'''Expresion : Subexpresion Expresion2'''
+		'''Expresion : Exp Expresion2'''
 
 def p_Expresion2(p):
-		'''Expresion2 : Expresion3
+		'''Expresion2 : Expresion3 Exp
 		| vacia'''
+		avail.expresion()
 
 def p_Expresion3(p):
-		'''Expresion3 : Expresion4 Expresion'''
-		avail.expresion()
-
-def p_Expresion4(p):
-		'''Expresion4 : Y
-		| O'''
-		avail.PilaOp_push(p[1])
-
-def p_Subexpresion(p):
-		'''Subexpresion : Exp Subexpresion2'''
-		
-def p_Subexpresion2(p):
-		'''Subexpresion2 : Subexpresion3
-		| vacia'''
-
-def p_Subexpresion3(p):
-		'''Subexpresion3 : Subexpresion4 Exp'''
-		avail.expresion()
-		
-def p_Subexpresion4(p):
-		'''Subexpresion4 : ME
+		'''Expresion3 : ME
 		| MA
 		| CI
 		| CD'''
 		avail.PilaOp_push(p[1])
-#Expresion, subexpresion------------------------------------------------------
+#Expresion------------------------------------------------------
 
 #Exp, termino, factor -------------------------------------------------
 def p_Exp(p):
@@ -425,15 +549,11 @@ def p_Factor3(p):
 								avail.OPila_pop()
 								avail.TPila_pop()
 		
-def p_Factor4(p):
-		'''Factor4 : SUM
-		| RES'''
-		
 def p_faID(p):
 		'''faID : ID'''
 		avail.setFuncAlcance(p[1])
 		avail.IDPila_push(p[1])
-
+				
 def p_Factor5(p):
 		'''Factor5 : AC Exp CC
 		| AP Exp CP
@@ -458,17 +578,15 @@ def p_Factor5(p):
 				
 #Exp, termino, factor -------------------------------------------------
 
-#falta terminar varcte bool---------------------------------------------------------------------------------------------------
+#varcte--------------------------------------------------------------------------------------
 def p_VarCte(p):
-		'''VarCte : VarCte2
-		| VALI
+		'''VarCte : VALI
 		| VALF
 		| STR'''
-		a = re.compile('\d+\.\d+')
-		
+		r = re.compile('\d+\.\d+')
 		if p[1] not in cnst:
 				global cnst_entero_cnt, cnst_float_cnt
-				if(a.match(p[1])):
+				if(r.match(p[1])):
 					cnst[p[1]] = cnst_float_cnt
 					cnst_float_cnt += 1
 				else:
@@ -476,28 +594,87 @@ def p_VarCte(p):
 					cnst_entero_cnt += 1
 		avail.OPila_push(cnst[p[1]])
 		global TipoV
-		if(a.match(p[1])):
+		if(r.match(p[1])):
 			TipoV = "flotante"
 		else:
 			TipoV = "entero"
 		avail.TPila_push(TipoV)
+#varcte--------------------------------------------------------------------------------------
 
-def p_VarCte2(p):
-		''' VarCte2 : fID VarCte3'''
+#asignacion------------------------------------------------------
+def p_WDAsignacion(p):
+		'''WDAsignacion : faID Factor5 WD2'''
+		ID = avail.IDPila_pop()
+		if (idF == "asign"):
+			TDM = avail.DPila_pop()
+			vars_declaradas(ID)
+			if(avail.DPila_pop()):
+					if(TDM):
+						par = avail.OPila_pop()
+						par2 = avail.OPila_pop()
+						avail.OPila_push(par)
+						avail.TPila_push(tipo_variable(ID, "var"))
+						avail.OPila_push(var_dir(ID))
+						avail.OPila_push(par2)
+						avail.dm(dm(ID), avail.OPila_pop())
+						avail.asign(avail.OPila_pop())
+					else:
+						par = avail.OPila_pop()
+						par2 = avail.OPila_pop()
+						par3 = avail.OPila_pop()
+						avail.OPila_push(par)
+						avail.OPila_push(par2)
+						avail.TPila_push(tipo_variable(ID, "var"))
+						avail.OPila_push(dir_var(ID))
+						avail.OPila_push(par3)
+						avail.dimT(dm(ID), avail.OPila_pop())
+						avail.asigna(avail.OPila_pop())
+						avail.asigna(avail.OPila_pop())
+			else:
+					avail.asigna(dir_var(ID))
+		else:
+			if(ID not in direc):
+					print "Funcion no declarada", ID
+					sys.exit(0)
+			else:
+					if((len(direc[ID][0]) != len(CHF))):
+						print "Error de llamada de funcion", ID
+						sys.error(0)
+					else:
+						cont = 0
+						for i in direc[ID][0]:
+							if(direc[ID][0][i][0] != CHF[cont]):
+								print "Error de tipo de llamada de funcion"
+								sys.error(0)
+							cont += 1
+		CHF[:] = []
+
+def p_WD2(p):
+		'''WD2 : Asignacion
+		| PC'''		
+						
+def p_Asignacion(p):
+		'''Asignacion : IG Asignacion2'''
+		global idF
+		idF = "asign"
 		
-def p_VarCte3(p):
-		''' VarCte3 : AP Exp VarCte4 CP
-		| AC Exp CC
-		| vacia'''
+def p_Asignacion2(p):
+		'''Asignacion2 : Exp PC
+		| listaAsig'''
 		
-def p_VarCte4(p):
-		''' VarCte4 : C Exp VarCte4
-		| vacia'''
-#falta terminar varcte bool---------------------------------------------------------------------------------------------------
+def p_listaAsig(p):
+		'''listaAsig : AC Exp C Exp CC PC'''
+		global DirT
+		if(not DirT):
+			print "Error de Dimension"
+			sys.error(0)
+		else:
+			DirT = False
+#asignacion------------------------------------------------------
 
 #condicion------------------------------------------------------
 def p_Condicion(p):
-		'''Condicion : SI AP Expresion CondicionCP Estatuto Condicion2'''
+		'''Condicion : SI AP Expresion CondicionCP Bloque Condicion2'''
 		avail.condicion_inicio()
 
 def p_CondicionCP(p):
@@ -505,151 +682,31 @@ def p_CondicionCP(p):
 		avail.condicion()
 		
 def p_Condicion2(p):
-		'''Condicion2 : Condicion3
-		| vacia'''
+		'''Condicion2 : vacia
+		| Condicion3 Bloque'''
 
 def p_Condicion3(p):
-		'''Condicion3 : SINO Estatuto'''
+		'''Condicion3 : SINO'''
 		avail.condicion_else()
 #condicion------------------------------------------------------
 
-#asignacion------------------------------------------------------
-def p_Asignacion(p):
-		'''Asignacion : fID Asignacion2 IG Expresion PC'''
+#Bloque------------------------------------------------------
+def p_Bloque(p):
+		'''Bloque : Estatuto b3'''
 		
-def p_Asignacion2(p):
-		'''Asignacion2 : AC Exp CC
-		| vacia'''
-#asignacion------------------------------------------------------
+def p_b3(p):
+		'''b3 : Estatuto b3
+		| vacia'''	
+#Bloque------------------------------------------------------
 
-#llamada------------------------------------------------------
-def p_Llamada(p):
-		'''Llamada : faID Llamada1'''
-
-def p_Llamada1(p):
-		'''Llamada1 : fEra Llamada2 CP PC'''
-		global idF, vacia
-		idF = "func"
-		if avail.getFuncAlcance() not in direc:
-				print "Error, funcion no existe"
-				sys.exit(0)
-		avail.funcion_param(direc[avail.getFuncAlcance()][0])
-		vD = 10000
-		cant = direc["globales"][6]
-		vD += 6000 + cant
-		direc["globales"][6] = cant + 1
-		avail.llama_funcion_final(direc.getFuncAlcance()[1], dir_var(getFuncAlcance()), vD)
-		vacia = False
-
-def p_fEra(p):
-		'''fEra : AP'''
-		avail.llama_funcion(avail.getAlcance())
-		
-def p_Llamada2(p):
-		'''Llamada2 : Llamada4 Llamada3
-		| vacia'''
-				
-def p_Llamada3(p):
-		'''Llamada3 : C Llamada4 Llamada3
-		| vacia'''
-
-def p_Llamada4(p):
-		'''Llamada4 : Exp'''
-		CHF.append(TipoV)
-		
-#llamada------------------------------------------------------
-
-#ciclo------------------------------------------------------
-def p_Ciclo(p):
-		'''Ciclo : Mientras 
-		| Para'''
-
-def p_Mientras(p):
-		'''Mientras : MIENTRAS AP Expresion CP AC Estatuto aux2 CC'''
-		
-def p_aux2(p):
-		'''aux2 : Estatuto aux2
-		| vacia'''
-
-def p_Para(p):
-		'''Para : PARA AP fID IG Exp C Expresion C Expresion CP AC Estatuto aux2 CC'''
-#ciclo------------------------------------------------------
-
-#objeto------------------------------------------------------
-def p_Objeto(p):
-		'''Objeto : Figura Color Objeto2 Posicion
-		| Texto Color Objeto2 Posicion'''
-		
-def p_Objeto2(p):
-		'''Objeto2 : Grosor Rotacion
-		| Grosor
-		| Rotacion
-		| vacia'''
-		
-def p_Figura(p):
-		'''Figura : Cuadrado
-		| Circulo
-		| Arco
-		| Triangulo
-		| Poligono
-		| Linea'''
-
-def p_Color(p):
-		'''Color : Contorno Color2
-		| Relleno'''
-
-def p_Color2(p):
-		'''Color2 : Relleno
-		| vacia'''
-				
-def p_Cuadrado(p):
-		'''Cuadrado : CUAD AP Exp C Exp CP PC'''
-		avail.append_quad_dos(201)
-
-def p_Circulo(p):
-		'''Circulo : CIRC AP Exp C Exp CP PC'''
-		avail.append_quad_uno(203)
-
-def p_Arco(p):
-		'''Arco : ARC AP Exp C Exp CP PC'''
-		avail.append_quad_uno(207)
-
-def p_Triangulo(p):
-		'''Triangulo : TRIAN AP Exp C Exp C Exp C Exp C Exp C Exp CP PC'''
-		avail.append_quad_tres(202)
-
-def p_Poligono(p):
-		'''Poligono : POLI AP Exp C Exp CP PC'''
-		avail.append_quad_dos(205)
-
-def p_Linea(p):
-		'''Linea : LIN AP Exp C Exp CP PC'''
-		avail.append_quad_dos(206)
-
-def p_Contorno(p):
-		'''Contorno : CONTORNO AP Exp C Exp C Exp CP PC'''
-		avail.append_quad_tres(302)
-
-def p_Relleno(p):
-		'''Relleno : RELLENO AP Exp C Exp C Exp CP PC'''
-		spC = [209, -1, -1, 1]
-		avail.append_quad(spC)
-		avail.append_quad_tres(303)
-
-def p_Texto(p):
-		'''Texto : TEXTO AP Exp CP PC'''
-
-def p_Grosor(p):
-		'''Grosor : GROSOR AP Exp CP PC'''
-		avail.append_quad_uno(304)
-
-def p_Posicion(p):
-		'''Posicion : XY AP Exp C Exp CP PC'''
-		avail.append_quad_dos(307)
-
-def p_Rotacion(p):
-		'''Rotacion : ROTACION AP Exp CP PC'''
-#objeto------------------------------------------------------
+#Estatuto------------------------------------------------------
+def p_Estatuto(p):
+		'''Estatuto : WDAsignacion 
+		| Condicion 
+		| Ciclo 
+		| Llamada
+		| Objeto'''
+#Estatuto------------------------------------------------------
 
 def p_vacia(p):
 		'''vacia : '''
