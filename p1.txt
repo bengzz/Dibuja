@@ -1,5 +1,6 @@
 programa
 princ
+var int j=9;
 [
-cuadrado[2,3];
+cuadrado[j,f];
 ]

@@ -395,15 +395,15 @@ def p_Color2(p):
 		| vacia'''
 				
 def p_Cuadrado(p):
-		'''Cuadrado : CUAD AP Exp C Exp CP PC'''
+		'''Cuadrado : CUAD AP Exp C Exp f CP PC'''
 		avail.append_quad_dos(201)
 
 def p_Circulo(p):
-		'''Circulo : CIRC AP Exp C Exp CP PC'''
+		'''Circulo : CIRC AP Exp f CP PC'''
 		avail.append_quad_uno(203)
 
 def p_Arco(p):
-		'''Arco : ARC AP Exp C Exp CP PC'''
+		'''Arco : ARC AP Exp f CP PC'''
 		avail.append_quad_uno(207)
 
 def p_Triangulo(p):
@@ -411,7 +411,7 @@ def p_Triangulo(p):
 		avail.append_quad_tres(202)
 
 def p_Poligono(p):
-		'''Poligono : POLI AP Exp C Exp CP PC'''
+		'''Poligono : POLI AP idL f CP PC'''
 		avail.append_quad_dos(205)
 
 def p_Linea(p):
@@ -424,8 +424,6 @@ def p_Contorno(p):
 
 def p_Relleno(p):
 		'''Relleno : RELLENO AP Exp C Exp C Exp CP PC'''
-		spC = [209, -1, -1, 1]
-		avail.append_quad(spC)
 		avail.append_quad_tres(302)
 
 def p_Texto(p):
@@ -467,6 +465,15 @@ def p_idL(p):
 			sys.error(0)
 		avail.OPila_push(var_dir(p[1]))
 		avail.OPila_push(dm)
+
+def p_f(p):
+	'''f : C F
+	| vacia'''
+	if(len(p) == 3):
+		spC = [209, -1, -1, 1]
+	else:
+		spC = [209, -1, -1, -1]
+	avail.append_quad(spC)
 #objeto------------------------------------------------------
 
 #Expresion------------------------------------------------------

@@ -32,6 +32,7 @@ reserved = {
 	'rotacion' : 'ROTACION',
 	'var' : 'V',
 	'repetir' : 'RE',
+	'f' : 'F'
 }
 
 #lista de tokens con sus respectivos nombres
