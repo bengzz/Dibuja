@@ -1,6 +1,0 @@
-programa
-princ
-var int j=9;
-[
-cuadrado[j,f];
-]
