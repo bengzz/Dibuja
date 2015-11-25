@@ -26,7 +26,7 @@ reserved = {
    'grosor':'GROSOR',
    'contorno':'CONTORNO',
    'relleno':'RELLENO',
-   'xy':'XY',
+   'posicion':'XY',
 }
 
 tokens = [

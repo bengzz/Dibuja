@@ -834,7 +834,7 @@ def agr():
 		cnst['2'] = cnst_entero_val
 		cnst_entero_val += 1
 def p_error(p):
-	print "Syntax error in input!", p.type
+	print "Error de sintaxis de entrada en:", p.type
 
 parser = yacc.yacc()
 
@@ -852,7 +852,7 @@ if(len(sys.argv) > 1):
     #print direc
     cuad_to_file()
     #print aArch
-    wFile = open('program.txt', 'w+')
+    wFile = open('compilado.txt', 'w+')
     wFile.write(aArch)
     wFile.close()
 else:

@@ -160,13 +160,6 @@ def posicion():
 		posicion = memoria.getValor(quad[quadActual][1])
 		quadActual += 1
 
-#Funcion que cambia la posicion en X y en Y		
-def posicionXY():
-		global quadActual, posX, posY
-		posX = memoria.getValor(quad[quadActual][1])
-		posY = memoria.getValor(quad[quadActual][2])
-		quadActual += 1
-		
 #Funcion que asigna un valor a las variables
 def asigna():
 		global quadActual
@@ -207,6 +200,22 @@ def linea():
 		w.create_line(vertice, fill=colorRell)
 		quadActual += 1
 		
+#funcion que crea un rectangulo
+def rectangulo():
+		global quadActual, relleno, colorRell, colorCont, gros
+		x = memoria.getValor('41000')
+		y = memoria.getValor('41001')
+		x2 = x + memoria.getValor(quad[quadActual][1])
+		y2 = y + memoria.getValor(quad[quadActual][2])
+			
+		if(relleno):
+			w.create_rectangle(x, y, x2, y2, fill=colorRell, outline=colorCont, width=gros)	
+		else:
+			w.create_rectangle(x, y, x2, y2, fill='', outline=colorCont, width=gros )
+			memoria.escribeValor('41000', x2)
+			memoria.escribeValor('41001', y2)
+			quadActual += 1
+			
 #Funcion que crea un rectangulo
 def cuadrado():
         global quadActual, relleno, colorRell, colorCont, gros
@@ -296,101 +305,12 @@ def poligono():
 				w.create_polygon(vertices, fill='', outline=colorCont, width=gros)
 		quadActual += 1
 
-#--------------------		
-def get_x_and_y(angle, hypotenus):
-#detetrmines the end of the line, basic mathematics
-	if(angle < 45):
-		return [ hypotenus * (math.cos(math.radians(angle))), (-1 * (hypotenus * (math.sin(math.radians(angle)))))]
-	elif(angle < 90):
-		return [ hypotenus * (math.sin(math.radians(angle))), (-1 * (hypotenus * (math.cos(math.radians(angle)))))]
-	elif(angle == 90):
-		return [ 0, (-1*hypotenus)]
-
-	angle -= 90
-	if(angle < 45):
-		return [ (-1 * (hypotenus * (math.sin(math.radians(angle))))), (-1 *  (hypotenus * (math.cos(math.radians(angle)))))]
-	elif(angle < 90):
-		return [ (-1 * (hypotenus * (math.cos(math.radians(angle))))), (-1 *  (hypotenus * (math.sin(math.radians(angle)))))]
-	elif(angle == 90):
-		return [(-1*hypotenus), 0]
-
-	angle -= 90
-	if(angle < 45):
-		return [ (-1 * (hypotenus * (math.cos(math.radians(angle))))), hypotenus * (math.sin(math.radians(angle)))]
-	elif(angle < 90):
-		return [ (-1 * (hypotenus * (math.sin(math.radians(angle))))), hypotenus * (math.cos(math.radians(angle)))]
-	elif(angle == 90):
-		return [0, hypotenus]
-
-	angle -= 90
-	if(angle < 45):
-		return [hypotenus * (math.sin(angle)), hypotenus * (math.cos(angle))]
-	elif(angle < 90):
-		return [hypotenus * (math.cos(angle)), hypotenus * (math.sin(angle))]	
-	elif(angle == 90):
-		return [hypotenus, 0]
-	
-def penpos():
+def pxy():
 #changes the pen position
 	global quadActual
 	memoria.escribeValor('41001', memoria.getValor(quad[quadActual][1]))
 	memoria.escribeValor('41000', memoria.getValor(quad[quadActual][2]))
 	quadActual += 1
-
-def penX():
-#changes the x of the pen position
-	global quadActual
-	memoria.escribeValor('41000', memoria.getValor(quad[quadActual][1]))
-	quadActual += 1
-
-def penY():
-#changes the y of the pen position
-	global quadActual
-	memoria.escribeValor('41001', memoria.getValor(quad[quadActual][1]))
-	quadActual += 1
-
-def penUp():
-#moves the y of the pen upwards
-	global quadActual
-	up = memoria.getValor('41001') - memoria.getValor(quad[quadActual][1])
-	memoria.escribeValor('41001', up)
-	quadActual += 1
-
-def penDown():
-#moves the y of the pen downwards
-	global quadActual
-	up = memoria.getValor(quad[quadActual][1]) + memoria.getValor('41001')
-	memoria.escribeValor('41001', up)
-	quadActual += 1
-
-def penLeft():
-#moves the x of the pen to the left
-	global quadActual
-	up = memoria.getValor('41000') - memoria.getValor(quad[quadActual][1])
-	memoria.escribeValor('41000', up)
-	quadActual += 1
-
-def penRight():
-#moves the x of the pen to the right
-	global quadActual
-	up = memoria.getValor(quad[quadActual][1]) + memoria.getValor('41000')
-	memoria.escribeValor('41000', up)
-	quadActual += 1
-
-def move():
-#creates a line, has to calculate the end position of the line.
-	global quadActual, colorCont
-	x = memoria.getValor('41000')
-	y = memoria.getValor('41001')
-	hyp = memoria.getValor(quad[quadActual][1])
-	angle = memoria.getValor(quad[quadActual][2])
-	pos = get_x_and_y(angle, hyp)
-	#print "X Y", pos[0], " ", pos[1]
-	w.create_line(x, y,(x+pos[0]), (y+pos[1]), fill=colorCont)
-	memoria.escribeValor('41000', (x+pos[0]))
-	memoria.escribeValor('41001', (y+pos[1]))
-	quadActual += 1
-#--------------------
 
 #define si la figura tendra un color de relleno
 def relleno():
@@ -409,11 +329,11 @@ def goto():
 #Cambia el cuadruplo cuando la condicion es falsa
 def goto_falso():
 		global quadActual
-		temporal = int(quad[quadActual][1])
+		temporal = memoria.getValor(quad[quadActual][1])
 		if(temporal):
-						quadActual += 1
+				quadActual += 1
 		else:
-						quadActual = int(quad[quadActual[3]])
+				quadActual = int(quad[quadActual][3])
 
 #Creacion de la memoria para la funcion llamada
 def era():
@@ -498,13 +418,13 @@ opciones = { '+' : suma,
 		'>' : mayorQue,
 		'<=' : menorIgQue,
 		'>=' : mayorIgQue,
-		'<>' : diferenteQue,
+		'!=' : diferenteQue,
 		'==' : igualQue,
 		'GOTO': goto,
 		'GOTOF' : goto_falso,
 		'ENDPROG': endProg,
 		'101': asigna,
-		'201' : cuadrado,
+		'201' : rectangulo,
 		'202' : triangulo,
 		'203' : circulo,
 		'204' : cuadrado,
@@ -516,16 +436,7 @@ opciones = { '+' : suma,
 		'301' : colorContorno,
 		'302' : colorRelleno,
 		'304' : grosor,
-#-----------------------------
-		'307' : penpos,
-		'308' : penX,
-		'309' : penY,
-		'305' : move,
-		'310' : penUp,
-		'311' : penDown,
-		'312' : penLeft,
-		'313' : penRight,
-#-----------------------------
+		'307' : pxy,
 		'ERA' : era,
 		'PARAMETRO' : param,
 		'GOSUB' : goSub,
@@ -570,17 +481,17 @@ if(len(sys.argv) > 1):
 		acumulador += linea
 	rt = Tk()
 	print "const int float", len(quad)
-	#memoria.imprimeConstantes()
+	memoria.imprimeConstantes()
 	w = Canvas(rt, width=600, height=480)
 	w.configure(background='white')
 	w.pack()
 	vivo()
-	#print "const int float"
-	#memoria.imprimeConstantes()
-	#print "main"
-	#memoria.imprimePrinc()
-	#print "global"
-	#memoria.imprimeGlobales()
+	print "const int float"
+	memoria.imprimeConstantes()
+	print "main"
+	memoria.imprimePrinc()
+	print "global"
+	memoria.imprimeGlobales()
 	mainloop()
 		
 else:
