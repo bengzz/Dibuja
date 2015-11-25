@@ -31,6 +31,7 @@ reserved = {
 	'grosor' : 'GROSOR',
 	'xy' : 'XY',
 	'rotacion' : 'ROTACION',
+	'var' : 'V',
 }
 
 #lista de tokens con sus respectivos nombres

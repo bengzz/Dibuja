@@ -209,17 +209,17 @@ def p_loc(p):
 		'''loc : LC'''
 
 def p_var(p):
-		'''var : Tipo var1 PC'''
+		'''var : V var11'''
+		
+def p_var11(p):
+		'''var11 : Tipo var1 PC var11
+		| vacia'''
 		
 def p_var1(p):
-		'''var1 : varSalvar var2 var3'''
-
-def p_var2(p):
-		'''var2 : AC VarCte CC
-		| vacia'''
+		'''var1 : varSalvar var2 var23 var3'''
 
 def p_var3(p):
-		'''var3 : C var1
+		'''var3 : C varSalvar var2 var23 var3
 		| vacia'''
 		
 def p_varSalvar(p):
@@ -228,6 +228,72 @@ def p_varSalvar(p):
 		global vD
 		vD = dir_var(p[1]) + (avail.getBloque() * 10000)
 		avail.IDPila_push(p[1])
+		
+def p_var23(p):
+		'''var23 : IG var4
+		| vacia'''
+		if(len(p) < 3):
+			avail.DPila_pop(False)
+			
+def p_var2(p):
+		'''var2 : AC var21
+		| vacia'''
+		if(len(p) < 3):
+			avail.DPila_push(False)
+
+def p_var4(p):
+	'''var4 : Exp
+	| AC Exp var41 CC'''
+	global vD, TipoV, DirQty
+	if len(p) == 2:
+		if(avail.OPila_peek() < 10000):
+			dV = avail.OPila_pop() + (avail.getBloque() * 10000)
+			avail.OPila_push(dV)
+		avail.asign(vD)
+	elif(len(p) == 5):
+		if(avail.DPila_pop()):
+			ID = avail.IDPila_pop()
+			vDm = dm(ID)
+			while DirQty >= 0:
+				avail.dmP(vD, DirQty, vDm)
+				DirQty -= 1
+			DirQty = 0
+		else:
+			print "Error de tipos"
+			sys.exit(0)
+	else:
+		if not avail.DPila_pop():
+			print "Error de tipos"
+			sys.exit(0)
+		else:
+			ID = avail.IDPila_pop()
+			vDm = dm(ID)
+			while DirQty >= 0:
+				avail.dmTP(vD, DirQty, vDm)
+				DirQty -= 1
+			DirQty = 0
+			
+def p_var41(p):
+	'''var41 : C Exp var41
+	| vacia'''
+	if(len(p) > 2):
+		global DirQty
+		DirQty += 1
+	
+def p_var21(p):
+	'''var21 : Exp CC'''
+	global TipoA, entero_val, float_val
+	ID = avail.IDPila_pop()
+	ex = avail.OPila_pop()
+	for v, vD in cnst.iteritems():
+		if ex == vD:
+			if TipoA == 'entero':
+				entero_val += int(v) + 1
+			else:
+				float_val += int(v) + 1
+			hashT[ID].append(v)
+	avail.DPila_push(True)
+	avail.IDPila_push(ID)
 #Variables------------------------------------------------------
 
 #Estatuto------------------------------------------------------
@@ -299,6 +365,8 @@ def p_Subexpresion4(p):
 #Exp, termino, factor -------------------------------------------------
 def p_Exp(p):
 		'''Exp : Termino Exp2'''
+		global vacia
+		vacia = False
 
 def p_Exp2(p):
 		'''Exp2 : Exp4 Exp3 Exp
@@ -340,7 +408,7 @@ def p_Factor2(p):
 		avail.PilaOp_push(p[1])
 		
 def p_Factor3(p):
-		'''Factor3 : Factor4 VarCte
+		'''Factor3 : VarCte
 		| faID Factor5'''
 		if(len(p) == 3):
 				ID = avail.IDPila_pop()
@@ -536,21 +604,27 @@ def p_Color2(p):
 				
 def p_Cuadrado(p):
 		'''Cuadrado : CUAD AP Exp C Exp CP PC'''
+		avail.append_quad_dos(201)
 
 def p_Circulo(p):
 		'''Circulo : CIRC AP Exp C Exp CP PC'''
+		avail.append_quad_uno(203)
 
 def p_Arco(p):
 		'''Arco : ARC AP Exp C Exp CP PC'''
+		avail.append_quad_uno(207)
 
 def p_Triangulo(p):
 		'''Triangulo : TRIAN AP Exp C Exp C Exp C Exp C Exp C Exp CP PC'''
+		avail.append_quad_tres(202)
 
 def p_Poligono(p):
 		'''Poligono : POLI AP Exp C Exp CP PC'''
+		avail.append_quad_dos(205)
 
 def p_Linea(p):
 		'''Linea : LIN AP Exp C Exp CP PC'''
+		avail.append_quad_dos(206)
 
 def p_Contorno(p):
 		'''Contorno : CONTORNO AP Exp C Exp C Exp CP PC'''
@@ -558,6 +632,8 @@ def p_Contorno(p):
 
 def p_Relleno(p):
 		'''Relleno : RELLENO AP Exp C Exp C Exp CP PC'''
+		spC = [209, -1, -1, 1]
+		avail.append_quad(spC)
 		avail.append_quad_tres(303)
 
 def p_Texto(p):
@@ -565,7 +641,7 @@ def p_Texto(p):
 
 def p_Grosor(p):
 		'''Grosor : GROSOR AP Exp CP PC'''
-		avail.append_quad_uno(301)
+		avail.append_quad_uno(304)
 
 def p_Posicion(p):
 		'''Posicion : XY AP Exp C Exp CP PC'''
@@ -682,8 +758,24 @@ def agr():
 			cnst_entero_cnt += 1
 			
 def p_error(p):
-		print "Syntax error en entrada!", p.tipo
+		print "Syntax error en entrada!", p.type
 					
 parser = yacc.yacc()
 
-#930949
+if(len(sys.argv) > 1):
+	archivo = open(sys.argv[1], "r")
+	agr()
+	l = archivo.readlines()
+	acumulador = ""
+	for linea in l:
+		acumulador += linea
+	resultado = parser.parse(acumulador)
+	aArch += str(cnst_entero_cnt - 40000) + " " + str(cnst_float_cnt - 41000) + " " + str(cnst_void_cnt - 42000) + '\n'
+	aArch += str(dic_a_str_cons(cnst))
+	aArch += str(dic_a_str(cnst))
+	cuad_a_arch()
+	wF = open('program.txt', 'w+')
+	wF.write(aArch)
+	wF.close()
+else:
+	print "No se compilo correctamente"

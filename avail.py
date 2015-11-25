@@ -342,7 +342,7 @@ class avail:
 			self.POper.push(one)
 			self.numQuad += 4
 			
-		def dimTP(self, direccion, row, dim):
+		def dmTP(self, direccion, row, dim):
 		#al inicializar una matriz, revisa la dimension, crea un apuntador para que asigne algo al siguiente valor
 			row *= 2
 			cuads = ['DIMC', dim, row, -1]
@@ -362,7 +362,7 @@ class avail:
 			
 			self.numQuad += 3
 			
-		def dimP(self, direccion, row, dim):
+		def dmP(self, direccion, row, dim):
 		#checa la dimension, obtiene la direccion del puntero, cuad que genera la direccion actual
 			cuads = ['DIMC', dim, row, -1]
 			self.quads.append(cuads)

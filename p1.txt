@@ -1,0 +1,5 @@
+programa
+princ
+[
+cuadrado[2,3];
+]

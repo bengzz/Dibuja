@@ -584,4 +584,4 @@ if(len(sys.argv) > 1):
 	mainloop()
 		
 else:
-    print "No se compilo correctamente"
+    print "No se ejecuto correctamente"
