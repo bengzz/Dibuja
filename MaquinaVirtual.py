@@ -399,13 +399,13 @@ def apuntadorDirC():
 		quadActual += 1
 
 #Termina el procedimiento y borra la memoria que utilizo		
-def endProc():
+def endP():
 		global quadActual
 		quadActual = int(memoria.pop_apuntador())
 		memoria.borrar_funcion()
 		
 #Termina el programa
-def endProg():
+def endPg():
 		global activo
 		activo = False
 
@@ -421,7 +421,7 @@ opciones = { '+' : suma,
 		'==' : igualQue,
 		'GOTO': goto,
 		'GOTOF' : goto_falso,
-		'ENDPROG': endProg,
+		'ENDPROG': endPg,
 		'101': asigna,
 		'201' : rectangulo,
 		'202' : triangulo,
@@ -434,8 +434,8 @@ opciones = { '+' : suma,
 		'209' : relleno,
 		'301' : colorContorno,
 		'302' : colorRelleno,
-		'304' : grosor,
-		'307' : pxy,
+		'303' : grosor,
+		'304' : pxy,
 		'ERA' : era,
 		'PARAMETRO' : param,
 		'GOSUB' : goSub,
@@ -444,7 +444,7 @@ opciones = { '+' : suma,
 		'DIMC' : dimMat,
 		'DIR' : apuntadorDir,
 		'DIRC' : apuntadorDirC,
-		'ENDPROC' : endProc}
+		'ENDPROC' : endP}
 				
 #Correr el programa
 if(len(sys.argv) > 1):
@@ -479,18 +479,11 @@ if(len(sys.argv) > 1):
 				quad.append(s)
 		acumulador += linea
 	rt = Tk()
-	print "const int float", len(quad)
 	memoria.imprimeConstantes()
 	w = Canvas(rt, width=600, height=480)
 	w.configure(background='white')
 	w.pack()
 	vivo()
-	print "const int float"
-	memoria.imprimeConstantes()
-	print "main"
-	memoria.imprimePrinc()
-	print "global"
-	memoria.imprimeGlobales()
 	mainloop()
 		
 else:

@@ -158,7 +158,7 @@ def p_arrD(p):
 def p_Regresar(p):	
 	'''Regresar : RT Regresar2 PC'''
 	if(avail.getalcance() == 'princ'):
-			print "ERROR, no return in main"
+			print "ERROR, no hay return en el main"
 			sys.exit(0)
 			
 def p_Regresar2(p):
@@ -256,7 +256,7 @@ def p_var4(p):
 	elif(len(p) == 5):
 		if(avail.DPila_pop()):
 			ID = avail.IDPila_pop()
-			vDim = dim(ID)
+			vDim = dimension(ID)
 			while DirQty >= 0 :
 				avail.dmP(vD, DirQty, vDim)
 				DirQty -= 1
@@ -270,7 +270,7 @@ def p_var4(p):
 			sys.exit(0)
 		else:
 			ID = avail.IDPila_pop()
-			vDim = dim(ID)
+			vDim = dimension(ID)
 			while DirQty >= 0:
 				avail.dmTP(vD, DirQty, vDim)
 				DirQty -= 1
@@ -424,7 +424,7 @@ def p_Factor4(p):
 		avail.TPila_push(tipo_variable(ID, "var"))
 		avail.OPila_push(dir_var(ID))
 		if(DimM):
-			avail.dim(dim(ID), apuntador)
+			avail.dim(dimension(ID), apuntador)
 		if not DimM:
 			if avail.DPila_pop():
 				avail.OPila_pop()
@@ -530,7 +530,7 @@ def p_Asignacion(p):
 				avail.TPila_push(tipo_variable(ID, "var"))
 				avail.OPila_push(dir_var(ID))
 				avail.OPila_push(par2)
-				avail.dim(dim(ID), avail.OPila_pop())
+				avail.dim(dimension(ID), avail.OPila_pop())
 				avail.asign(avail.OPila_pop())
 			else:
 				par = avail.OPila_pop()
@@ -541,7 +541,7 @@ def p_Asignacion(p):
 				avail.TPila_push(tipo_variable(ID, "var"))
 				avail.OPila_push(dir_var(ID))
 				avail.OPila_push(par3)
-				avail.dmT(dim(ID), avail.OPila_pop())
+				avail.dmT(dimension(ID), avail.OPila_pop())
 				avail.asign(avail.OPila_pop())
 				avail.asign(avail.OPila_pop())
 		else:
@@ -642,7 +642,7 @@ def p_Figura(p):
 	
 def p_Posicion(p):
 	'''Posicion : XY AP exp C exp CP PC'''
-	avail.append_quad_dos(307)
+	avail.append_quad_dos(304)
 
 def p_Color(p):
 	'''Color : CONTORNO AP exp C exp C exp CP PC 
@@ -655,7 +655,7 @@ def p_Color(p):
 
 def p_Grosor(p):
 	'''Grosor : GROSOR AP exp CP PC '''
-	avail.append_quad_uno(304)
+	avail.append_quad_uno(303)
 
 def p_Rectangulo(p):
 	'''Rectangulo : REC AP exp C exp fondo CP PC'''
@@ -694,9 +694,9 @@ def p_Linea(p):
 def p_idList(p):
 	'''idList : ID'''
 	variables_declaradas(p[1])
-	dimention = dim(p[1])
-	if dim(p[1]) == -1:
-		print "dimension error"
+	dimention = dimension(p[1])
+	if dimension(p[1]) == -1:
+		print "Error en cuanto la dimension"
 		sys.error(0)
 	avail.OPila_push(dir_var(p[1]))
 	avail.OPila_push(dimention)
@@ -733,7 +733,7 @@ def p_vacia(p):
 def guardar_var(var):
 	global TipoA
 	if var in hashT:
-		print "Existing var, ", var
+		print "La variable ya existe ", var
 		sys.exit(0)
 	else:
 		if TipoA == "entero":
@@ -757,12 +757,12 @@ def variables_declaradas(p):
 		if(p not in hashT):
 			if("globales" in direc):
 				if(p not in direc["globales"][0]):
-					print "Undeclared variable. ", p
+					print "No se declaro la variable. ", p
 					sys.exit(0)
 				else:
 					TipoV = direc["globales"][0][p][0]
 			else:
-				print "Undeclared variable. ", p
+				print "No se declaro la variable. ", p
 				sys.exit(0)
 		else:
 			TipoV = hashT[p][0]
@@ -781,7 +781,7 @@ def dir_var(p):
 		if "globales" in direc:
 			return direc["globales"][0][p][2]
 
-def dim(p):
+def dimension(p):
 	if p in hashT:
 		try:
 			return hashT[p][3]
@@ -851,4 +851,4 @@ if(len(sys.argv) > 1):
     wFile.write(aArch)
     wFile.close()
 else:
-    print "):"
+    print "No se ha podido compilar"
