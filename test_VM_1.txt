@@ -41,11 +41,14 @@ flotante g;
 {
 	n = 2 - 3 + 10;
 	n = 2 - 4 + 90;
-rectangulo(k[7], k[0]);
-cont = 0;
-repetir 8{
-cuadrado(k[cont]);
-cont = cont + 1;
+	contorno(255, 45, 78);
+	grosor(3);
+	xy(50,100);
+	rectangulo(k[7], k[0]);
+	cont = 0;
+	repetir 8{
+	cuadrado(k[cont]);
+	cont = cont + 1;
 }
 bah(j, 7, k);
 cont = 0;

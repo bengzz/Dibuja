@@ -23,14 +23,10 @@ reserved = {
    'repetir' : 'RE',
    'regresar' : 'RT',
    'texto' : 'LA',
-
    'grosor':'GROSOR',
    'contorno':'CONTORNO',
    'relleno':'RELLENO',
-  
    'xy':'XY',
-   'px': 'PX',
-   'py':'PY',
 }
 
 tokens = [

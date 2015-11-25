@@ -628,49 +628,44 @@ def p_Cicloprog3(p):
 
 #Objeto----------------------------------------------------------------
 def p_Objeto(p):
-	'''Objeto : Cuadrado
+	'''Objeto : Figura
+	| Color
+	| Posicion
+	| Grosor'''
+		
+		
+def p_Figura(p):
+	'''Figura : Rectangulo
 	| Triangulo
 	| Poligono
 	| Linea
-	| uno_par
+	| CUADCIR
 	| Arco
 	| Texto'''
 	
-def p_position(p):
-	'''position : XY AP exp C exp CP PC'''
+def p_Posicion(p):
+	'''Posicion : XY AP exp C exp CP PC'''
 	avail.append_quad_dos(307)
 
-def p_colors(p):
-	'''colors : CONTORNO AP exp C exp C exp CP PC 
+def p_Color(p):
+	'''Color : CONTORNO AP exp C exp C exp CP PC 
 | RELLENO AP exp C exp C exp CP PC'''
-	if(p[1] == 'penColor'):
-		fun = 301
-	elif(p[1] == 'setColor'):
-		fun = 302
-	else:
-		fun = 303
-	avail.append_quad_three(fun)
+	if(p[1] == 'contorno'):
+		fond = 301
+	elif(p[1] == 'relleno'):
+		fond = 302
+	avail.append_quad_tres(fond)
 
-
-def p_p_Width(p):
-	'''p_Width : GROSOR AP exp CP PC '''
+def p_Grosor(p):
+	'''Grosor : GROSOR AP exp CP PC '''
 	avail.append_quad_uno(304)
 
-def p_penwrite(p):
-	'''penwrite : PX AP exp CP PC 
-| PY AP exp CP PC'''
-	if(p[1] == 'px'):
-		sC = 308
-	elif p[1] == 'py':
-		sC = 309
-	avail.append_quad_uno(sC)
-
-def p_Cuadrado(p):
-	'''Cuadrado : REC AP exp C exp p_fill CP PC'''
+def p_Rectangulo(p):
+	'''Rectangulo : REC AP exp C exp fondo CP PC'''
 	avail.append_quad_dos(201)
 
-def p_p_fill(p):
-	'''p_fill : C Fondo 
+def p_fondo(p):
+	'''fondo : C Fondo 
 | vacia'''
 	if(len(p) == 3):
 		sC = [209, -1, -1, 1]
@@ -679,20 +674,20 @@ def p_p_fill(p):
 	avail.append_quad(sC)
 
 def p_Triangulo(p):
-	'''Triangulo : TRI AP AC exp C exp CC C AC exp C exp CC C AC exp C exp CC p_fill CP PC'''
+	'''Triangulo : TRI AP AC exp C exp CC C AC exp C exp CC C AC exp C exp CC fondo CP PC'''
 	avail.append_quad_tri(202)
 
-def p_uno_par(p):
-	'''uno_par : CIR AP exp p_fill CP PC
-| SQ AP exp p_fill CP PC'''
-	if(p[1] == 'circle'):
+def p_CUADCIR(p):
+	'''CUADCIR : CIR AP exp fondo CP PC
+| SQ AP exp fondo CP PC'''
+	if(p[1] == 'circulo'):
 		sC = 203
 	else:
 		sC = 204
 	avail.append_quad_uno(sC)
 
 def p_Poligono(p):
-	'''Poligono : POL AP idList p_fill CP PC'''
+	'''Poligono : POL AP idList fondo CP PC'''
 	avail.append_quad_dos(205)
 
 def p_Linea(p):
@@ -710,7 +705,7 @@ def p_idList(p):
 	avail.OPila_push(dimention)
 
 def p_Arco(p):
-	'''Arco : ARC AP exp p_fill CP PC'''
+	'''Arco : ARC AP exp fondo CP PC'''
 	avail.append_quad_uno(207)
 
 def p_Texto(p):
@@ -733,12 +728,6 @@ def p_Texto(p):
 	avail.append_quad(sC)
 #Objeto----------------------------------------------------------------
 	
-def p_pen(p):
-	'''pen : colors 
-| p_Width  
-| position 
-| penwrite '''
-
 def p_vacia(p):
 	'''vacia : '''
 	global vacia
