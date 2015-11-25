@@ -3,7 +3,6 @@ import lex
 import sys
 import re
 
-from pila import Pila
 from avail import avail
 
 tokens = lex.tokens
@@ -88,7 +87,6 @@ def p_Fun1(p):
 	qty = direc["globales"][3] + 1
 	direc["globales"][0][avail.getalcance()] = ["flotante", 'func', 13000 + qty]
 	direc["globales"][3] = qty
-	#print direc["globales"]
 	funT.clear()
 	contadoCP = 0
 
@@ -256,7 +254,6 @@ def p_var4(p):
 			avail.OPila_push(dV)
 		avail.asign(vD)
 	elif(len(p) == 5):
-	#array
 		if(avail.DPila_pop()):
 			ID = avail.IDPila_pop()
 			vDim = dim(ID)
@@ -849,9 +846,7 @@ if(len(sys.argv) > 1):
     aArch += str(cnst_entero_val - 40000) + " " + str(cnst_flotante_val - 41000) + " " + str(cnst_void_val - 42000) + '\n'
     aArch += str(dic_a_str_cons(cnst))
     aArch += str(dic_a_str(direc))
-    #print direc
     cuad_to_file()
-    #print aArch
     wFile = open('compilado.txt', 'w+')
     wFile.write(aArch)
     wFile.close()

@@ -2,7 +2,6 @@ import sys
 import math
 from Tkinter import *
 from adminMemoria import AdminMemoria
-from pila import Pila
 
 memoria = AdminMemoria()
 quad = []

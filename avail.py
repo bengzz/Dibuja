@@ -11,9 +11,9 @@ class avail:
 		self.temp_flotante = 6000
 		self.temp_dir = 7000 
 		self.Bloque = 0
-		self.OPila = Pila() #Pila de operandos
-		self.TPila = Pila() #Pila de tipos
-		self.OpPila = Pila() #Pila de operadores
+		self.OPila = Pila() 
+		self.TPila = Pila() 
+		self.OpPila = Pila() 
 		self.salto = Pila()
 		self.numCuad = 0
 		self.funcCuad = 0
