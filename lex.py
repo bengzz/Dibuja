@@ -5,7 +5,7 @@
 import ply.lex as lex
 
 reserved = {
-	'progama' : 'PR',
+	'progama' : 'PROG',
 	'funcion' : 'FUNCION',
 	'princ' : 'PRINC',
 	'regresa' : 'REGRESA',
@@ -37,7 +37,7 @@ reserved = {
 
 #lista de tokens con sus respectivos nombres
 tokens = [
-	'P', 'SUM', 'RES', 'MUL', 'DIV', 'ME', 'MA', 'CI', 'CD', 'IG', 'PC', 'C', 'AC', 'CC', 'AP', 'CP', 'VALI', 'VALF', 'STR', 'ID'
+	'P', 'SUM', 'RES', 'MUL', 'DIV', 'ME', 'MA', 'CI', 'CD', 'IG', 'PC', 'C', 'AC', 'CC', 'AP', 'CP', 'LB', 'RB', 'VALI', 'VALF', 'STR', 'ID'
 ] + list(reserved.values())
 
 
@@ -57,6 +57,8 @@ t_AC	= r'\['
 t_CC	= r'\]'
 t_AP	= r'\('
 t_CP	= r'\)'
+t_LB	= r'\{'
+t_RB	= r'\}'
 t_VALI	= r'\d+'
 t_VALF	= r'\d+\.\d+'
 t_STR 	= r'\'.*\''
